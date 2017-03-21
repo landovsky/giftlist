@@ -1,10 +1,25 @@
-<div class="col-md-4 col-sm-4">
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h3 class="panel-title"><%= gift.name %></h3>
-		</div>
-		<div class="panel-body">
-			<%= gift.description %>
+<div class="col-md-6 col-sm-6">
+	<% if gift.name == "zabraný dárek"%>
+		<div class="panel panel-default">
+	<% else %>
+		<div class="panel panel-primary">
+	<% end %>
+			<div class="panel-heading">
+				<div class="panel-title" style="font-weight: bold; vertical-align: middle">
+					<span class="glyphicon glyphicon-gift">&nbsp;</span>
+					<%= link_to gift.name, edit_gift_path(gift.id) %>
+					<% if gift.name == "zabraný dárek"%>
+					<span class="label label-success" style="position: relative; left: 5px; bottom: 2px">zabráno</span>
+					<% end %>
+				</div>
+			</div>
+			<div class="panel-body">
+				<p>
+					<span class="glyphicon glyphicon-heart drop">&nbsp;</span><%= gift.description %>
+				</p>
+				<p>
+					<span class="glyphicon glyphicon-question-sign drop">&nbsp;</span><%= gift.price_range %>
+				</p>
+			</div>
 		</div>
 	</div>
-</div>

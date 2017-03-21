@@ -1,2 +1,9 @@
-<h1>Gifts#edit</h1>
-<p>Find me in app/views/gifts/edit.html.erb</p>
+<h3>Upravit dáreček</h3>
+
+<%= render "shared/alert-box"%>
+
+<p>
+	<%= link_to 'zpět', list_path(id: @gift.list_id), class: "btn btn-default" %>
+</p>
+
+<%= render partial: 'gift_form', locals: { gift: @gift } %>

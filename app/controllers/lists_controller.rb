@@ -10,9 +10,10 @@ class ListsController < ApplicationController
       flash[:success] = "uloženo"
       flash.discard
       @lists = List.owned(current_user)
-      render 'index'
+      redirect_to :action => 'show', id: @list.id
     else
-      @lists = List.owned(current_user)
+      @lists_owned = List.owned(current_user)
+      @lists_invited = List.invited(current_user)
       render 'index'
     end
   end
@@ -27,7 +28,7 @@ class ListsController < ApplicationController
     @list = List.authentic?(params[:id], current_user.id)
     if @list
       @gifts = @list.gifts
-      @gift = Gift.new
+      @gift = Gift.new(list: @list)
     else
       redirect_to :action => 'index'
       return 

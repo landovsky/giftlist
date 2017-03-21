@@ -1,7 +1,12 @@
-<%= render "shared/alert-box"%>
-
 <h3><%= @list.occasion%></h3>
 <h4><%= @list.occasion_of%></h4>
+
+<%= render "shared/alert-box"%>
+
+<p>
+	<%= link_to 'zpět', lists_path, class: "btn btn-default" %>&nbsp;
+	<%= link_to 'pozvat dárce', '/', class: "btn btn-success disabled" %>
+</p>
 
 <%= render partial: 'gifts/gift_form', gift: @gift %>
 

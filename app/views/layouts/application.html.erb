@@ -19,29 +19,27 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-gift"></span> Gift List</a>
+							<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-gift"></span><strong>&nbsp;Gift List</strong></a>
 						</div>
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav">
-								<li <%= "class=active" if Rails.application.routes.recognize_path(request.original_url)[:controller] == "users"%>>
-									<%= link_to 'Uživatelé', controller: 'users' %>
-								</li>
 								<li <%= "class=active" if Rails.application.routes.recognize_path(request.original_url)[:controller] == "lists"%>>
-									<%= link_to 'Giftlisty', controller: 'lists' %>
+									<%= link_to 'seznamy', lists_path %>
 								</li>
 							</ul>
 							<ul class="nav navbar-nav navbar-right">
 								<li>
-									<% if current_user %> <a><%= current_user.full_name %> </a>
+									<% if current_user %>
+									<a><%= current_user.full_name %> </a>
 								</li>
 								<li>
-									<%= link_to "Odhlásit", '/logout' %>
+									<%= link_to "odhlásit", '/logout' %>
 									<% else %>
-									<%= link_to 'Login', '/login' %>
+									<%= link_to 'přihlásit', '/login' %>
 								</li>
 
 								<li>
-									<%= link_to 'Signup', '/signup' %>
+									<%= link_to 'registrovat', '/' %>
 									<% end %>
 								</li>
 							</ul>
@@ -54,8 +52,7 @@
 				<%= yield %>
 			</div>
 
-			<div class="col-md-8 col-centered">
-			</div>
+			<div class="col-md-8 col-centered"></div>
 		</div>
 	</body>
 </html>

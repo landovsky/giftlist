@@ -5,25 +5,21 @@ class GiftsController < ApplicationController
   def new
     @list = List.authentic?(params[:list_id], current_user.id)
     if @list
-      @gift = Gift.new
-    @gift.list = @list
+      @gift = Gift.new(list: @list)
+      @list_id = params[:list_id]
     else
-      redirect_to 'lists/index'
+      redirect_to lists_path
     return
     end
   end
 
   def create
     @gift = Gift.new(gift_params)
-    @gift.associate_to_list(params[:list_id])
+
     if @gift.save
-      flash[:success] = "uloženo"
-      flash.discard
-      render "lists/index"
+      redirect_to list_path(id: @gift.list_id)
     else
-      flash[:danger] = "něco se pokazilo"
-      flash.discard
-      render "lists/index"
+      render 'new'
     end
   end
 
@@ -37,12 +33,28 @@ class GiftsController < ApplicationController
   end
 
   def destroy
+    @gift = Gift.find_by(id: params[:id])
+    if @gift.destroy
+      redirect_to list_path(id: @gift.list_id)
+    else
+      flash[:danger] = "nešlo to smazat"
+      render 'edit'
+    end
   end
 
   def edit
+    #TODO udělat gift.authentic? na kontrolu jestli dárek existuje a user se na něj může dívat
+    @gift = Gift.find_by(id: params[:id])
+    @list = @gift.list
   end
 
   def update
+    @gift = Gift.find_by(id: params[:id])
+    if @gift.update_attributes(gift_params)
+      redirect_to list_path(id: @gift.list_id)
+    else
+      render 'edit'
+    end
   end
 
   private
