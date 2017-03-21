@@ -1,6 +1,6 @@
-class CreateGiftLists < ActiveRecord::Migration[5.0]
+class CreateLists < ActiveRecord::Migration[5.0]
   def change
-    create_table :gift_lists do |t|
+    create_table :lists do |t|
       t.belongs_to :user, foreign_key: true
       t.string :occasion
       t.integer :occasion_of

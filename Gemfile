@@ -31,11 +31,10 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'devise'
-
 gem 'roo-xls'
 gem 'simple-spreadsheet'
 gem 'bootstrap_form'
+gem 'bootstrap', '~> 4.0.0.alpha6'
 
 
 group :development, :test do
@@ -58,7 +57,7 @@ group :development do
  end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'X', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'

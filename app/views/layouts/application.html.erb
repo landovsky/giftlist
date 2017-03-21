@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Giftlist</title>
-    <%= csrf_meta_tags %>
+	<head>
+		<title>Gift List</title>
+		<%= csrf_meta_tags %>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+	<body>
+		<div class="container">
+			<div class="row col-centered">
+				<div class="col-md-8 col-centered">
+					<nav class="navbar navbar-default">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-gift"></span> Gift List</a>
+						</div>
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">
+								<li <%= "class=active" if Rails.application.routes.recognize_path(request.original_url)[:controller] == "users"%>>
+									<%= link_to 'Uživatelé', controller: 'users' %>
+								</li>
+								<li <%= "class=active" if Rails.application.routes.recognize_path(request.original_url)[:controller] == "lists"%>>
+									<%= link_to 'Giftlisty', controller: 'lists' %>
+								</li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<% if current_user %> <a><%= current_user.full_name %> </a>
+								</li>
+								<li>
+									<%= link_to "Odhlásit", '/logout' %>
+									<% else %>
+									<%= link_to 'Login', '/login' %>
+								</li>
 
-  <body>
-    <%= yield %>
-  </body>
+								<li>
+									<%= link_to 'Signup', '/signup' %>
+									<% end %>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+			</div>
+
+			<div class="col-md-8 col-centered">
+				<%= yield %>
+			</div>
+
+			<div class="col-md-8 col-centered">
+			</div>
+		</div>
+	</body>
 </html>

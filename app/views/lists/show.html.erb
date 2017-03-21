@@ -1,0 +1,10 @@
+<%= render "shared/alert-box"%>
+
+<h3><%= @list.occasion%></h3>
+<h4><%= @list.occasion_of%></h4>
+
+<%= render partial: 'gifts/gift_form', gift: @gift %>
+
+<%= render partial: 'gift', collection: @gifts, as: :gift %>
+<%= render partial: 'gift_empty' if @gifts.blank? %>
+

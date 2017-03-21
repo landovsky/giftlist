@@ -1,0 +1,37 @@
+<%= render "shared/alert-box"%>
+
+<h3>Seznamy dárků</h3>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="col-md-2 btn-lg">
+			<span class="glyphicon glyphicon-plus-sign text-primary" style="font-size: 16pt; float: left"></span>
+			Nový
+		</div>
+		<div class="col-md-10 col-lg-8">
+			<%= bootstrap_form_for(@list, layout: :inline) do |f| %>
+			<%= f.text_field :occasion, hide_label: true, placeholder: "narozeniny" %>
+			<%= f.text_field :occasion_of, hide_label: true, placeholder: "moje" %>
+			<%= f.primary "uložit", class: "btn btn-primary" %>
+			<% end %>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Moje
+	</div>
+	<div class="panel-body">
+		<%= render partial: 'list', collection: @lists_owned %>
+		<%= render partial: 'list_empty', locals: { type: "owned" } if @lists_owned.blank? %>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Cizí
+	</div>
+	<div class="panel-body">
+		<%= render partial: 'list', collection: @lists_invited %>
+		<%= render partial: 'list_empty', locals: { type: "invited" } if @lists_invited.blank? %>
+	</div>
+</div>

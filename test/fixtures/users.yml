@@ -1,21 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  email: MyString
-  status: 1
-  name: MyString
-  surname: MyString
-  sex: 1
-  dob: 2017-03-11
-  birth_year: 2017-03-11
-  password_digest: MyString
+valid:
+  name: Test
+  surname: User
+  email: neco@neco.neco
+  password_digest: $2a$10$ARyKOVF7/JxET.qstoMPMuQ23JlxYasPfLy5aodpd4QlauxQ2sjo2
 
-two:
-  email: MyString
-  status: 1
+new:
   name: MyString
   surname: MyString
-  sex: 1
-  dob: 2017-03-11
-  birth_year: 2017-03-11
+  email: MyString
   password_digest: MyString
