@@ -1,4 +1,4 @@
-user1 = User.create(email: "dita.landovska@gmail.com", role: 2, name: "Tomáš", surname: "Landovský", sex: nil, dob: nil, birth_year: nil, password_digest: "$2a$10$AzdiF2IFff1xxRtmIvbWcOKeDD8PNf.gA1rDc7GNF1uqE9J.VhOIm")
+user1 = User.create(email: "dita.landovska@gmail.com", role: 2, name: "Dita", surname: "Landovská", sex: nil, dob: nil, birth_year: nil, password_digest: "$2a$10$AzdiF2IFff1xxRtmIvbWcOKeDD8PNf.gA1rDc7GNF1uqE9J.VhOIm")
 
 user = User.create(email: "landovsky@gmail.com", role: 2, name: "Tomáš", surname: "Landovský", sex: nil, dob: nil, birth_year: nil, password_digest: "$2a$10$ruQct.vUHXg562ZLn7Kvce2bdqfh7sEVOQX4ZGjJ3PIsfgF1opQIS")
 
