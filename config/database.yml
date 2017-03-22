@@ -20,6 +20,10 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+stage:
+  <<: *default
+  database: db/stage.sqlite3
+
 production:
   <<: *default
   database: shared/db/production.sqlite3
