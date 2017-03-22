@@ -36,13 +36,13 @@ gem 'bootstrap_form'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 
 
-group :development, :test do
+group :development, :test, :stage do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'minitest-rails'
 end
 
-group :development do
+group :development, :stage do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
