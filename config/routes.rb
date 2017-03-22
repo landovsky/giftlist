@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'datovestatistiky', to: 'stats#index' 
+
   # post 'lists/create', to: 'lists#create'
   # get 'lists/index', to: 'lists#index', as: 'lists'
   # get 'lists/show/:id', to: 'lists#show', as: 'list'
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
-  #get '/signup' => 'users#new'
-  #post '/users' => 'users#create'
+  get '/signup' => 'users#new'
+  post '/users' => 'users#create'
   
 end
