@@ -22,7 +22,6 @@ skip_before_action :authorize
 
   def destroy
     session[:user_id] = nil
-    session[:active_org] = nil
     redirect_to '/'
   end
 

@@ -1,7 +1,9 @@
 class StatsController < ApplicationController
   def index
-  @users = User.all
-  @lists = List.all
-
+  if session[:user_id] = 1
+    @users = User.all
+    @lists = List.all
+  else
+     redirect_to home_path
   end
 end
