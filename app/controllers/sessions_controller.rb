@@ -11,7 +11,7 @@ skip_before_action :authorize
       # Save the user id inside the browser cookie. This is how we keep the user 
       # logged in when they navigate around our website.
       session[:user_id] = user.id
-      redirect_to lists_path
+      redirect_to session[:pre_login_path]
     else
     # If user's login doesn't work, send them back to the login form.
      flash[:danger] = "Kombinace přihlašovacího jména a hesla nesedí."

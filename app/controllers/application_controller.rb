@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authorize
+  	session[:pre_login_path] = request.fullpath
     redirect_to '/login' unless current_user
   end
 
