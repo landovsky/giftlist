@@ -11,6 +11,7 @@ skip_before_action :authorize
       # Save the user id inside the browser cookie. This is how we keep the user 
       # logged in when they navigate around our website.
       session[:user_id] = user.id
+      session[:pre_login_path] ||= '/'
       redirect_to session[:pre_login_path]
     else
     # If user's login doesn't work, send them back to the login form.
@@ -22,6 +23,7 @@ skip_before_action :authorize
 
   def destroy
     session[:user_id] = nil
+    session[:pre_login_path] = '/'
     redirect_to '/'
   end
 
