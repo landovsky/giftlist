@@ -15,6 +15,11 @@ skip_before_action :authorize
       redirect_to session[:pre_login_path]
     else
     # If user's login doesn't work, send them back to the login form.
+	 if user
+	 	logger.warn { "Failed login attempt of user id #{user.id} (#{user.full_name})" }
+	 else
+		logger.warn { "Failed login attempt with #{params[:email]} / #{params[:password]}" }
+	 end
      flash[:danger] = "Kombinace přihlašovacího jména a hesla nesedí."
      flash.discard
      render 'new'
