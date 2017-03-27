@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authorize
-  protect_from_forgery with: :exception
+  #protect_from_forgery with: :exception
   #conditional before_action http://stackoverflow.com/questions/23368424/documentation-for-conditional-before-action-before-filter
 
   def current_user

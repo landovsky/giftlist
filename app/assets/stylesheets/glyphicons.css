@@ -35,3 +35,12 @@ h3{
 h4{
     font-size: 1.2em;
 }
+
+.loading {
+  background-color: #ffffff;
+  background-image: url("http://loadinggif.com/images/image-selection/3.gif");
+  background-size: 18px 18px;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+

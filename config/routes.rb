@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'link/new', to: 'link#new'
+
   get 'datovestatistiky', to: 'stats#index' 
 
   # post 'lists/create', to: 'lists#create'

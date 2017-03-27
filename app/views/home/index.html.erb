@@ -1,1 +1,77 @@
 Tady bude úvodní stránka se 3 důvody proč aplikaci používat :-)
+
+<div id="addlist">
+	New urls
+	<br />
+	<br />
+</div>
+
+<div id="result"></div>
+
+
+<script>
+	var addid = 0;
+
+	function addInput() {
+
+		var addList = document.getElementById('addlist');
+		var docstyle = addList.style.display;
+		if (docstyle == 'none')
+			addList.style.display = '';
+
+		addid++;
+
+		var text = document.createElement('div');
+		text.id = 'additem_' + addid;
+		text.innerHTML = "<input type='text' value='' name='items[]' onfocus='loadStatus(0)' onblur='doThis()', id='neco', style='padding:5px; width: 40%' /> <a href='javascript:void(0);' onclick='addInput(" + addid + ")' id='addlink_" + addid + "'>add more</a>";
+
+		addList.appendChild(text);
+	}
+
+	function doThis() {
+		var x = document.getElementById("neco");
+		x.classList.add('loading');
+		var url = '/link/new?url=' + x.value
+
+		httpGetAsync(url, displayData);
+	}
+
+	function loadStatus(status) {
+		var x = document.getElementById("neco");
+		if (status == 1) {
+			x.classList.add('loading');
+		} else {
+			x.classList.remove('loading');
+		}
+	}
+
+	function progress(status) {
+		var x = document.getElementById("progress");
+		x.innerHTML = status;
+	}
+
+	function displayData(data) {
+		var x = document.getElementById("result");
+		x.innerHTML = data;
+		loadStatus('down');
+	}
+
+	function httpGetAsync(theUrl, callback) {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function() {
+			progress(xmlHttp.status);
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				callback(xmlHttp.responseText);
+			} else {
+				callback(xmlHttp.responseText);
+				loadStatus(0);
+			}
+		}
+		xmlHttp.open("GET", theUrl, true);
+		// true for asynchronous
+		xmlHttp.send(null);
+	}
+
+	addInput(1);
+
+</script>
