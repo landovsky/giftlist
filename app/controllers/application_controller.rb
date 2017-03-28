@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def current_controller(controller)
+    Rails.application.routes.recognize_path(request.original_url)[:controller] == controller    
+  end
+  helper_method :current_controller
+
   def authorize
   	session[:pre_login_path] = request.fullpath unless current_user
     redirect_to '/login' unless current_user
