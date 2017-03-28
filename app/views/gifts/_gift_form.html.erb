@@ -16,7 +16,9 @@
 				<p>
 					<%= render partial: 'gifts/url_form' if current_controller("gifts") %>
 				</p>
-				<div id="result"></div>
+				<div id="result">
+					<%= render partial: 'urls/url', collection: @urls, as: :url %>
+				</div>
 			</div>
 		</div>
 

@@ -1,0 +1,4 @@
+<p id="<%= url.digest%>">
+	<%= image_tag(url.data[:images].first[:src], height: 50)  %>
+	<%= link_to url.data[:title], url.data[:url], target: "blank" %>
+</p>

@@ -1,5 +1,5 @@
 <%= bootstrap_form_for(Url.new, layout: :inline, id: "form", remote: true) do |f| %>
-<%= f.text_field :data, hide_label: true, placeholder: "http://..." %>
+<%= f.text_field :data, hide_label: true, id: "url", placeholder: "http://..." %>
 <%= f.hidden_field :gift_id, value: Rails.application.routes.recognize_path(request.original_url)[:id] %>
 <%= f.primary "uložit", class: "btn btn-default" %>
 <% end %>

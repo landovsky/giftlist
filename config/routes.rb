@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  post 'urls', to: 'url#create', as: 'urls'
+  post 'urls', to: 'urls#create', as: 'urls'
   get 'url/destroy/:id', to: 'url#destroy', as: 'url'
   
   #TODO disable this route

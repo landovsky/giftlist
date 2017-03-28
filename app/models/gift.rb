@@ -4,6 +4,8 @@ class Gift < ApplicationRecord
 
   belongs_to :donor, :class_name => 'User', :foreign_key => 'user_id', optional: true
   
+  has_many :urls
+  
   validates :name, presence: { message: "něco si přeju, ale jak se to jen řekne..." }
   
   def associate_to_list(list_id)

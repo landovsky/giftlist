@@ -1,4 +1,4 @@
-class UrlController < ApplicationController
+class UrlsController < ApplicationController
   
   def create
     #TODO ošetřit situaci kdy se nevygeneruje objekt (což způsobí problémy při rendrování)
@@ -7,6 +7,8 @@ class UrlController < ApplicationController
     #TODO zanořit vytvoření digestu do modelu Url
     @url = Url.new(data: @data.as_json, gift_id: url_params[:gift_id])
     @url.digest =  Digest::SHA1.hexdigest(url_match(url_params[:data]))
+    
+    #TODO udělat un-happy cestu když se to neuloží
     @url.save
   end
 
