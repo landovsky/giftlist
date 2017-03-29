@@ -20,3 +20,12 @@
 # Ignore Byebug command history file.
 .byebug_history
 .Gemfile.swp
+
+# Deployment folders
+/current
+/releases/*
+/repo/*
+revisions.log
+rolled-back-release*
+shared/*
+stage/*
