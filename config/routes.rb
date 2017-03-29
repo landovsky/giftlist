@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  post 'urls', to: 'urls#create', as: 'urls'
+  get 'urls/destroy/:id', to: 'urls#destroy', as: 'url_destroy'
+  
+  
+  #TODO disable this route
+  get 'link/new', to: 'link#new'
   get 'datovestatistiky', to: 'stats#index' 
 
   # post 'lists/create', to: 'lists#create'
@@ -10,7 +16,7 @@ Rails.application.routes.draw do
   
   root 'home#index'
   
-  #TODO upravit routy tak, aby nevystavovali to co není nutné
+  #TODO upravit routy tak, aby nevystavovaly to co není nutné
   resources :lists, :gifts
     
   #SESSIONS

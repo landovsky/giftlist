@@ -46,6 +46,7 @@ class GiftsController < ApplicationController
     #TODO udělat gift.authentic? na kontrolu jestli dárek existuje a user se na něj může dívat
     @gift = Gift.find_by(id: params[:id])
     @list = @gift.list
+    @urls = @gift.urls
   end
 
   def update

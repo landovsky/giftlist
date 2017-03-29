@@ -1,0 +1,5 @@
+<%= bootstrap_form_for(Url.new, :html => {:id => "form"}, remote: true) do |f| %>
+<%= f.text_field :data, hide_label: true, id: "url", class: "input-sm", placeholder: "vlož odkaz na stránky s produktem" %>
+<%= f.hidden_field :gift_id, value: Rails.application.routes.recognize_path(request.original_url)[:id] %>
+<%= f.primary "vložit", class: "btn btn-default" %>
+<% end %>

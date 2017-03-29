@@ -1,0 +1,9 @@
+$('#url').val('');
+url = $("#<%= j (@url.digest)%>")
+if( url.length === 0 ) {
+	$('#result').append("<%= j (render @url, as: :url) %>");
+	} else {
+	url.animate( { opacity: 0.25 }, 300, function() {
+		url.animate( { opacity: 1}, 300 ); }
+	);
+}

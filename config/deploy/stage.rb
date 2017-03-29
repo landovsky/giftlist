@@ -10,6 +10,8 @@ set :deploy_to, "/home/ruby/giftlist/stage"
 
 append :linked_files, "config/database.yml", "config/secrets.yml", "db/stage.sqlite3"
 
+set :branch, 'stage'
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.

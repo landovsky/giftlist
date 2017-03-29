@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170319204623) do
+ActiveRecord::Schema.define(version: 20170328040145) do
 
   create_table "gifts", force: :cascade do |t|
     t.integer  "list_id"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 20170319204623) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_lists_on_user_id"
+  end
+
+  create_table "urls", force: :cascade do |t|
+    t.integer  "gift_id"
+    t.string   "digest"
+    t.string   "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gift_id"], name: "index_urls_on_gift_id"
   end
 
   create_table "users", force: :cascade do |t|
