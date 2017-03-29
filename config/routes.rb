@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   post 'urls', to: 'urls#create', as: 'urls'
-  get 'url/destroy/:id', to: 'url#destroy', as: 'url'
+  get 'urls/destroy/:id', to: 'urls#destroy', as: 'url_destroy'
+  
   
   #TODO disable this route
   get 'link/new', to: 'link#new'

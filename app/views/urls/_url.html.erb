@@ -1,4 +1,11 @@
-<p id="<%= url.digest%>">
-	<%= image_tag(url.data[:images].first[:src], height: 50)  %>
-	<%= link_to url.data[:title], url.data[:url], target: "blank" %>
-</p>
+<tr id="<%= url.digest%>">
+	<td style="text-align: center;">
+		<% if url.image_src == false %>
+			<span class="glyphicon glyphicon-heart"></span>
+			<% else %>
+			<%= image_tag(url.image_src, height: 50) %>
+		<% end %>
+	</td>
+	<td><%= link_to url.data[:title], url.data[:url], target: "blank" %></td>
+	<td> <%= link_to url_destroy_path(url.id), remote: true do %> <span class="glyphicon glyphicon-trash"></span> <% end %> </td>
+</tr>

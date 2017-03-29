@@ -16,11 +16,23 @@
 				<p>
 					<%= render partial: 'gifts/url_form' if current_controller("gifts") %>
 				</p>
-				<div id="result">
-					<%= render partial: 'urls/url', collection: @urls, as: :url %>
-				</div>
+
+				<table class="table-condensed" id="result">
+					<%= render partial: 'urls/url', collection: @urls %>
+				</table>
+
 			</div>
 		</div>
-
 	</div>
 </div>
+
+<script>
+	$("#form").submit( function(event) {
+		url = $("#url");
+		if ( url.val().length === 0 ) {
+			url.val("zadejte něco...").fadeOut(500);
+			url.val("").fadeIn(500);
+			event.preventDefault();
+		}
+	}); 
+</script>
