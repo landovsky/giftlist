@@ -9,7 +9,10 @@ class UrlsController < ApplicationController
     @url.digest =  Digest::SHA1.hexdigest(url_match(url_params[:data]))
     
     #TODO udělat un-happy cestu když se to neuloží
-    @url.save
+    if !@url.save
+      logger.debug @url.errors.messages      
+      @url = Url.find_by(digest: @url.digest)
+    end
   end
 
   def destroy

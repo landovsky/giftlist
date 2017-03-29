@@ -4,7 +4,7 @@ class Url < ApplicationRecord
   belongs_to :gift
   serialize :data
 
-  validates :digest, uniqueness: true
+  validates :digest, uniqueness: { scope: :gift_id }
   
   def image_src
     if self.data[:images].blank?
