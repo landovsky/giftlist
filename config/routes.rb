@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   post 'urls', to: 'urls#create', as: 'urls'
-  get 'urls/destroy/:id', to: 'urls#destroy', as: 'url_destroy'
-  
+  get 'urls/destroy/:id', to: 'urls#destroy', as: 'url_destroy'  
   
   #TODO disable this route
   get 'link/new', to: 'link#new'
   get 'datovestatistiky', to: 'stats#index' 
+
+  
 
   # post 'lists/create', to: 'lists#create'
   # get 'lists/index', to: 'lists#index', as: 'lists'
@@ -23,8 +24,10 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
+  get '/auth', to: 'sessions#token_auth'
 
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
+  
   
 end

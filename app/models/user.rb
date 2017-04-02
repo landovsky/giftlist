@@ -19,7 +19,11 @@ class User < ApplicationRecord
   validates :role, presence: true
   
   def full_name
-    [name, surname].join(' ')
+    if name.blank? || surname.blank?
+      email
+    else
+      [name, surname].join(' ')
+    end
   end
 
 end

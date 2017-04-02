@@ -1,5 +1,29 @@
-<%= bootstrap_form_for(Url.new, :html => {:id => "form"}, remote: true) do |f| %>
+<br />
+<h4>Odkazy</h4>
+<%= bootstrap_form_for(Url.new, :html => {:id => "urlform"}, remote: true) do |f| %>
 <%= f.text_field :data, hide_label: true, id: "url", class: "input-sm", placeholder: "vlož odkaz na stránky s produktem" %>
 <%= f.hidden_field :gift_id, value: Rails.application.routes.recognize_path(request.original_url)[:id] %>
-<%= f.primary "vložit", class: "btn btn-default" %>
 <% end %>
+
+<script>
+	$("#urlform").submit( function(event) {
+		url = $("#url");
+		if ( url.val().length === 0 ) {
+			url.fadeOut(500);
+			url.fadeIn(500);
+			event.preventDefault();
+		}
+	}); 
+	
+	$('#url').on('paste', function () {
+  		var element = this;
+  		setTimeout(function () {
+    		var text = $(element).val();
+    		$("#urlform").submit();
+  		}, 100);
+	});
+	
+	$('#url').on('blur', function () {
+  		$("#urlform").submit();
+  	});
+</script>

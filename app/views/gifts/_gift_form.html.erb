@@ -4,21 +4,17 @@
 		<div class="col-md-10 col-lg-8">
 			<div class="row">
 				<%= bootstrap_form_for(@gift) do |f| %>
-				<%= f.text_field :name, label: "co si přeju", placeholder: "" %>
-				<%= f.text_area :description, label: "podrobnosti", placeholder: "popis podrobností" %>
-				<%= f.text_field :price_range, label: "cenové rozpětí", placeholder: "350..450 Kč" %>
+				<%= f.text_field :name, label: "co si přeju", class: "input-sm", placeholder: "" %>
+				<%= f.text_area :description, label: "podrobnosti", class: "input-sm", placeholder: "popis podrobností" %>
+				<%= f.text_field :price_range, label: "cenové rozpětí", class: "input-sm", placeholder: "350..450 Kč" %>
 				<%= f.hidden_field :list_id, value: @gift.list_id %>
 				<%= f.primary "uložit", class: "btn btn-success" %>
 				&nbsp;&nbsp;&nbsp;<%= link_to 'smazat', @gift, :method => :delete, :confirm => "Určitě?" if current_page?(action: 'edit') %>
 				<% end %>
 			</div>
 			<div class="row">
-				<br />
-				<h4>Odkazy</h4>
-				<p>
-					<%= render partial: 'gifts/url_form' if current_controller("gifts") %>
-				</p>
-
+				<%= render partial: 'gifts/url_form' if current_controller("gifts") %>
+			
 				<table class="table-condensed" id="result">
 					<%= render partial: 'urls/url', collection: @urls %>
 				</table>
@@ -27,14 +23,3 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	$("#form").submit( function(event) {
-		url = $("#url");
-		if ( url.val().length === 0 ) {
-			url.val("zadejte něco...").fadeOut(500);
-			url.val("").fadeIn(500);
-			event.preventDefault();
-		}
-	}); 
-</script>

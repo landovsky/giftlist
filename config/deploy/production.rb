@@ -2,11 +2,11 @@ set :bundle_without, 'development'
 server '207.154.209.213', user: 'ruby', roles: %w{app db web}
 
 set :ssh_options, { 
-  forward_agent: true, 
+  #forward_agent: true, 
   keys: "~/.ssh/mac-home.pub"
 }
 
-set :deploy_to, "/home/ruby/giftlist"
+set :deploy_to, "/home/ruby/giftlist/production"
 
 append :linked_files, "config/database.yml", "config/secrets.yml", "db/production.sqlite3"
 
