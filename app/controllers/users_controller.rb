@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-#TODO vyřešit přístup k seznamu uživatelů bez přihlášení...asi v routes.rb
-skip_before_action :authorize
+  #TODO vyřešit přístup k seznamu uživatelů bez přihlášení...asi v routes.rb
+  skip_before_action :authorize
 
   def index
     @users = User.all
@@ -11,6 +11,34 @@ skip_before_action :authorize
   end
 
   def new
+  end
+
+  def invite
+    #vstupy: list_id, adresy
+    #flash s tím kde může spravovat pozvánky
+    @list = List.authentic?(params[:list_id], current_user.id)
+    if !@list
+      redirect to '/' and return
+    end
+    emails = EmailChecker.new(params[:emails])
+    @new_donors = []
+    @valid = emails.valid
+    @valid.each do |e|
+      @user = User.find_or_create_by(email: e) do |u|
+        u.role = 0
+        u.password_digest = "empty"
+      end
+      UserMailer.invitation_email(@list, @user).deliver_later if !@list.donors.include?(@user)
+      @new_donors << @user
+      @list.donors << @user
+    end 
+    @list = @list.decorate
+    @invalid = emails.invalid.join(", ")
+
+  end
+
+  def uninvite
+
   end
 
   def create
@@ -32,7 +60,7 @@ skip_before_action :authorize
     end
   end
 
-private
+  private
 
   def user_params
     params.require(:user).permit(:name, :email, :surname, :password, :password_confirmation)

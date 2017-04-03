@@ -1,16 +1,18 @@
 class User < ApplicationRecord
   has_many :lists #ownership of GiftList
   has_many :invitations, through: :invitation_lists, :source => :list #invitation to GiftList
-  has_many :invitation_lists
+  #TODO cleanup: test dependent destroy
+  has_many :invitation_lists, dependent: :destroy
   has_many :donations, :source => :gift
+  
 
   has_secure_password
   
   enum role: { guest: 0, unconfirmed: 1, registered: 2, admin: 3 }
 
-  validates :email, presence: { message: "Vyplňte emailovou adresu." }
+  validates :email, email: true
   validates :email, uniqueness: { message: "Uživatel s emailovou adresou %{value} už u nás existuje." }
-  validates :email, length: { maximum: 200, message: "Email nesmí obsahovt víc než 200 znaků."}
+  validates :email, length: { maximum: 200, message: "Email nesmí obsahovat víc než 200 znaků."}
 
   validates :name, length: { maximum: 30, message: "Jméno nesmí obsahovat víc než 30 znaků."}
   validates :surname, length: { maximum: 60, message: "Příjmení nesmí obsahovat víc než 60 znaků."}
@@ -24,6 +26,10 @@ class User < ApplicationRecord
     else
       [name, surname].join(' ')
     end
+  end
+  
+  def token_for_list(list_id)
+    JsonWebToken.encode(user_id: self.id, list_id: list_id)
   end
 
 end
