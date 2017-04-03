@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: valid
+  list: one
+  occasion: narozeniny
+  occasion_of: bratra
+
+two:
+  user: valid
+  list: two
+  occasion: narozeniny
+  occasion_of: sestry

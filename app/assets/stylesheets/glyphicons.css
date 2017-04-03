@@ -9,6 +9,16 @@ body {
   font-size: 14px;
 }
 
+.panel-title {
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.control-label {
+	font-size: 15px;
+	font-weight: bold;
+}
+
 .col-centered{
         float: none;
         margin: 0 auto;

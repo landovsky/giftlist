@@ -12,5 +12,7 @@ module Giftlist
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.autoload_paths += %W["#{root}/app/validators/"]
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

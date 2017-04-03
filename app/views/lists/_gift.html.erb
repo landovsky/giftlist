@@ -1,3 +1,4 @@
+<div class="row">
 <div class="col-md-6 col-sm-6">
 	<% if gift.name == "zabraný dárek"%>
 		<div class="panel panel-default">
@@ -5,7 +6,7 @@
 		<div class="panel panel-primary">
 	<% end %>
 			<div class="panel-heading">
-				<div class="panel-title" style="font-weight: bold; vertical-align: middle">
+				<div class="panel-title">
 					<span class="glyphicon glyphicon-gift">&nbsp;</span>
 					<%= link_to gift.name, edit_gift_path(gift.id) %>
 					<% if gift.name == "zabraný dárek"%>
@@ -23,3 +24,4 @@
 			</div>
 		</div>
 	</div>
+</div>

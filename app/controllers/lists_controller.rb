@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+
   def new
   end
 
@@ -29,9 +30,13 @@ class ListsController < ApplicationController
     if @list
       @gifts = @list.gifts
       @gift = Gift.new(list: @list)
+      @donors = @list.donors.decorate
+      #TODO fake email
+      @fake = fake_email(2)
+      @list = @list.decorate
     else
       redirect_to :action => 'index'
-      return 
+    return
     end
   end
 
