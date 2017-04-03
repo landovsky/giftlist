@@ -30,9 +30,8 @@ class ListsController < ApplicationController
     if @list
       @gifts = @list.gifts
       @gift = Gift.new(list: @list)
+      #TODO proč dekoruju list.donors?
       @donors = @list.donors.decorate
-      #TODO fake email
-      @fake = fake_email(2)
       @list = @list.decorate
     else
       redirect_to :action => 'index'
