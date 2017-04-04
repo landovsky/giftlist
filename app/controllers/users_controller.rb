@@ -32,9 +32,8 @@ class UsersController < ApplicationController
         u.role = 0
         u.password_digest = "empty"
       end
-      logger.warn { "before email" }
-      UserMailer.invitation_email(@list, @user).deliver_now # if !@list.donors.include?(@user)
-      logger.warn { "after email" }
+      #TODO proč tam mám tu podmínku na list.donors.include?user
+      UserMailer.invitation_email(@list, @user).deliver_later if !@list.donors.include?(@user)
       @new_donors << @user
       @list.donors << @user
     end 
