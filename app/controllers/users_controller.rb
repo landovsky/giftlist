@@ -1,3 +1,7 @@
+require 'email_checker'
+require 'json_web_token'
+
+
 class UsersController < ApplicationController
   #TODO vyřešit přístup k seznamu uživatelů bez přihlášení...asi v routes.rb
   skip_before_action :authorize
