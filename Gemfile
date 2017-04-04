@@ -9,6 +9,7 @@ end
 gem 'link_thumbnailer'
 gem 'jwt'
 gem 'draper', '3.0.0.pre1'
+gem 'cancancan'
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'

@@ -6,4 +6,5 @@
 	<%= link_to 'zpět', list_path(id: @gift.list_id), class: "btn btn-default" %>
 </p>
 
-<%= render partial: 'gift_form', locals: { gift: @gift } %>
+<%= render partial: 'gift_form', locals: { gift: @gift } if @list.owner?(session_user) %>
+

@@ -1,11 +1,13 @@
 class EmailChecker
   def initialize(emails)
-    @emails = emails || "" #prevent nil value
-    @emails = @emails.split(/,|;/).map(&:strip).uniq
+    emails = emails || "" #prevent nil value
+    emails = 
+    emails = emails.split(/,|;|\n/).map(&:strip).uniq
     @valid = []
     @invalid = []
-    @emails.each do |e|
+    emails.each do |e|
       if e.match(/^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i)
+        next if e == ""
         @valid << e
       else
         @invalid << e

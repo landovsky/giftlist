@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'datovestatistiky' => 'stats#index'
 
+  get 'gift/:id/take' => 'gifts#take', as: 'take_gift'
+
   if Rails.env.development?
   resources :users
   end

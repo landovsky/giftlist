@@ -28,11 +28,11 @@ class ListsController < ApplicationController
   def show
     @list = List.authentic?(params[:id], current_user.id)
     if @list
-      @gifts = @list.gifts
+      @gifts = @list.gifts.decorate
       @gift = Gift.new(list: @list)
-      #TODO proč dekoruju list.donors?
-      @donors = @list.donors.decorate
+      @donors = @list.donors.decorate #dekorace kvůli zobrazení v seznamu dárců (registrovaní v. neregistrovaní)
       @list = @list.decorate
+      @fake = fake_email(2)
     else
       redirect_to :action => 'index'
     return

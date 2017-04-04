@@ -1,1 +1,8 @@
 Tady bude úvodní stránka se 3 důvody proč aplikaci používat :-)
+
+<br />
+<%= session_user %>
+<br />
+<%= link_to "link to current user, list 2", User.token_url(2, auth_url)%>
+
+<br />

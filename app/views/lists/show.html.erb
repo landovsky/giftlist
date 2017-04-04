@@ -6,24 +6,31 @@
 
 <p>
 	<%= link_to 'zpět', lists_path, class: "btn btn-default" %>&nbsp;
-	<%= link_to @list.invitations_button_label, '#', id: "invitation_btn", class: "btn btn-success" %>
+	<%= link_to @list.invitations_button_label, '#', id: "invitation_btn", class: "btn btn-success" if @list.owner?(session_user) %>
 </p>
 
-<%= render 'users/invitations' %>
-<%= render partial: 'gifts/gift_form', gift: @gift %>
-<%= render partial: 'gift', collection: @gifts, as: :gift %>
-<%= render partial: 'gift_empty' if @gifts.blank? %>
-
+<%= render 'users/invitations' if @list.owner?(session_user) %>
+<%= render partial: 'gifts/gift_form', gift: @gift if @list.owner?(session_user) %>
+<div class="row">
+	<div class="panel-group" id="accordion">
+		<%= render partial: 'gift', collection: @gifts, as: :gift %>
+		<%= render partial: 'gift_empty' if @gifts.blank? %>
+	</div>
+</div>
 
 <script>
-	i = $("#invitations") 
-	$("#invitation_btn").on("click", function () {
-		if ( i.is(":visible") ) {
-			i.hide(200);
-			event.preventDefault();
-		} else {
-			i.show(200);
-			event.preventDefault();
-		}
+	i=$("#invitations")
+	$("#invitation_btn").on("click", function() {
+	if(i.is(":visible")) {
+	i.hide(200);
+	event.preventDefault();
+	} else {
+	i.show(200);
+	event.preventDefault();
+	}
 	});
 </script>
+
+
+
+

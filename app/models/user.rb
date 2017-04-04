@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :lists #ownership of GiftList
   has_many :invitations, through: :invitation_lists, :source => :list #invitation to GiftList
-  #TODO cleanup: test dependent destroy
+  #TODO prod cleanup: test dependent destroy
   has_many :invitation_lists, dependent: :destroy
   has_many :donations, :source => :gift
   
@@ -30,6 +30,15 @@ class User < ApplicationRecord
   
   def token_for_list(list_id)
     JsonWebToken.encode(user_id: self.id, list_id: list_id)
+  end
+
+  #TODO pomocná metoda
+  def self.token_url(list_id, url)
+    "#{url}?t=#{User.last.token_for_list(list_id)}"
+  end
+
+  def registered?
+    role == "registered"
   end
 
 end

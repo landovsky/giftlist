@@ -1,5 +1,9 @@
-<% if type == "owned" %>
+<% if type == "owned" && current_user.registered? %>
 Zatím nemáš žádný seznam dárků.
+<%end %>
+
+<% if type == "owned" && !current_user.registered? %>
+Po dokončení <a>registrace</a> si tady můžeš založit svůj vlastní seznam.
 <%end %>
 
 <% if type == "invited" %>
