@@ -13,7 +13,7 @@
 <%= render partial: 'gifts/gift_form', gift: @gift if @list.owner?(session_user) %>
 <div class="row">
 	<div class="panel-group" id="accordion">
-		<%= render partial: 'gift', collection: @gifts, as: :gift %>
+		<%= render partial: 'gift', collection: @gifts, as: :gift, locals: { urls: @urls, gift: @gifts } %>
 		<%= render partial: 'gift_empty' if @gifts.blank? %>
 	</div>
 </div>

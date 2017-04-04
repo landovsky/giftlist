@@ -19,10 +19,15 @@ body {
 	font-weight: bold;
 }
 
-.col-centered{
+.col-centered {
         float: none;
         margin: 0 auto;
     }
+    
+.centered {
+  float: none;
+  margin: 0 auto;
+}
 
 h3{
     font-size: 22px;

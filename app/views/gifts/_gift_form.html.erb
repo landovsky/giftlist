@@ -16,7 +16,7 @@
 				<%= render partial: 'gifts/url_form' if current_controller("gifts") %>
 			
 				<table class="table-condensed" id="result">
-					<%= render partial: 'urls/url', collection: @urls %>
+					<%= render partial: 'urls/url', collection: @urls if current_controller("gifts") %>
 				</table>
 
 			</div>

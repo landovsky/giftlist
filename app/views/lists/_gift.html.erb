@@ -1,4 +1,4 @@
-<div class="col-md-6 col-sm-4" id="<%= gift.container_id %>">
+<div class="col-md-6 col-sm-6" id="<%= gift.container_id %>">
 	<div class="panel panel-<%= gift.panel_style %>" style="margin-bottom: 10px">
 
 		<div class="panel-heading">
@@ -10,15 +10,22 @@
 				<%= gift.taken_badge %>
 			</div>
 		</div>
-		<div class="panel-body collapse in" id="<%= gift.collapse_id%>">
+		<div class="panel-body collapse" id="<%= gift.collapse_id%>">
 			<p>
 				<span class="glyphicon glyphicon-heart drop">&nbsp;</span><%= gift.description %>
 			</p>
 			<p>
 				<span class="glyphicon glyphicon-question-sign drop">&nbsp;</span><%= gift.price_range %>
 			</p>
-			<%= link_to 'zrušit mojí rezervaci', take_gift_path(gift.id), remote: true, class: "clickable" if gift.taken?(session_user) == "self"%>
-			<%= link_to 'rezervovat', take_gift_path(gift.id), remote: true, class: "clickable" if !gift.taken?%>
+			<p>
+				<table class="table-condensed" id="result">
+					<%= render partial: 'urls/url', collection: gift.urls %>
+				</table>
+			</p>
+			<div class="text-center">
+					<%= link_to 'zrušit mojí rezervaci', take_gift_path(gift.id), remote: true, class: "clickable btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
+					<%= link_to 'rezervovat', take_gift_path(gift.id), remote: true, class: "clickable btn-success btn-sm" if !gift.taken?%>
+			</div>
 		</div>
 	</div>
 </div>
