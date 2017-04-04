@@ -32,7 +32,9 @@ class UsersController < ApplicationController
         u.role = 0
         u.password_digest = "empty"
       end
+      logger.warn { "before email" }
       UserMailer.invitation_email(@list, @user).deliver_later if !@list.donors.include?(@user)
+      logger.warn { "after email" }
       @new_donors << @user
       @list.donors << @user
     end 
