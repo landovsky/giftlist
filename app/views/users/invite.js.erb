@@ -1,0 +1,15 @@
+// vložení nevalidních adres do formuláře
+input = $("#emails");
+input.val('<%= j (@invalid) %>');
+if (input.val().length > 0) {
+	input.fadeOut(500);
+	input.fadeIn(500);
+	$("#message").text("Adresy co zbyly ve formuláři v sobě mají nějakou chybku. Oprav je a zkus to znova.");
+	$("#alert").fadeIn(300);
+};
+	
+// vložení nových dárců
+$("#invitees").append('<%= j (render partial: 'users/invitee', collection: @new_donors, as: :donor) %>');
+
+// nastavení textu tlačítka
+$("#invitation_btn").text("dárci (<%= @list.donors.count %>)")

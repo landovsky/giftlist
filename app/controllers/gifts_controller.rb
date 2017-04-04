@@ -26,10 +26,20 @@ class GiftsController < ApplicationController
   def show
   end
 
-  def grab
-  end
-
-  def release
+  def take
+    @gift = Gift.authentic?(params[:id],current_user.id)
+    if @gift
+      if @gift.user_id.blank?
+        @gift.user_id = current_user.id
+      else
+        @gift.user_id = nil
+      end
+      @gift.save
+      @gift.reload
+      @gift
+    else
+      redirect_to '/' and return
+    end
   end
 
   def destroy

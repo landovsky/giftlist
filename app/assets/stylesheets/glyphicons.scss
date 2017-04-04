@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(asset_path('glyphicons-halflings-regular.eot'));
+  src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+}
+
+body {
+  margin: 100;
+  font-size: 12px;
+}
+
+.panel-title {
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.control-label {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.col-centered {
+        float: none;
+        margin: 0 auto;
+    }
+    
+.centered {
+  float: none;
+  margin: 0 auto;
+}
+
+h3{
+    font-size: 22px;
+}
+
+h4{
+    font-size: 18px;
+}
+
+.shref {
+
+  position:absolute; 
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+
+  z-index: 1;
+
+  /* fixes overlap error in IE7/8, 
+     make sure you have an empty gif */
+  background-image: image-url('empty.gif');
+}
+
+.clickable {
+	z-index: 2;
+	position: relative;
+}

@@ -14,4 +14,8 @@ class Url < ApplicationRecord
     end
   end
 
+  def src
+    self.data[:url]
+  end
+
 end

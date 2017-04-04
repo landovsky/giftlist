@@ -5,14 +5,23 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# MojeApp extras 
 gem 'link_thumbnailer'
+gem 'jwt'
+gem 'draper', '3.0.0.pre1'
+gem 'cancancan'
+
+# Bootstrap stuff
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+gem 'bootstrap_form'
+gem 'sprockets-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -32,17 +41,13 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'roo-xls'
-gem 'simple-spreadsheet'
-gem 'bootstrap_form'
-gem 'bootstrap', '~> 4.0.0.alpha6'
-
 
 group :development, :test, :stage do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'minitest-rails'
   gem 'listen', '~> 3.0.5'
+  gem 'faker'
 end
 
 group :development do
@@ -55,16 +60,10 @@ group :development do
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-rbenv', '~> 2.1'
-  gem 'seed_dump'
+  gem 'puma', '~> 3.0'
  end
 
 gem 'net-ssh', '>=3.0.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'X', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# Bootstrap stuff
-gem 'bootstrap-sass', '~> 3.2.0'
-gem 'autoprefixer-rails'
-
-#gem 'composite_primary_keys', '~> 9.0', '>= 9.0.6'

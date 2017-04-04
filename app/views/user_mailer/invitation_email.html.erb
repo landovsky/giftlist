@@ -1,0 +1,20 @@
+<p>
+	<strong><%= @list.owner.full_name %></strong> tě pozval/a do svého seznamu dárků k příležitosti: <strong><%= @list.occasion%>.</strong>
+	<br>
+</p>
+<p>
+	Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @recipient.token_for_list(@list.id)) %>. Dárky si tam můžeš pro sebe zarezervovat. Pozor ať odkaz neztratíš, bez něj se tam nedostaneš.
+</p>
+<p>
+	Ještě se uvidíme - na tuto adresu ti pošleme email, když :<br />
+	- se na seznamu objeví nové přání<br />
+	- přiblíží datum události pro kterou byl seznam vytvořen
+</p>
+<p>
+	Nejspíš nejsi sám kdo pozvánku dostal, tak neotálej, ať na tebe nějaké dárky zbydou :-).
+</p>
+<br />
+<p style="font-style: italic">
+	Givit.cz - dárky, které opravdu potěší
+</p>
+for: <%= @recipient.full_name%>
