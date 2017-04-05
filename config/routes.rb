@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root 'lists#index'
 
   post 'urls' => 'urls#create', as: 'urls'
   get 'urls/destroy/:id' => 'urls#destroy', as: 'url_destroy'
