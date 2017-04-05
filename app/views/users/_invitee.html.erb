@@ -1,4 +1,4 @@
-<div class="btn-group" style="margin: 5px">
+<div class="btn-group" id="donor<%= donor.id %>" style="margin: 5px">
 	<div class="dropdown">
 		<button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<%= donor.full_name %>
@@ -6,11 +6,9 @@
 		</button>
 		<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
 			<li>
-				<a href="#">přeposlat pozvánku</a>
-			</li>
-			<li role="separator" class="divider"></li>
-			<li>
-				<a href="#"><span class="text-danger">odebrat přístup</span></a>
+				<%= link_to uninvite_path(list.id, donor.id), remote: true do %>
+				<span class="text-danger">odebrat přístup</span></a>
+				<%end%>
 			</li>
 		</ul>
 	</div>

@@ -27,7 +27,7 @@ class List < ApplicationRecord
   end 
 
   def owner?(session_user_id)
-    logger.debug { "DB load list.owner? method" }
+    #logger.debug { "DB load list.owner? method" }
     user_id == session_user_id
   end
 

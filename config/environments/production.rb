@@ -1,4 +1,17 @@
 Rails.application.configure do
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:              'smtp.gmail.com',
+  port:                 587,
+  domain:               'gmail.com',
+  user_name:            'givit.cz@gmail.com',
+  password:             'giftlistPass01',
+  authentication:       :login,
+  enable_starttls_auto: true  }
+
+  
+  
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.action_mailer.default_url_options = { host: 'www.givit.cz' }
@@ -46,6 +59,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
+  #TODO production take back
   config.log_level = :warn
 
   # Prepend all log lines with the following tags.
