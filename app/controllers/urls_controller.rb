@@ -16,8 +16,15 @@ class UrlsController < ApplicationController
   end
 
   def destroy
-    @url = Url.find_by(id: params[:id])
-    @url.destroy
+    @url = Url.joins(:gift => :list).where( urls: {id: params[:id]}, lists: {user_id: current_user.id}).limit(1)
+    if @url.empty?
+      logger.debug "URL#destroy: supplied params not authentic"
+      #TODO return nezastaví zpracování a šablona hází chybu (nemá proměnnou) 
+      return
+    else
+      @url.first.destroy
+      @url = @url.first #konverze ActiveRecord::Relation objektu do Url objektu
+    end
   end
 
   private

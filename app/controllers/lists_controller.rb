@@ -28,12 +28,14 @@ class ListsController < ApplicationController
   def show
     @list = List.authentic?(params[:id], current_user.id)
     if @list
-      @gifts = Gift.eager_load(:urls).where(list_id: @list.id).decorate
+      @gifts = Gift.eager_load(:urls).where(list_id: @list.id)
+      #@gifts = GiftDecorator.decorate_collection(Gift.eager_load(:urls).where(list_id: @list.id))
       @urls = @gifts.map(&:urls)
+      #@urls = UrlDecorator.decorate_collection(@urls)
       @gift = Gift.new(list: @list)
       @donors = @list.donors.decorate #dekorace kvůli zobrazení v seznamu dárců (registrovaní v. neregistrovaní)
       @list = @list.decorate
-      #@fake = fake_email(2)
+      @fake = fake_email(2) if ["development", "stage"].include?Rails.env
     else
       redirect_to :action => 'index'
     return

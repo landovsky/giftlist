@@ -6,6 +6,10 @@
 			<%= image_tag(url.image_src, height: 50) %>
 		<% end %>
 	</td>
-	<td><%= link_to url.data[:title], url.data[:url], target: "blank" %></td>
-	<td> <%= link_to url_destroy_path(url.id), remote: true do %> <span class="glyphicon glyphicon-trash"></span> <% end %> </td>
+	<td><%= link_to url.data[:title], url.data[:url], class: "clickable", target: "blank" %></td>
+	<td><%= link_to url_destroy_path(url.id), class: "clickable", remote: true do %>
+			<span class="glyphicon glyphicon-trash"></span>
+		<% end %>
+	</td>
 </tr>
+  

@@ -18,11 +18,11 @@ class UsersController < ApplicationController
   end
 
   def invite
-    #vstupy: list_id, adresy
-    #flash s tím kde může spravovat pozvánky
+    #TODO flash s tím kde může spravovat pozvánky
     @list = List.authentic?(params[:list_id], current_user.id)
     if !@list
-      redirect to '/' and return
+      raise 'List not authentic'
+      redirect to '/' and return    
     end
     emails = EmailChecker.new(params[:emails])
     @new_donors = []
@@ -39,11 +39,18 @@ class UsersController < ApplicationController
     end 
     @list = @list.decorate
     @invalid = emails.invalid.join(", ")
-
   end
 
   def uninvite
-
+    @list = List.authentic?(params[:list_id], current_user.id)
+    @list.donors.count
+    if !@list
+      raise "List not authentic"
+      redirect_to '/' and return
+    end
+    #TODO ošetřit že na to někdo klikne dvakrát a už nebude co mazat
+    InvitationList.find_by(user_id: params[:user_id], list_id: @list.id).destroy
+    @donor_id = params[:user_id]
   end
 
   def create

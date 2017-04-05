@@ -24,5 +24,7 @@ Rails.application.routes.draw do
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
   post '/invite' => 'users#invite'
+  #TODO zvážit jestli by invite a uninvite nemělo sedět spíš v list controlleru
+  get '/lists/:list_id/uninvite/:user_id' => 'users#uninvite', as: 'uninvite'
 
 end

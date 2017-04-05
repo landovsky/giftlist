@@ -1,7 +1,7 @@
 <div class="panel panel-default", id="invitations", style="display: none">
 	<div class="panel-body">
 		<div class="col-lg-12">
-			<%= render partial: 'users/invited', locals: { donors: @donors } %>
+			<%= render partial: 'users/invited', locals: { donors: @donors, list: @list } %>
 			<div class="row">
 				<%= bootstrap_form_tag url: '/invite', remote: true do |f| %>
 				<%= f.text_area :emails, hide_label: true, value: @fake, id: "emails", class: "input-sm", placeholder: "emailové adresy oddělené čárkou nebo středníkem" %>

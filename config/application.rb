@@ -13,7 +13,7 @@ module Giftlist
     # -- all .rb files in that directory are automatically loaded.
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.eager_load_paths += %W( #{config.root}/lib )
-    config.autoload_paths << Rails.root.join("/app/validators/")
+    #zlobí config.autoload_paths << Rails.root.join("/app/validators/")
     config.autoload_paths << Rails.root.join('lib')
 
   end
