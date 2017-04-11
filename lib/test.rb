@@ -12,5 +12,8 @@ end
 
 def decode_helper(token)
   d = JsonWebToken.decode(token)
-  out = DateTime.strptime(d["exp"].to_s,'%s')
+  d.each do |k,v|
+    d[k] = DateTime.strptime(v.to_s,'%s') if k == "exp"
+  end
+  d
 end
