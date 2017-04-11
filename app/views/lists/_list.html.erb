@@ -4,8 +4,10 @@
 			<h3 class="panel-title" style="font-weight: bold"><%= link_to list.occasion, list_path(list.id) %></h3>
 		</div>
 		<div class="panel-body">
-			<%= list.owner.full_name if !list.owner?(session_user) %>
-			<%= list.occasion_of if list.owner?(session_user) %>
+			<p>
+				<%= list.owner.full_name if !list.owner?(session_user) %>
+				<%= list.occasion_of if list.owner?(session_user) %>
+			</p>
 		</div>
 	</div>
 </div>

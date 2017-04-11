@@ -33,3 +33,4 @@ en:
           attributes:
             password:
               blank: "Napište heslo."
+              

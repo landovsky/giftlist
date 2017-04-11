@@ -1,4 +1,4 @@
-class GiftDecorator < Draper::Decorator
+class GiftDecorator < ApplicationDecorator
   delegate_all
 
 #TODO gift decorator se nepodařil dostat do take.js.erb takže jsem všechny metody dal do modelu. Opravit, nebo vyhodit gift_decorator
@@ -20,7 +20,12 @@ class GiftDecorator < Draper::Decorator
   end
 
   def taken_badge
-    "<span class=\"label label-default\" style=\"position: relative; left: 5px; bottom: 2px\">zabráno</span>".html_safe if taken?
+    case taken?(h.session_user)
+      when "self"
+        "<span class=\"label label-success\" style=\"position: relative; left: 5px; bottom: 2px\">tvoje rezervace</span>".html_safe
+      when true
+        "<span class=\"label label-default\" style=\"position: relative; left: 5px; bottom: 2px\">zabráno</span>".html_safe
+    end
   end
 
 end

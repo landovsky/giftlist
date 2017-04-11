@@ -1,4 +1,4 @@
-class ListDecorator < Draper::Decorator
+class ListDecorator < ApplicationDecorator
  delegate_all
      
   def invitations_button_label
@@ -7,6 +7,10 @@ class ListDecorator < Draper::Decorator
     else
       "dárci (#{object.donors.count})"
     end
+  end
+
+  def occasion_date_f
+    occasion_date.strftime("%D") if occasion_date != nil
   end
   
 end
