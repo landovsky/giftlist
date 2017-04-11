@@ -9,13 +9,18 @@ end
 gem 'link_thumbnailer'
 gem 'jwt'
 gem 'draper', '3.0.0.pre1'
+#TODO potřebuju vůbec cancancan?
 gem 'cancancan'
+gem 'rails-i18n', '~> 5.0.0'
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'bootstrap_form'
 gem 'sprockets-rails'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+    #HOW-TO https://eonasdan.github.io/bootstrap-datetimepicker/#using-locales
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'

@@ -21,8 +21,8 @@ class ListsController < ApplicationController
 
   def index
     @list = List.new
-    @lists_owned = List.owned(current_user)
-    @lists_invited = List.invited(current_user)
+    @lists_owned = List.owned(current_user).decorate
+    @lists_invited = List.invited(current_user).decorate
   end
 
   def show
@@ -45,7 +45,7 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:occasion, :occasion_of, :id)
+    params.require(:list).permit(:occasion, :occasion_of, :occasion_date, :id)
   end
 
 end

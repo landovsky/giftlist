@@ -15,5 +15,5 @@ config.action_mailer.delivery_method = :smtp
   password:             'giftlistPass01',
   authentication:       :login,
   enable_starttls_auto: true  }
-  
+    
 end

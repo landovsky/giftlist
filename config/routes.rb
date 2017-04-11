@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  root 'lists#index'
 
   post 'urls' => 'urls#create', as: 'urls'
   get 'urls/destroy/:id' => 'urls#destroy', as: 'url_destroy'
@@ -8,8 +7,12 @@ Rails.application.routes.draw do
 
   get 'gift/:id/take' => 'gifts#take', as: 'take_gift'
 
-  if Rails.env.development?
-  resources :users
+  case Rails.env
+  when "development"
+    resources :users
+    root 'home#index'
+  when "test","stage","production"
+    root 'lists#index'
   end
 
   #TODO upravit routy tak, aby nevystavovaly to co není nutné

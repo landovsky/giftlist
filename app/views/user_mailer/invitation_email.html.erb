@@ -3,7 +3,7 @@
 	<br>
 </p>
 <p>
-	Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @recipient.token_for_list(@list.id)) %> odkazu. Dárky si tam můžeš pro sebe zarezervovat. Pozor ať odkaz neztratíš, bez něj se tam nedostaneš.
+	Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @recipient.token_for_list(list_id: @list.id)) %> odkazu. Dárky si tam můžeš pro sebe zarezervovat. Pozor ať odkaz neztratíš, bez něj se tam nedostaneš.
 </p>
 <p>
 	Ještě se uvidíme - na tuto adresu ti pošleme email, když :<br />
