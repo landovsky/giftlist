@@ -29,7 +29,7 @@ class User < ApplicationRecord
   end
   
   def token_for_list(list_id)
-    JsonWebToken.encode(user_id: self.id, list_id: list_id)
+    JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: 6.months.from_now)
   end
 
   #TODO pomocná metoda
