@@ -5,11 +5,12 @@
 		</div>
 		<div class="col-md-10 col-lg-10">
 			<%= bootstrap_form_for(list, layout: :inline) do |f| %>
-			<%= f.text_field :occasion, hide_label: true, class: "input-sm", placeholder: "událost" %>
+			<%= f.select(:occasion, list.occasion_types, { hide_label: true, disabled: "0", selected: @selected}, { id: "occasion_type", class: "input-sm" }) %>
 			<%= f.text_field :occasion_of, hide_label: true, class: "input-sm", placeholder: "koho" %>
-			<%= f.text_field :occasion_date, hide_label: true, class: "input-sm", id: "datepicker", placeholder: "datum události" %>
+			<%= f.text_field :occasion_date, hide_label: true, class: "input-sm", id: "datepicker", placeholder: "datum příležitosti" %>
 			<%= f.primary "nový", class: "btn btn-primary" %>
 			<% end %>
+			<%= list.occasion_date %>
 		</div>
 	</div>
 </div>
@@ -19,7 +20,14 @@
 		$('#datepicker').datetimepicker({
 			locale : 'cs',
 			viewMode : 'days',
-			format : 'dddd DD/MM/YYYY'
+			format : 'DD/MM/YYYY'
 		});
 	}); 
+	
+	$("select#occasion_type").change(function() {
+		if ( $("select#occasion_type option:selected").val() == 4 ) {
+		$("input#other").show();
+		$("input#other").focus();
+		}
+	});		
 </script>

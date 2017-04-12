@@ -12,5 +12,9 @@ class ListDecorator < ApplicationDecorator
   def occasion_date_f
     occasion_date.strftime("%D") if occasion_date != nil
   end
+
+  def occasion_types
+    {"příležitost" => 0}.merge(List.occasions)
+  end
   
 end
