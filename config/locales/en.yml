@@ -22,6 +22,8 @@
 #en:
  # hello: "Hello world"
 
+###https://searchcode.com/file/34566400/config/locales/cz.yml
+
 en:
   activerecord:
     attributes:
@@ -32,5 +34,6 @@ en:
         user:
           attributes:
             password:
-              blank: "Napište heslo."
-              
+              blank: "Vymysli si nějaké heslo."
+            password_confirmation:
+              confirmation: "Hesla nesedí."

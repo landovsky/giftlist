@@ -3,7 +3,7 @@ Zatím nemáš žádný seznam dárků.
 <%end %>
 
 <% if type == "owned" && !current_user.registered? %>
-Po dokončení <a>registrace</a> si tady můžeš založit svůj vlastní seznam.
+<%= render 'lists/list_own_teaser' %>
 <%end %>
 
 <% if type == "invited" %>

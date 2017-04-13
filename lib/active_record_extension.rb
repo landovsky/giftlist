@@ -11,6 +11,10 @@ module ActiveRecordExtension
       all.map(&:id)
     end
 
+    def id(id)
+      find_by(id: id)
+    end
+
     def load_random
       offset(rand(self.count)).first
     end
