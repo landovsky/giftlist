@@ -4,12 +4,13 @@ class List < ApplicationRecord
   has_many :invitation_lists
   has_many :gifts
 
-  enum occasion: { "svatba": 1, "narozeniny": 2, "vánoce": 3, "jiná": 4 }
+  enum occasion: { "svatba": 1, "narozeniny": 2, "vánoce": 3, "jiná": 99 }
 
   validates_presence_of :owner
   validates :occasion, presence: { message: "K jaké příležitosti?" }
   validates :occasion_of, presence: { message: "Kdo je obdarovaný?" }
   validates :occasion_date, presence: { message: "Kdy se slaví?"}
+  validates :occasion_data, presence: { message: "Jaká jiná?"}, if: "occasion == List.occasion_by_id(99)"
   
   def self.owned(user_id)
     self.where(user_id: user_id)
@@ -37,4 +38,8 @@ class List < ApplicationRecord
     find_by(id: id)    
   end
  
+  def self.occasion_by_id(id)
+    List.occasions.select { |key,value| value == id }.keys.first
+  end
+
 end

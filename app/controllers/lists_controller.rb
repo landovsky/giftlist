@@ -52,7 +52,7 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:occasion, :occasion_of, :occasion_date, :id)
+    params.require(:list).permit(:occasion, :occasion_of, :occasion_date, :id, :occasion_data)
   end
 
 end

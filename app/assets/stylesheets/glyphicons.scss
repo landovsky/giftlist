@@ -4,6 +4,14 @@
   src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
 }
 
+@media (min-width: 768px) { 
+  .form-inline .form-group {
+    vertical-align: top; /*přetížení Bootstrapu, aby chybové hlášky v inline formu
+                              nerozhodily elementy (nahoru když je hláška)*/
+    margin-top: 5px;
+  }
+}
+
 body {
   margin: 100;
   font-size: 12px;
