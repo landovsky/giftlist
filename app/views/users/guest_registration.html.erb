@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col-sm-8 col-md-8 col-centered">
+		<h3>Dokončení registrace</h3>
+		<div class="well well-lg">
+
+			Po dokončení registrace můžeš:
+			<ul>
+				<li>
+					<strong>vytvářet svoje seznamy dárků</strong>
+				</li>
+				<li>
+					<strong>zvát do nich ostatní</strong>
+				</li>
+				<li>
+					<strong>přihlašovat se emailem a heslem</strong>
+				</li>
+			</ul>
+		</div>
+		<%= render "shared/alert-box"%>
+
+		<%= render 'user_form', object: @user %>
+
+	</div>
+</div>
+

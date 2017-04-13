@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   #conditional before_action http://stackoverflow.com/questions/23368424/documentation-for-conditional-before-action-before-filter
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find(session[:user_id]).decorate if session[:user_id]
   end
   helper_method :current_user
 

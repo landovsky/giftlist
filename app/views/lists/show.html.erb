@@ -18,6 +18,12 @@
 	</div>
 </div>
 
+<% if !current_user.registered? %>
+	<%= content_tag :div, style: "margin-top: 50px" do %>
+		<%= render 'lists/list_own_teaser' %>
+	<%end%>
+<%end%>
+
 <script>
 	i=$("#invitations")
 	$("#invitation_btn").on("click", function() {
@@ -30,7 +36,4 @@
 	}
 	});
 </script>
-
-
-
 

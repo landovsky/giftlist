@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: { message: "Uživatel s emailovou adresou %{value} už u nás existuje." }
   validates :email, length: { maximum: 200, message: "Email nesmí obsahovat víc než 200 znaků."}
 
+  validates :password, presence: true
+
   validates :name, length: { maximum: 30, message: "Jméno nesmí obsahovat víc než 30 znaků."}
   validates :surname, length: { maximum: 60, message: "Příjmení nesmí obsahovat víc než 60 znaků."}
 
@@ -37,7 +39,7 @@ class User < ApplicationRecord
     JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
   end
 
-  #TODO pomocná metoda
+  #TODO pomocná debug metoda
   def self.token_url(list_id, url)
     "#{url}?t=#{User.last.token_for_list(list_id)}"
   end

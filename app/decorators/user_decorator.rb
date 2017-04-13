@@ -9,4 +9,12 @@ class UserDecorator < ApplicationDecorator
     end
   end
 
+  def display_name
+      if object.registered?
+        object.full_name
+      else
+        h.content_tag(:span, "dokončit registraci", class: "label label-warning label-lg")
+      end
+  end
+
 end

@@ -9,11 +9,13 @@ Rails.application.routes.draw do
 
   case Rails.env
   when "development"
-    resources :users
     root 'home#index'
   when "test","stage","production"
     root 'lists#index'
   end
+
+  #GIFTS
+  get 'gifts' => 'lists#index'
 
   #TODO upravit routy tak, aby nevystavovaly to co není nutné
   resources :lists, :gifts
@@ -24,9 +26,14 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   get '/auth' => 'sessions#token_auth', as: 'auth'
 
+  #USERS
+  get '/user/:id' => 'users#profile', as: 'user'
+  patch '/user/:id' => 'users#update'
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
   post '/invite' => 'users#invite'
+  get '/registration' => 'users#guest_registration'
+  get '/profile' => 'users#profile'
   #TODO zvážit jestli by invite a uninvite nemělo sedět spíš v list controlleru
   get '/lists/:list_id/uninvite/:user_id' => 'users#uninvite', as: 'uninvite'
 
