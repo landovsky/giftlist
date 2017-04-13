@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406150125) do
+ActiveRecord::Schema.define(version: 20170413041416) do
 
   create_table "gifts", force: :cascade do |t|
     t.integer  "list_id"
@@ -35,11 +35,12 @@ ActiveRecord::Schema.define(version: 20170406150125) do
 
   create_table "lists", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "occasion"
+    t.integer  "occasion"
     t.string   "occasion_of"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.date     "occasion_date"
+    t.string   "occasion_data"
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 

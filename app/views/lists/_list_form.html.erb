@@ -1,16 +1,16 @@
 <div class="panel panel-default">
 	<div class="panel-body">
-		<div class="col-md-1 btn-lg">
-			<span class="glyphicon glyphicon-plus-sign text-primary" style="font-size: 16pt; float: left"></span>
-		</div>
-		<div class="col-md-10 col-lg-10">
 			<%= bootstrap_form_for(list, layout: :inline) do |f| %>
-			<%= f.text_field :occasion, hide_label: true, class: "input-sm", placeholder: "událost" %>
+			<%= content_tag :div, class: "form-group" do %>
+			<%= f.label "Nový seznam", class: "control-label", style: "margin: 1px 10px 0px 0px"%>
+			<% end %>
+			<%= f.select(:occasion, list.occasion_types, { hide_label: true, disabled: "0", selected: @selected}, { id: "occasion_type", class: "input-sm" }) %>
+			<%= f.text_field :occasion_data, hide_label: true, class: "input-sm", style: "display:none", id: "other" %>
 			<%= f.text_field :occasion_of, hide_label: true, class: "input-sm", placeholder: "koho" %>
-			<%= f.text_field :occasion_date, hide_label: true, class: "input-sm", id: "datepicker", placeholder: "datum události" %>
+			<%= f.text_field :occasion_date, hide_label: true, class: "input-sm", id: "datepicker", placeholder: "datum příležitosti" %>
 			<%= f.primary "nový", class: "btn btn-primary" %>
 			<% end %>
-		</div>
+		
 	</div>
 </div>
 
@@ -19,7 +19,25 @@
 		$('#datepicker').datetimepicker({
 			locale : 'cs',
 			viewMode : 'days',
-			format : 'dddd DD/MM/YYYY'
+			format : 'DD/MM/YYYY'
 		});
 	}); 
+	
+	function ShowOther () {
+		var other = $("input#other");
+		var speed = 100;
+		if ( $("select#occasion_type option:selected").val() == 99 ) {
+			other.show(speed);
+			other.focus();
+		} else {
+			other.hide(speed);
+		}
+	}
+	
+	$("select#occasion_type").change(function() {	
+		ShowOther();
+	});		
+	
+	ShowOther();
+	
 </script>

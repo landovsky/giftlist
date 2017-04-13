@@ -1,13 +1,16 @@
 class List < ApplicationRecord
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
-  validates_presence_of :owner
-
   has_many :donors, through: :invitation_lists, :source => :user
   has_many :invitation_lists
   has_many :gifts
 
-  validates :occasion, presence: { message: "vyplňte příležitost (např. svatba, vánoce, ..)" }
-  validates :occasion_of, presence: { message: "vyplňte obdarovaného (např. já, sestra, ..)" }
+  enum occasion: { "svatba": 1, "narozeniny": 2, "vánoce": 3, "jiná": 99 }
+
+  validates_presence_of :owner
+  validates :occasion, presence: { message: "K jaké příležitosti?" }
+  validates :occasion_of, presence: { message: "Kdo je obdarovaný?" }
+  validates :occasion_date, presence: { message: "Kdy se slaví?"}
+  validates :occasion_data, presence: { message: "Jaká jiná?"}, if: "occasion == List.occasion_by_id(99)"
   
   def self.owned(user_id)
     self.where(user_id: user_id)
@@ -33,6 +36,10 @@ class List < ApplicationRecord
 
   def self.id(id)
     find_by(id: id)    
+  end
+ 
+  def self.occasion_by_id(id)
+    List.occasions.select { |key,value| value == id }.keys.first
   end
 
 end
