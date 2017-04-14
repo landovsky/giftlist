@@ -11,7 +11,7 @@ class User < ApplicationRecord
   enum role: { guest: 0, unconfirmed: 1, registered: 2, admin: 3 }
 
   validates :email, email: true
-  validates :email, uniqueness: { message: "Uživatel s emailovou adresou %{value} už u nás existuje." }
+  validates :email, uniqueness: { message: "Tuto emailovou adresu už známe. Pokud tě někdo pozval do svého seznamu, přihlaš se do aplikace odkazem (přišel ti emailem), poté můžeš dokončit registraci a přihlašovat se heslem." }
   validates :email, length: { maximum: 200, message: "Email nesmí obsahovat víc než 200 znaků."}
 
   validates :password, presence: true
