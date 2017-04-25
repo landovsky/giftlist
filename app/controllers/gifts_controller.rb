@@ -26,14 +26,15 @@ class GiftsController < ApplicationController
   def show
   end
 
-  def take
-    @gift = Gift.authentic?(params[:id],current_user.id)
+  def take #also un-take
+    @gift = Gift.authentic?(gift_id: params[:id],user_id: current_user.id)
     if @gift
       if @gift.user_id.blank?
         @gift.user_id = current_user.id
       else
         @gift.user_id = nil
       end
+      UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(User.id(session_user))
       @gift.save
       @gift.reload
       @gift

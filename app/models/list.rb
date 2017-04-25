@@ -1,10 +1,10 @@
 class List < ApplicationRecord
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
-  has_many :donors, through: :invitation_lists, :source => :user
+  has_many :invitees, through: :invitation_lists, :source => :user
   has_many :invitation_lists
   has_many :gifts
 
-  enum occasion: { "svatba": 1, "narozeniny": 2, "vánoce": 3, "jiná": 99 }
+  enum occasion: { "svatba" => 1, "narozeniny" => 2, "vánoce" => 3, "jiná" => 99 }
 
   validates_presence_of :owner
   validates :occasion, presence: { message: "K jaké příležitosti?" }
@@ -25,7 +25,7 @@ class List < ApplicationRecord
     return false if list_id == 0
     @list = self.find_by(id: list_id)
     return false if @list == nil #list does not exist
-    return false if @list.user_id != user_id && !@list.donors.map(&:id).include?(user_id) #supplied user_id is not owner nor donor
+    return false if @list.user_id != user_id && !@list.invitees.map(&:id).include?(user_id) #supplied user_id is not owner nor invitee
     @list
   end 
 

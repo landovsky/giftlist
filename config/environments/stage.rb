@@ -1,4 +1,15 @@
 Rails.application.configure do
+  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:              'smtp.gmail.com',
+  port:                 587,
+  domain:               'gmail.com',
+  user_name:            'givit.cz@gmail.com',
+  password:             'giftlistPass01',
+  authentication:       :login,
+  enable_starttls_auto: true  }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -7,6 +18,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   config.action_mailer.default_url_options = { host: 'stage.givit.cz' }
+  config.action_controller.asset_host = "http://stage.givit.cz/"
 
   # Do not eager load code on boot.
   config.eager_load = false

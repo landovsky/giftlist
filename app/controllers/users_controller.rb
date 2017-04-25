@@ -67,13 +67,14 @@ class UsersController < ApplicationController
 
   def invite
     #TODO flash s tím kde může spravovat pozvánky
+    #TODO ošetřit, že nemůže pozvat sám sebe
     @list = List.authentic?(params[:list_id], current_user.id)
     if !@list
       raise 'List not authentic'
       redirect to '/' and return    
     end
     emails = EmailChecker.new(params[:emails])
-    @new_donors = []
+    @new_invitees = []
     @valid = emails.valid
     @valid.each do |e|
       @user = User.find_or_create_by(email: e) do |u|
@@ -81,10 +82,10 @@ class UsersController < ApplicationController
         u.password = "empty"
         u.password_digest = "empty"
       end
-      #TODO proč tam mám tu podmínku na list.donors.include?user
-      UserMailer.invitation_email(@list, @user).deliver_later if !@list.donors.include?(@user)
-      @new_donors << @user
-      @list.donors << @user
+      #TODO proč tam mám tu podmínku na list.invitees.include?user
+      UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user) if !@list.invitees.include?(@user)
+      @new_invitees << @user
+      @list.invitees << @user
     end 
     @list = @list.decorate
     @invalid = emails.invalid.join(", ")
@@ -92,14 +93,14 @@ class UsersController < ApplicationController
 
   def uninvite
     @list = List.authentic?(params[:list_id], current_user.id)
-    @list.donors.count
+    @list.invitees.count
     if !@list
       raise "List not authentic"
       redirect_to '/' and return
     end
     #TODO ošetřit že na to někdo klikne dvakrát a už nebude co mazat
     InvitationList.find_by(user_id: params[:user_id], list_id: @list.id).destroy
-    @donor_id = params[:user_id]
+    @invitee_id = params[:user_id]
   end
 
   private

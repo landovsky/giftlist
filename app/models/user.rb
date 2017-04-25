@@ -2,8 +2,9 @@ class User < ApplicationRecord
   has_many :lists #ownership of GiftList
   has_many :invitations, through: :invitation_lists, :source => :list #invitation to GiftList
   #TODO prod cleanup: test dependent destroy
+  #FIXME při smazání uživatele zajistit, že jeho ID nebude v Gift.user_id
   has_many :invitation_lists, dependent: :destroy
-  has_many :donations, :source => :gift
+  has_many :donations, class_name: "Gift"
   
 
   has_secure_password
@@ -40,9 +41,23 @@ class User < ApplicationRecord
   end
 
   #TODO pomocná debug metoda
-  def self.token_url(list_id, url)
-    "#{url}?t=#{User.last.token_for_list(list_id)}"
+  def self.token_url(options = {})
+    user_id = options[:user_id] if options[:user_id]
+    list_id = options[:list_id] if options[:list_id]
+    url ||= "http://localhost:3000/auth"
+    "#{url}?t=#{User.find_by(id: user_id).token_for_list(list_id: list_id)}"
   end
+
+  #TODO pomocná debug metoda
+  def self.donation_stats( options={} )
+    user = find_by(options)    
+    donations = user.donations.where(user_id: user.id)
+    puts "donations: #{donations.count}"
+    donation_lists = List.joins(:gifts).where(gifts: {user_id: user.id}).uniq
+    puts "donation's lists #{donation_lists.count}"
+    out = {"donations" => donations, "donation_lists" => donation_lists}
+  end
+    
 
   def registered?
     role == "registered"

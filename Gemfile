@@ -9,10 +9,11 @@ end
 gem 'link_thumbnailer'
 gem 'jwt'
 gem 'draper', '3.0.0.pre1'
-#TODO potřebuju vůbec cancancan?
-gem 'cancancan'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'bcrypt', '~> 3.1.7' # Use ActiveModel has_secure_password
+gem 'delayed_job_active_record'
+gem 'daemons'
+gem 'premailer-rails' #automatic styling of HTML emails
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'

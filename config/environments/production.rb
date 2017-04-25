@@ -37,6 +37,9 @@ Rails.application.configure do
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
+
+  config.action_controller.asset_host = "http://www.givit.cz/"
+
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
@@ -59,7 +62,6 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  #TODO production take back
   config.log_level = :warn
 
   # Prepend all log lines with the following tags.

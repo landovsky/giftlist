@@ -23,21 +23,23 @@ class Gift < ApplicationRecord
   end
   
   #TODO optimize: 3 selecty na odbavení této metody, možná dlouhý join (až bude víc dat)
-  def self.authentic?(gift_id, user_id)
-    gift_id = gift_id.to_i
+  def self.authentic?( options = {} )
+    gift_id = options[:gift_id].to_i if options[:gift_id]
+    user_id = options[:user_id] if options[:user_id]
+    
     return false if gift_id == 0
     @gift = self.find_by(id: gift_id)
     return false if @gift == nil #gift does not exist
-    return false if !@gift.authorized_ids.include?(user_id)
+    return false if !@gift.authorized_users.include?(user_id)
     @gift
   end 
   
-  def authorized_ids
+  def authorized_users
     @ids = []
     @ids << user_id if user_id != nil # dárce (může být nil)
-    @list = List.eager_load(:donors).find_by(id: self.list_id)
+    @list = List.eager_load(:invitees).find_by(id: self.list_id)
     @ids << @list.user_id # vlastník seznamu
-    @list.donors.map(&:id).each do |n| @ids << n end # pozvaní do seznamu
+    @list.invitees.map(&:id).each do |n| @ids << n end # pozvaní do seznamu
     @ids.uniq
   end
   

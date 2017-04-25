@@ -1,0 +1,14 @@
+<span class="list-group-item" style="margin-bottom: 5px; border-radius: 3px "> <h5><strong><%= gift.name%></strong></h5>
+	<%= gift.description_glyph %>
+	<%= gift.price_range_glyph %>
+	
+	<% if !gift.urls.empty? %>
+		<p>
+		<%= content_tag(:span, "&nbsp;".html_safe, class:"glyphicon glyphicon-link") %>Odkazy
+		<ul>
+			<%= render partial: 'urls/url_mailer', collection: gift.urls, as: :url %>
+		</ul>
+		</p>
+	<%end%>
+	
+</span>

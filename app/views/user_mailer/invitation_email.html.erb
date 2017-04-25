@@ -1,19 +1,37 @@
-<p>
-	<strong><%= @list.owner.full_name %></strong> tě pozval/a do svého seznamu dárků k příležitosti: <strong><%= @list.occasion%>.</strong>
-	<br>
+<p style="margin-top: 30px">
+	<h3><strong><%= @list.owner.full_name %></strong> tě pozval/a do svého seznamu dárků k příležitosti <strong><%= @list.occasion_name%>.</strong></h3>
 </p>
 <p>
-	Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @recipient.token_for_list(list_id: @list.id)) %> odkazu. Dárky si tam můžeš pro sebe zarezervovat. Pozor ať odkaz neztratíš, bez něj se tam nedostaneš.
+	<strong>Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @recipient.token_for_list(list_id: @list.id)) %> odkazu.</strong>
 </p>
-<p>
-	Ještě se uvidíme - na tuto adresu ti pošleme email, když :<br />
-	- se na seznamu objeví nové přání<br />
-	- přiblíží datum události pro kterou byl seznam vytvořen
-</p>
-<p>
-	Nejspíš nejsi sám kdo pozvánku dostal, tak neotálej, ať na tebe nějaké dárky zbydou :-).
-</p>
-<br />
-<p style="font-style: italic">
-	Givit.cz - dárky, které opravdu potěší
-</p>
+<div class="well">
+	<h4>Několik tipů</h4>
+	<ul>
+		<li>
+			po přihlášení si můžeš dárky pro sebe zarezervovat
+		</li>
+		<li>
+			po rezervaci ti pošleme seznam všech dárků, které sis rezervoval
+		</li>
+		<li>
+			pozor ať odkaz neztratíš, bez něj se tam nedostaneš
+		</li>
+		<li>
+			nejspíš nejsi sám kdo pozvánku dostal, tak neotálej, ať na tebe nějaké dárky zbydou :-)
+		</li>
+	</ul>
+</div>
+<div class="well">
+	<h4>Ještě o sobě dáme vědět.</h4>
+	Na tuto adresu ti pošleme email, když :
+	<br />
+	<ul>
+		<li>
+			se na seznamu objeví nové přání
+		</li>
+		<li>
+			přiblíží datum události pro kterou byl seznam vytvořen
+		</li>
+	</ul>
+</div>
+<%= render 'footer' %>

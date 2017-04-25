@@ -1,6 +1,7 @@
 class UserDecorator < ApplicationDecorator
   delegate_all
 
+  #TODO používá se?
   def donor_name
     if name.blank? || surname.blank?
       email

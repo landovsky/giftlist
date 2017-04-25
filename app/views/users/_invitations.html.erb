@@ -2,7 +2,7 @@
 	<div class="panel-body">
 		<div class="col-lg-12">
 			<%= "STAGE env sends emails".html_safe if ["stage"].include?Rails.env%>
-			<%= render partial: 'users/invited', locals: { donors: @donors, list: @list } %>
+			<%= render partial: 'users/invited', locals: { invitees: @invitees, list: @list } %>
 			<div class="row">
 				<%= bootstrap_form_tag url: '/invite', remote: true do |f| %>
 				<%= f.text_area :emails, hide_label: true, value: @fake, id: "emails", class: "input-sm", placeholder: "emailové adresy oddělené čárkou nebo středníkem" %>

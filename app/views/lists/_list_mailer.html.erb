@@ -1,0 +1,8 @@
+<div>
+	<span style="font-weight: bold; font-size: 20px">
+		<%= link_to "#{list.occasion_name} (#{list.owner_name(recipient.id)})", list_url(list.id), target: "blank" %>
+	</span>
+	&nbsp;<span class="glyphicon glyphicon-new-window" style="font-size: 10px; vertical-align:super"></span>
+</div>
+<%= render partial: 'gifts/gift_mailer', collection: @gifts.where(list_id: list.id).distinct.decorate, as: :gift %>
+<br />

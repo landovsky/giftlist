@@ -9,7 +9,7 @@ if (input.val().length > 0) {
 };
 	
 // vložení nových dárců
-$("#invitees").append('<%= j (render partial: 'users/invitee', collection: @new_donors, as: :donor, locals: { list: @list } ) %>');
+$("#invitees").append('<%= j (render partial: 'users/invitee', collection: @new_invitees, as: :invitee, locals: { list: @list } ) %>');
 
 // nastavení textu tlačítka
-$("#invitation_btn").text("dárci (<%= @list.donors.count %>)")
+$("#invitation_btn").text("dárci (<%= @list.invitees.count %>)")

@@ -1,10 +1,12 @@
 class ListDecorator < ApplicationDecorator
   delegate_all
+  decorates_association :gifts
+
   def invitations_button_label
-    if object.donors.count == 0
+    if object.invitees.count == 0
       "pozvat dárce"
     else
-      "dárci (#{object.donors.count})"
+      "dárci (#{object.invitees.count})"
     end
   end
 
@@ -17,11 +19,15 @@ class ListDecorator < ApplicationDecorator
   end
 
   def occasion_name
-    if List.occasions[occasion] == 99
+    if List.occasions[object.occasion] == 99
       occasion_data
     else
-      occasion
+      object.occasion
     end
+  end
+  
+  def owner_name(list_user_id = h.session_user)
+    list_user_id == object.user_id ? occasion_of : owner.full_name 
   end
 
 end

@@ -43,6 +43,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.1)
+      public_suffix (~> 2.0, >= 2.0.2)
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     ansi (1.5.0)
@@ -58,7 +60,6 @@ GEM
     bootstrap_form (2.6.0)
     builder (3.2.3)
     byebug (9.0.6)
-    cancancan (1.16.0)
     capistrano (3.7.1)
       airbrussh (>= 1.0.0)
       capistrano-harrow
@@ -85,7 +86,15 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    css_parser (1.5.0)
+      addressable
+    daemons (1.2.4)
     debug_inspector (0.0.2)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     draper (3.0.0.pre1)
       actionpack (~> 5.0)
       activemodel (~> 5.0)
@@ -101,6 +110,7 @@ GEM
     ffi (1.9.18)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    htmlentities (4.3.4)
     i18n (0.8.1)
     image_info (1.1.2)
       image_size
@@ -154,6 +164,14 @@ GEM
     oga (2.9)
       ast
       ruby-ll (~> 2.1)
+    premailer (1.10.3)
+      addressable
+      css_parser (>= 1.4.10)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.9.5)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
+    public_suffix (2.0.5)
     puma (3.8.1)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -251,12 +269,13 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (~> 4.17.47)
   bootstrap_form
   byebug
-  cancancan
   capistrano (~> 3.7, >= 3.7.1)
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.2)
   capistrano-rbenv (~> 2.1)
   coffee-rails (~> 4.2)
+  daemons
+  delayed_job_active_record
   draper (= 3.0.0.pre1)
   faker
   jbuilder (~> 2.5)
@@ -267,6 +286,7 @@ DEPENDENCIES
   minitest-rails
   momentjs-rails (>= 2.9.0)
   net-ssh (>= 3.0.0)
+  premailer-rails
   puma (~> 3.0)
   rails (~> 5.0.1)
   rails-i18n (~> 5.0.0)

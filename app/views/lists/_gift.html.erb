@@ -11,12 +11,8 @@
 			</div>
 		</div>
 		<div class="panel-body collapse" id="<%= gift.collapse_id%>">
-			<p>
-				<span class="glyphicon glyphicon-heart">&nbsp;</span><%= gift.description %>
-			</p>
-			<p>
-				<span class="glyphicon glyphicon-question-sign drop">&nbsp;</span><%= gift.price_range %>
-			</p>
+			<%= gift.description_glyph %>
+			<%= gift.price_range_glyph %>
 			<p>
 				<table class="table-condensed" id="result">
 					<%= render partial: 'urls/url', collection: gift.urls %>

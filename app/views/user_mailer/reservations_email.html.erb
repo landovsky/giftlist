@@ -1,0 +1,36 @@
+<% if @recipient.donations.count == 0 %>
+<div class="row">
+	<p style="margin-top: 30px">
+		<h3><strong>Už nemáš žádné rezervace</strong></h3>
+	</p>
+</div>
+<% else %>
+<div class="row">
+	<p style="margin-top: 30px">
+		<h3><strong>Tvoje rezervace</strong></h3>
+	</p>
+	<p>
+		Pro připomenutí ti posíláme seznam tvých rezervací.
+	</p>
+</div>
+<% end %>
+
+<div class="row">
+	<%= render partial: 'lists/list_mailer', collection: @lists, as: :list, locals: { recipient: @recipient } %>
+</div>
+<div class="row well">
+	<h4>Ještě o sobě dáme vědět.</h4>
+	Na tuto adresu ti pošleme email, když :
+	<br />
+	<ul>
+		<li>
+			se na seznamu objeví nové přání
+		</li>
+		<li>
+			přiblíží datum události pro kterou byl seznam vytvořen
+		</li>
+	</ul>
+</div>
+<div class="row">
+	<%= render 'footer' %>
+</div>
