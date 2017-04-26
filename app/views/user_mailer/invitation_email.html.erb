@@ -2,7 +2,7 @@
 	<h3><strong><%= @list.owner.full_name %></strong> tě pozval/a do svého seznamu dárků k příležitosti <strong><%= @list.occasion_name%>.</strong></h3>
 </p>
 <p>
-	<strong>Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @recipient.token_for_list(list_id: @list.id)) %> odkazu.</strong>
+	<strong>Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @token ) %> odkazu.</strong>
 </p>
 <div class="well">
 	<h4>Několik tipů</h4>

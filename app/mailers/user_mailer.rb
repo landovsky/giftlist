@@ -8,6 +8,7 @@ add_template_helper(ApplicationHelper)
   def invitation_email( options={} )
     @list = options[:list].decorate if options[:list]
     @recipient = options[:user].decorate if options[:user]
+    @token = @recipient.token_for_list(list_id: @list.id)
     mail(to: @recipient.email, subject: "pozvánka do seznamu dárků: #{@list.occasion_name} / #{@list.occasion_of}")
   end
 

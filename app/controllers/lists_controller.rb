@@ -41,7 +41,7 @@ class ListsController < ApplicationController
       @gift = Gift.new(list: @list)
       @invitees = @list.invitees.decorate #dekorace kvůli zobrazení v seznamu dárců (registrovaní v. neregistrovaní)
       @list = @list.decorate
-      @fake = fake_email(2) if ["development", "stage"].include?Rails.env
+      @fake = "landovsky@gmail.com" if ["development", "stage"].include?Rails.env #fake_email(2) 
     else
       redirect_to :action => 'index' and return
     end
