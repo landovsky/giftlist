@@ -1,3 +1,6 @@
+#TODO delayed job - Implement Error Hook
+
+
 # /lib/delayed_duplicate_prevention_plugin.rb
 require 'delayed_job'
 class DelayedDuplicatePreventionPlugin < Delayed::Plugin
