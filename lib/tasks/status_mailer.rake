@@ -1,4 +1,5 @@
 task :status_mailer => :environment do
+  Rails.logger.warn "Running status_mailer rake task"
   jobs_count = Delayed::Job.count
   if jobs_count > 0
     puts "#{jobs_count} unprocessed jobs in #{Rails.env.upcase}"
