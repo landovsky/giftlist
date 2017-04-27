@@ -15,6 +15,7 @@ module Giftlist
     config.eager_load_paths += %W( #{config.root}/lib )
     #zlobí config.autoload_paths << Rails.root.join("/app/validators/")
     config.autoload_paths << Rails.root.join('lib')
-    config.active_job.queue_adapter = :delayed_job
+    #tmp config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :async
   end
 end
