@@ -1,5 +1,5 @@
 set :bundle_without, 'development'
-server '207.154.209.213', user: 'ruby', roles: %w{app db web}
+server '37.205.8.146', user: 'ruby', roles: %w{app db web}
 
 set :ssh_options, { 
   #forward_agent: true, 
@@ -7,6 +7,8 @@ set :ssh_options, {
 }
 
 set :deploy_to, "/home/ruby/giftlist/production"
+
+set :branch, 'master'
 
 append :linked_files, "config/database.yml", "config/secrets.yml", "db/production.sqlite3"
 
