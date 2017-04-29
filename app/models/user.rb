@@ -37,7 +37,7 @@ class User < ApplicationRecord
     interval ||= "months"
     n = options[:n] if options[:n]
     n ||= 6
-    #tmp Rails.logger.warn "JWT DEBUG: JsonWebToken.encode(user_id: #{self.id}, list_id: #{list_id}, exp: #{n.send(interval).from_now.to_i})"
+    Rails.logger.warn "JWT DEBUG: self.id #{self.id}/#{self.id.class}, list_id: #{list_id}/#{list_id.class}, exp: #{n.send(interval).from_now}"
     JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
   end
 

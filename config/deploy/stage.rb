@@ -1,5 +1,5 @@
 set :bundle_without, 'development'
-server '207.154.209.213', user: 'ruby', roles: %w{app db web}
+server '37.205.8.146', user: 'ruby', roles: %w{app db web}
 
 set :ssh_options, { 
   #forward_agent: true, 
@@ -10,7 +10,7 @@ set :deploy_to, "/home/ruby/giftlist/stage"
 
 append :linked_files, "config/database.yml", "config/secrets.yml", "db/stage.sqlite3"
 
-set :branch, 'master'
+set :branch, 'delayed_job'
 
 # server-based syntax
 # ======================
