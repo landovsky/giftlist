@@ -83,8 +83,8 @@ class UsersController < ApplicationController
         u.password_digest = "empty"
       end
       #TODO proč tam mám tu podmínku na list.invitees.include?user
-      #UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user) if !@list.invitees.include?(@user)
-      UserMailer.invitation_email(list: @list, user: @user).deliver_later if !@list.invitees.include?(@user)
+      UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user) if !@list.invitees.include?(@user)
+      #UserMailer.invitation_email(list: @list, user: @user).deliver_later if !@list.invitees.include?(@user)
       @new_invitees << @user
       @list.invitees << @user
     end 

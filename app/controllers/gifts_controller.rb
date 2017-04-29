@@ -34,8 +34,8 @@ class GiftsController < ApplicationController
       else
         @gift.user_id = nil
       end
-      #UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(User.id(session_user))
-      UserMailer.reservations_email(User.id(session_user)).deliver_later
+      UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(User.id(session_user))
+      #UserMailer.reservations_email(User.id(session_user)).deliver_later
       @gift.save
       @gift.reload
       @gift
