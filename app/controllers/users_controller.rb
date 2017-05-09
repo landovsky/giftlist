@@ -68,12 +68,18 @@ class UsersController < ApplicationController
   def invite
     #TODO flash s tím kde může spravovat pozvánky
     #TODO ošetřit, že nemůže pozvat sám sebe
+    #TODO přesunout pozvánky do List controlleru kvůli ukládání dat k seznamu
+    
     @list = List.authentic?(params[:list_id], current_user.id)
     if !@list
       raise 'List not authentic'
-      redirect to '/' and return    
+      redirect to '/' and return
+    else
+      @list.invitation_text = params[:invitation_text]
+      @list.save
     end
     emails = EmailChecker.new(params[:emails])
+    
     @new_invitees = []
     @valid = emails.valid
     @valid.each do |e|

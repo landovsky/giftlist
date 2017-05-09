@@ -16,5 +16,5 @@ module ApplicationHelper
   def __environment__
     ["stage", "test", "development"].include?(Rails.env) ? Rails.env : ""
   end
-
+  
 end
