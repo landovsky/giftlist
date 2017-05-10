@@ -8,12 +8,12 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-gift"></span><strong>&nbsp;Givit</strong></a>
+				<a class="navbar-brand" href="/" style="font-size: 32px"><span class="glyphicon glyphicon-gift"></span><strong>&nbsp;Givit</strong></a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<div class="panel panel-default">
-						<div class="panel-body">
+						<div class="panel-body" style="margin-top: 12px">
 
 							<% if current_user %>
 							<%= link_to content_tag(:strong, current_user.display_name), profile_path if current_user.registered? %>
