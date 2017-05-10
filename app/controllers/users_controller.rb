@@ -68,12 +68,18 @@ class UsersController < ApplicationController
   def invite
     #TODO flash s tím kde může spravovat pozvánky
     #TODO ošetřit, že nemůže pozvat sám sebe
+    #TODO přesunout pozvánky do List controlleru kvůli ukládání dat k seznamu
+    
     @list = List.authentic?(params[:list_id], current_user.id)
     if !@list
       raise 'List not authentic'
-      redirect to '/' and return    
+      redirect to '/' and return
+    else
+      @list.invitation_text = params[:invitation_text]
+      @list.save
     end
     emails = EmailChecker.new(params[:emails])
+    
     @new_invitees = []
     @valid = emails.valid
     @valid.each do |e|
@@ -82,11 +88,9 @@ class UsersController < ApplicationController
         u.password = "empty"
         u.password_digest = "empty"
       end
-      #TODO proč tam mám tu podmínku na list.invitees.include?user
-      UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user) if !@list.invitees.include?(@user)
-      #UserMailer.invitation_email(list: @list, user: @user).deliver_later if !@list.invitees.include?(@user)
-      @new_invitees << @user
-      @list.invitees << @user
+      UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)
+      @new_invitees << @user if !@list.invitees.include?(@user)
+      @list.invitees << @user if !@list.invitees.include?(@user)
     end 
     @list = @list.decorate
     @invalid = emails.invalid.join(", ")

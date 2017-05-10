@@ -5,7 +5,8 @@
 			<%= render partial: 'users/invited', locals: { invitees: @invitees, list: @list } %>
 			<div class="row">
 				<%= bootstrap_form_tag url: '/invite', remote: true do |f| %>
-				<%= f.text_area :emails, hide_label: true, value: @fake, id: "emails", class: "input-sm", placeholder: "emailové adresy oddělené čárkou nebo středníkem" %>
+				<%= f.text_area :emails, label: "Pozvat", value: @fake, id: "emails", class: "input-sm", placeholder: "emailové adresy oddělené čárkou nebo středníkem" %>
+				<%= f.text_area :invitation_text, label: "Text pozvánky", value: @list.invitation_text_decorated, class: "input-sm", placeholder: "Sem napiš osobní vzkaz, který pošleme všem, které pozveš do seznamu."%>
 				<%= f.hidden_field :list_id, value: @list.id %>
 				<%= f.submit "Pozvat" %>
 				<% end %>

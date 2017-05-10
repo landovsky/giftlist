@@ -1,11 +1,22 @@
 <div class="row">
 	<div class="col-sm-8 col-md-8 col-centered">
-		<h3>Registrace do givit.cz</h3>
+		<h3 class="mytitle">Registrace do givit.cz</h3>
+		<div class="well well-lg">
 
+			Po dokončení registrace můžeš:
+			<ul>
+				<li>
+					<strong>vytvářet svoje seznamy dárků k vánocům, narozeninám a jiným příležitostem</strong>
+				</li>
+				<li>
+					<strong>zvát do nich ostatní</strong>
+				</li>
+			</ul>
+		</div>
 		<%= render "shared/alert-box"%>
 
 		<%= render 'user_form', object: @user %>
-		
+
 	</div>
 </div>
 

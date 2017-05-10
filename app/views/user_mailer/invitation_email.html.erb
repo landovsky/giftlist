@@ -1,5 +1,5 @@
 <p style="margin-top: 30px">
-	<h3><strong><%= @list.owner.full_name %></strong> tě pozval/a do svého seznamu dárků k příležitosti <strong><%= @list.occasion_name%>.</strong></h3>
+	<h4><%= @list.invitation_text_decorated(@recipient.full_name).gsub(/\r\n/,"<br />").html_safe %></h4>
 </p>
 <p>
 	<strong>Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @token ) %> odkazu.</strong>

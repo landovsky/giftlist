@@ -5,9 +5,10 @@ class UserMailerPreview < ActionMailer::Preview
   def invitation_email
     rand_list = List.all.map(&:id).sample
     #@list = List.find_by(id: rand_list)
-    @list = List.first.decorate
+    @list = List.id(4).decorate
     rand_recipient = @list.invitees.map(&:id).sample
-    @recipient = User.find_by(id: rand_recipient).decorate
+    #@recipient = User.find_by(id: rand_recipient).decorate
+    @recipient = User.id(2)
     UserMailer.invitation_email(list: @list, user: @recipient)
   end
   

@@ -1,39 +1,31 @@
 <div class="row col-centered">
-				<div class="col-md-8 col-centered">
-					<nav class="navbar navbar-default">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-gift"></span><strong>&nbsp;Givit</strong></a>
-						</div>
-						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<ul class="nav navbar-nav">
-								<li <%= "class=active" if current_controller("lists") %>>
-									<%= link_to 'seznamy', lists_path %>
-								</li>
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-								<li>
-									<% if current_user %>
-									<%= link_to content_tag(:strong, current_user.display_name), profile_path if current_user.registered? %>
-									<%= link_to current_user.display_name, registration_path if !current_user.registered? %>
-								</li>
-								<li>
-									<%= link_to "odhlásit", '/logout' %>
-									<% else %>
-									<%= link_to 'přihlásit', '/login' %>
-								</li>
-
-								<li>
-									<%= link_to 'registrovat', '/signup' %>
-									<% end %>
-								</li>
-							</ul>
-						</div>
-					</nav>
-				</div>
+	<div class="col-md-8 col-centered">
+		<nav class="navbar navbar-default">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-gift"></span><strong>&nbsp;Givit</strong></a>
 			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<div class="panel panel-default">
+						<div class="panel-body">
+
+							<% if current_user %>
+							<%= link_to content_tag(:strong, current_user.display_name), profile_path if current_user.registered? %>
+							<%= link_to current_user.display_name, registration_path if !current_user.registered? %>
+
+							&nbsp;|&nbsp;<%= link_to "odhlásit", '/logout' %>
+							<% else %>
+							<%= link_to 'přihlásit', '/login' %>
+
+							&nbsp;|&nbsp;<%= link_to 'registrovat', '/signup' %>
+							<% end %>
+				</ul>
+			</div>
+		</nav>
+</div>
