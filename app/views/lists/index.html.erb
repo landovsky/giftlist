@@ -1,6 +1,6 @@
 <%= render "shared/alert-box"%>
 
-<h3>Seznamy dárků</h3>
+<h3 class="mytitle">Seznamy dárků</h3>
 
 <%= render partial: 'list_form', locals: { list: @list } if !current_user.guest? %>
 <div class="panel panel-default">

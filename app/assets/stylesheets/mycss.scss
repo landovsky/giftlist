@@ -15,6 +15,15 @@
   }
 }
 
+.mytitle {
+  color: white;
+  font-weight: bold;
+}
+
+.mysubtitle {
+  color: white;
+}
+
 body {
   font-size: 12px;
 }
@@ -74,7 +83,7 @@ h5 {
 }
 
 .wedding {
-  background-image: url(image-path('wedding-flipped.jpg'));
+  background-image: url(image-path('wedding-misa.jpg'));
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;

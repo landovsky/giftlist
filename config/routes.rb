@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   get 'gift/:id/take' => 'gifts#take', as: 'take_gift'
 
   case Rails.env
-  when "development"
+  when "neco"
     root 'home#index'
-  when "test","stage","production"
+  when "test","stage","production", "development"
     root 'lists#index'
   end
 
