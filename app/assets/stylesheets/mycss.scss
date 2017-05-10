@@ -83,21 +83,11 @@ h5 {
 }
 
 .wedding {
-  background-image: url(image-path('wedding-misa.jpg'));
+  background-image: url(image-path('wedding-misa-lg.jpg'));
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-@media only screen and (min-width: 1200px) {
-    .wedding { 
-        background-image: url('wedding-misa-lg.jpg');
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
 }
 
 .clickable {
