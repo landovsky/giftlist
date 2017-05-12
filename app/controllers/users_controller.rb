@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = User.roles["registered"]
     if @user.save
-      GoogleAnalyticsApi.new.event('users', 'user_registered', '', params[:ga_user_id])
+      GoogleAnalyticsApi.new.event('users', 'registered - user', '', params[:ga_user_id])
       session[:user_id] = @user.id
       redirect_to '/'
     else
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       if @user.role == "guest"
         @user.role = User.roles["registered"]
-        GoogleAnalyticsApi.new.event('users', 'guest_registered', '', params[:ga_user_id])  
+        GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id])  
       end
       @user.save
       redirect_to lists_path
@@ -85,6 +85,7 @@ class UsersController < ApplicationController
     end
     emails = EmailChecker.new(params[:emails])
     
+    invitees_before = @list.invitees.count
     @new_invitees = []
     @valid = emails.valid
     @valid.each do |e|
@@ -97,6 +98,8 @@ class UsersController < ApplicationController
       @new_invitees << @user if !@list.invitees.include?(@user)
       @list.invitees << @user if !@list.invitees.include?(@user)
     end 
+    invitees_delta = @list.invitees.count - invitees_before
+    invitees_delta > 0 ? GoogleAnalyticsApi.new.event('users', 'invitation sent', '', invitees_delta, params[:ga_user_id]) : nil
     @list = @list.decorate
     @invalid = emails.invalid.join(", ")
   end

@@ -1,6 +1,6 @@
 module MyLogger
   def self.logme(msg="", vars={}, level="debug")
-    content = "MYLOGGER: #{caller[0]} / #{caller[1]}: #{vars}"
+    content = "MYLOGGER: #{caller[0]} / #{caller[1]}: #{vars}, #{msg}"
     Rails.logger.send(level, content)
   end
 end

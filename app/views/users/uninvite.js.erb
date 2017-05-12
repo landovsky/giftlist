@@ -1,2 +1,9 @@
 $("#invitee<%= @invitee_id %>").hide(300);
 $("#invitation_btn").text("dárci (<%= @list.invitees.count %>)")
+ga('send', {
+  hitType: 'event',
+  eventCategory: 'users',
+  eventAction: 'invitation removed',
+  eventLabel: '',
+  eventValue: 1
+});

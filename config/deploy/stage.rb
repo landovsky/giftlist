@@ -10,7 +10,7 @@ set :deploy_to, "/home/ruby/giftlist/stage"
 
 append :linked_files, "config/database.yml", "config/secrets.yml", "db/stage.sqlite3"
 
-set :branch, 'stage'
+set :branch, 'ga_events'
 
 # server-based syntax
 # ======================
