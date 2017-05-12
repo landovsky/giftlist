@@ -5,7 +5,7 @@ class GoogleAnalyticsApi
   def event(category, action, label, value='', client_id)
     return unless GOOGLE_ANALYTICS_SETTINGS[:tracking_code].present?
     if client_id.blank?
-      MyLogger.logme("no client id detected", client_id: client_id)
+      MyLogger.logme("google analytics", "no Client ID detected", level: "warn")
       return
     end
 
@@ -19,14 +19,17 @@ class GoogleAnalyticsApi
       el: label,
       ev: value
     }
+    
+    params.delete(:el) if label.empty?
+    params.delete(:ev) if value.empty?
 
     begin
       #response = RestClient.delay(strategy: :allow_duplicate).get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
-      MyLogger.logme(params: params)
+      MyLogger.logme("google analytics", "submitted params", params: params)
       response = RestClient.get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
       #return true
     rescue  RestClient::Exception => rex
-      MyLogger.logme("server side analytics", errors: rex)
+      MyLogger.logme("google analytics", "hit report failed", level: "warn", errors: rex)
       return false
     end
   end

@@ -32,20 +32,18 @@ class User < ApplicationRecord
   end
   
   def token_for_list(options={})
-    list_id = options[:list_id] if options[:list_id]
-    interval = options[:interval] if options[:interval]
-    interval ||= "months"
-    n = options[:n] if options[:n]
-    n ||= 6
-    JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
+    options[:list_id] ? list_id = options[:list_id] : raise("Cannot proceed without List ID") 
+    options[:interval] ? interval = options[:interval] : interval ||= "months"
+    options[:n] ? n = options[:n] : n ||= 6
+    token = JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
+    MyLogger.logme("JWT DEBUG", "returned token", token: token)
   end
 
   #TODO pomocná debug metoda
   def self.token_url(options = {})
     user_id = options[:user_id] if options[:user_id]
     list_id = options[:list_id] if options[:list_id]
-    url ||= "http://localhost:3000/auth"
-    "#{url}?t=#{User.find_by(id: user_id).token_for_list(list_id: list_id)}"
+    "#{Rails.application.routes.url_helpers.auth_url}?t=#{User.find_by(id: user_id).token_for_list(list_id: list_id)}"
   end
 
   #TODO pomocná debug metoda
