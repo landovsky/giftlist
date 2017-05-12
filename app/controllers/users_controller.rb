@@ -22,9 +22,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = User.roles["registered"]
     if @user.save
+      GoogleAnalyticsApi.new.event('users', 'user_registered', '', params[:ga_user_id])
       session[:user_id] = @user.id
       redirect_to '/'
     else
+      #TODO debordelizovat
       #@user_name = @user.name
       #@user_surname = @user.surname
       #@user_email = @user.email
@@ -38,7 +40,10 @@ class UsersController < ApplicationController
     @user = User.find_by(id: session_user)     
      
     if @user.update_attributes(user_params)
-      @user.role = User.roles["registered"] if @user.role == "guest"
+      if @user.role == "guest"
+        @user.role = User.roles["registered"]
+        GoogleAnalyticsApi.new.event('users', 'guest_registered', '', params[:ga_user_id])  
+      end
       @user.save
       redirect_to lists_path
     else

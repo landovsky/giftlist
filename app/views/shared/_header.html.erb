@@ -14,7 +14,6 @@
 				<ul class="nav navbar-nav navbar-right">
 					<div class="panel panel-default">
 						<div class="panel-body" style="margin-top: 12px">
-
 							<% if current_user %>
 							<%= link_to content_tag(:strong, current_user.display_name), profile_path if current_user.registered? %>
 							<%= link_to current_user.display_name, registration_path if !current_user.registered? %>

@@ -16,14 +16,9 @@ module ApplicationHelper
   def __environment__
     ["stage", "test", "development"].include?(Rails.env) ? Rails.env : ""
   end
-  
-  def analytics_tracker
-    case Rails.env
-    when "stage"
-      "UA-349441-6"
-    when "production"
-      "UA-349441-5"
-    end
+
+  def user_type
+    current_user ? current_user.role : "no_auth"
   end
   
 end

@@ -14,6 +14,7 @@ gem 'bcrypt', '~> 3.1.7' # Use ActiveModel has_secure_password
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'premailer-rails' #automatic styling of HTML emails
+gem 'rest-client' # for Google Analytics server-side tracking
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'
