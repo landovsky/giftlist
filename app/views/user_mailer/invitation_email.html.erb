@@ -2,7 +2,7 @@
 	<h4><%= @list.invitation_text_decorated(@recipient.full_name).gsub(/\r\n/,"<br />").html_safe %></h4>
 </p>
 <p>
-	<strong>Do seznamu se přihlásíš pomocí <%= link_to "tohoto", auth_url(t: @token ) %> odkazu.</strong>
+	<strong>Do seznamu se přihlásíš pomocí tohoto <%= link_to "odkazu", auth_url(t: @token ), style: 'text-decoration: underline' %>.</strong>
 </p>
 <div class="well">
 	<h4>Několik tipů</h4>
