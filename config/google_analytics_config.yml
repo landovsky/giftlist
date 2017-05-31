@@ -1,0 +1,14 @@
+common: &common
+  endpoint: "http://www.google-analytics.com/collect"
+  version: 1
+
+production:  
+  tracking_code: "UA-349441-5"
+  <<: *common
+
+stage: &stage
+  tracking_code: "UA-349441-6"
+  <<: *common
+  
+development:
+  <<: *stage

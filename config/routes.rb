@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   post 'urls' => 'urls#create', as: 'urls'
   get 'urls/destroy/:id' => 'urls#destroy', as: 'url_destroy'
+  get 'urls/open/:digest' => 'urls#open', as: 'url_open'
 
   get 'datovestatistiky' => 'stats#index'
 

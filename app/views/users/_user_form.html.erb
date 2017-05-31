@@ -10,6 +10,7 @@
 		<%= f.password_field :password_confirmation, label: "Ještě jednou pro kontrolu" %>
 		<%= hidden_field_tag :origin, value: @origin ||= Rails.application.routes.recognize_path(request.original_url, method: :post)[:action] if @origin != nil && @origin == "new"%>
 		<%= hidden_field_tag :origin, value: @origin ||= Rails.application.routes.recognize_path(request.original_url)[:action] %>
+		<%= hidden_field_tag 'ga_user_id', '', :class => 'ga_user_id' %>
 		<%= f.submit "Poďme" %>
 		<% end %>
 	</div>

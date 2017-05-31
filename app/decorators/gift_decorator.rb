@@ -1,6 +1,7 @@
 class GiftDecorator < ApplicationDecorator
   delegate_all
-
+  decorates_association :list
+  
   #TODO gift decorator se nepodařil dostat do take.js.erb takže jsem všechny metody dal do modelu. Opravit, nebo vyhodit gift_decorator
   def collapse_id
     "gift#{id}"

@@ -22,9 +22,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = User.roles["registered"]
     if @user.save
+      GoogleAnalyticsApi.new.event('users', 'registered - user', '', params[:ga_user_id], location: request.url, user_type: "no_auth")
       session[:user_id] = @user.id
       redirect_to '/'
     else
+      #TODO debordelizovat
       #@user_name = @user.name
       #@user_surname = @user.surname
       #@user_email = @user.email
@@ -38,7 +40,10 @@ class UsersController < ApplicationController
     @user = User.find_by(id: session_user)     
      
     if @user.update_attributes(user_params)
-      @user.role = User.roles["registered"] if @user.role == "guest"
+      if @user.role == "guest"
+        @user.role = User.roles["registered"]
+        GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id], location: request.url, user_type: 'guest')  
+      end
       @user.save
       redirect_to lists_path
     else
@@ -78,7 +83,7 @@ class UsersController < ApplicationController
       @list.invitation_text = params[:invitation_text]
       @list.save
     end
-    emails = EmailChecker.new(params[:emails])
+    emails = EmailChecker.new(params[:emails].downcase)
     
     @new_invitees = []
     @valid = emails.valid
@@ -87,13 +92,14 @@ class UsersController < ApplicationController
         u.role = 0
         u.password = "empty"
         u.password_digest = "empty"
+        GoogleAnalyticsApi.new.event('users', "guest invited", @list.occasion, params[:ga_user_id], location: request.url, user_type: 'registered', list_type: @list.occasion) 
       end
       UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)
       @new_invitees << @user if !@list.invitees.include?(@user)
       @list.invitees << @user if !@list.invitees.include?(@user)
     end 
+    @invalid = emails.invalid.join(", ")    
     @list = @list.decorate
-    @invalid = emails.invalid.join(", ")
   end
 
   def uninvite

@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     if token != nil
       user = User.find_by_id(token[:user_id])
     else
+      GoogleAnalyticsApi.new.event('users', 'login - failure', 'token', 555, location: request.url)
       flash[:danger] = "Neplatný přihlašovací odkaz."
       flash.discard
       render 'new' and return
@@ -17,6 +18,7 @@ class SessionsController < ApplicationController
 
     if user
       session[:user_id] = user.id
+      GoogleAnalyticsApi.new.event('users', 'login - success', 'token', 555, location: request.url)
       redir = '/'
       redir = list_path(token[:list_id]) if token.keys.include?("list_id") && !token[:list_id].blank?
       redirect_to redir
@@ -32,11 +34,14 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       session[:pre_login_path] ||= lists_path
+      GoogleAnalyticsApi.new.event('users', 'login - success', 'password', params[:ga_user_id], location: request.url)
       redirect_to session[:pre_login_path]
     else
       if user
+        GoogleAnalyticsApi.new.event('users', 'login - failure', 'password', params[:ga_user_id], location: request.url)
         logger.warn { "Failed login attempt of user id #{user.id} (#{user.full_name})" }
       else
+        GoogleAnalyticsApi.new.event('users', 'login - failure', 'credentials', params[:ga_user_id], location: request.url)
         logger.warn { "Failed login attempt with #{params[:email]} / #{params[:password]}" }
       end
       flash[:danger] = "Kombinace přihlašovacího jména a hesla nesedí."
