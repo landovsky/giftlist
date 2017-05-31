@@ -5,6 +5,7 @@ class GiftsController < ApplicationController
   def new
     @list = List.authentic?(params[:list_id], current_user.id)
     if @list
+      @list = @list.decorate
       @gift = Gift.new(list: @list)
       @list_id = params[:list_id]
     else
@@ -35,7 +36,6 @@ class GiftsController < ApplicationController
         @gift.user_id = nil
       end
       UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(User.id(session_user))
-      #UserMailer.reservations_email(User.id(session_user)).deliver_later
       @gift.save
       @gift.reload
       @gift
@@ -57,13 +57,14 @@ class GiftsController < ApplicationController
   def edit
     #TODO udělat gift.authentic? na kontrolu jestli dárek existuje a user se na něj může dívat
     @gift = Gift.find_by(id: params[:id])
-    @list = @gift.list
+    @list = @gift.list.decorate
     @urls = @gift.urls
   end
 
   def update
-    @gift = Gift.find_by(id: params[:id])
+    @gift = Gift.eager_load(:list).find_by(id: params[:id])
     if @gift.update_attributes(gift_params)
+      @gift.decorate
       redirect_to list_path(id: @gift.list_id)
     else
       render 'edit'

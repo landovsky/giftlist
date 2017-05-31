@@ -2,7 +2,7 @@ require 'rest_client'
 
 class GoogleAnalyticsApi
 
-  def event(category, action, label, value='', client_id)
+  def event(category, action, label, client_id, options={})
     return unless GOOGLE_ANALYTICS_SETTINGS[:tracking_code].present?
     if client_id.blank?
       MyLogger.logme("google analytics", "no Client ID detected", level: "warn")
@@ -16,18 +16,17 @@ class GoogleAnalyticsApi
       t: "event",
       ec: category,
       ea: action,
-      el: label,
-      ev: value
+      el: label
     }
     
-    params.delete(:el) if label.empty?
-    params.delete(:ev) if value.empty?
+    params[:dl] = options[:location] if options[:location]
+    params[:ev] = options[:value] if options[:value]
+    params[:cd1] = options[:user_type] if options[:user_type]
+    params[:cd2] = options[:list_type] if options[:list_type]
 
     begin
-      #response = RestClient.delay(strategy: :allow_duplicate).get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
-      MyLogger.logme("google analytics", "submitted params", params: params)
-      response = RestClient.get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
-      #return true
+      MyLogger.logme("google analytics", "submitted params", params: params.to_query)
+      RestClient.delay(strategy: :allow_duplicate).get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
     rescue  RestClient::Exception => rex
       MyLogger.logme("google analytics", "hit report failed", level: "warn", errors: rex)
       return false

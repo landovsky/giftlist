@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.role = User.roles["registered"]
     if @user.save
-      GoogleAnalyticsApi.new.event('users', 'registered - user', '', params[:ga_user_id])
+      GoogleAnalyticsApi.new.event('users', 'registered - user', '', params[:ga_user_id], location: request.url, user_type: "no_auth")
       session[:user_id] = @user.id
       redirect_to '/'
     else
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       if @user.role == "guest"
         @user.role = User.roles["registered"]
-        GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id])  
+        GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id], location: request.url, user_type: 'guest')  
       end
       @user.save
       redirect_to lists_path
@@ -83,9 +83,8 @@ class UsersController < ApplicationController
       @list.invitation_text = params[:invitation_text]
       @list.save
     end
-    emails = EmailChecker.new(params[:emails])
+    emails = EmailChecker.new(params[:emails].downcase)
     
-    invitees_before = @list.invitees.count
     @new_invitees = []
     @valid = emails.valid
     @valid.each do |e|
@@ -93,15 +92,14 @@ class UsersController < ApplicationController
         u.role = 0
         u.password = "empty"
         u.password_digest = "empty"
+        GoogleAnalyticsApi.new.event('users', "guest invited", @list.occasion, params[:ga_user_id], location: request.url, user_type: 'registered', list_type: @list.occasion) 
       end
       UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)
       @new_invitees << @user if !@list.invitees.include?(@user)
       @list.invitees << @user if !@list.invitees.include?(@user)
     end 
-    invitees_delta = @list.invitees.count - invitees_before
-    invitees_delta > 0 ? GoogleAnalyticsApi.new.event('users', 'invitation sent', '', invitees_delta, params[:ga_user_id]) : nil
+    @invalid = emails.invalid.join(", ")    
     @list = @list.decorate
-    @invalid = emails.invalid.join(", ")
   end
 
   def uninvite

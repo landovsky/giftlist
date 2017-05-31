@@ -1,7 +1,6 @@
 module ApplicationHelper
-  
+
   #TODO potřebuju asset_host helper?
-  
   def asset_host
     case Rails.env
     when "development"
@@ -20,5 +19,13 @@ module ApplicationHelper
   def user_type
     current_user ? current_user.role : "no_auth"
   end
-  
+
+  def page_title
+    "Givit - dárky, které opravdu potěší"
+  end
+
+  def list_type
+    @list ? @list.occasion_name : ""
+  end
+
 end

@@ -5,6 +5,10 @@ common: &common
 production:  
   tracking_code: "UA-349441-5"
   <<: *common
-stage:
+
+stage: &stage
   tracking_code: "UA-349441-6"
   <<: *common
+  
+development:
+  <<: *stage
