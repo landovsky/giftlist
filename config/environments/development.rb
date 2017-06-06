@@ -19,6 +19,8 @@ config.action_mailer.delivery_method = :smtp
   config.cache_classes = false
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+
   #config.action_controller.asset_host = "http://stage.givit.cz/"
   config.action_controller.asset_host = "http://localhost:3000/"
 
@@ -59,7 +61,7 @@ config.action_mailer.delivery_method = :smtp
   # number of complex assets.
   config.assets.debug = true
 
-  
+
 
 
   # Suppress logger output for asset requests.
