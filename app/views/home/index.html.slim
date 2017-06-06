@@ -1,0 +1,14 @@
+h1.mytitle.shadow Dárky, které opravdu chceš.
+h2.mytitle.shadow Žádné cetky, žádné dárky dvakrát.
+
+h3.mysubtitle.shadow K narozeninám, svatbě, vánocům i jiným příležitostem.
+
+.landing.panel.panel-default style="background-color: rgba(230, 210, 203, 0.9)"
+  .panel-body style="margin-left: 15px;"
+    - @data.each do |d|
+      .row
+        .col-xs-2.square
+          span.glyphicon class="glyphicon-#{d[0]}"
+        .col-xs-10
+          p = "#{d[1]}"
+          small #{d[2]}
