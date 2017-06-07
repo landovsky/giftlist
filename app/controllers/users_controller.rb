@@ -26,10 +26,9 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to '/'
     else
-      #TODO debordelizovat
-      #@user_name = @user.name
-      #@user_surname = @user.surname
-      #@user_email = @user.email
+      if @user.errors.messages.key?(:email)
+        StatusMailer.delay(strategy: :delete_previous_duplicate).guest_registration_error(email: @user.email, error: @user.errors.messages)
+      end
       render @origin
     end
   end
@@ -37,12 +36,12 @@ class UsersController < ApplicationController
   def update
     #FIXME update profilu nelze uložit bez zadání hesla
     @origin = eval(params[:origin])[:value] # hash > string origin controller action pro renderovani spravne sablony
-    @user = User.find_by(id: session_user)     
-     
+    @user = User.find_by(id: session_user)
+
     if @user.update_attributes(user_params)
       if @user.role == "guest"
         @user.role = User.roles["registered"]
-        GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id], location: request.url, user_type: 'guest')  
+        GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id], location: request.url, user_type: 'guest')
       end
       @user.save
       redirect_to lists_path
@@ -74,7 +73,7 @@ class UsersController < ApplicationController
     #TODO flash s tím kde může spravovat pozvánky
     #TODO ošetřit, že nemůže pozvat sám sebe
     #TODO přesunout pozvánky do List controlleru kvůli ukládání dat k seznamu
-    
+
     @list = List.authentic?(params[:list_id], current_user.id)
     if !@list
       raise 'List not authentic'
@@ -84,7 +83,7 @@ class UsersController < ApplicationController
       @list.save
     end
     emails = EmailChecker.new(params[:emails].downcase)
-    
+
     @new_invitees = []
     @valid = emails.valid
     @valid.each do |e|
@@ -92,13 +91,13 @@ class UsersController < ApplicationController
         u.role = 0
         u.password = "empty"
         u.password_digest = "empty"
-        GoogleAnalyticsApi.new.event('users', "guest invited", @list.occasion, params[:ga_user_id], location: request.url, user_type: 'registered', list_type: @list.occasion) 
+        GoogleAnalyticsApi.new.event('users', "guest invited", @list.occasion, params[:ga_user_id], location: request.url, user_type: 'registered', list_type: @list.occasion)
       end
       UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)
       @new_invitees << @user if !@list.invitees.include?(@user)
       @list.invitees << @user if !@list.invitees.include?(@user)
-    end 
-    @invalid = emails.invalid.join(", ")    
+    end
+    @invalid = emails.invalid.join(", ")
     @list = @list.decorate
   end
 
