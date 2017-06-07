@@ -1099,6 +1099,7 @@ textarea {
 }
 a {
   color: #163752;
+  font-weight: bold;
   text-decoration: none;
 }
 a:hover,

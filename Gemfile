@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# MojeApp extras 
+# MojeApp extras
 gem 'link_thumbnailer'
 gem 'jwt'
 gem 'draper', '3.0.0.pre1'
@@ -15,6 +15,8 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'premailer-rails' #automatic styling of HTML emails
 gem 'rest-client' # for Google Analytics server-side tracking
+gem 'rollbar'
+gem 'slim'
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'

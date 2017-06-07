@@ -9,11 +9,13 @@ Rails.application.routes.draw do
   get 'gift/:id/take' => 'gifts#take', as: 'take_gift'
 
   case Rails.env
-  when "neco"
-    root 'home#index'
-  when "test","stage","production", "development"
-    root 'lists#index'
+  when "development"
+    get 'glyphs' => 'home#glyphs'
   end
+
+  #ROOT
+  get '/' => 'lists#index', constraints: LoggedInConstraint.new
+  root 'home#index'
 
   #GIFTS
   get 'gifts' => 'lists#index'
