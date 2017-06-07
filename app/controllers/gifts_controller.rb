@@ -38,7 +38,7 @@ class GiftsController < ApplicationController
       UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(User.id(session_user))
       @gift.save
       @gift.reload
-      @gift
+      @list = @gift.list #kvůli podmíněnému zobrazení ikony koše
     else
       redirect_to '/' and return
     end

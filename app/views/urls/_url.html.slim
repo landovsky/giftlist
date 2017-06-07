@@ -1,0 +1,12 @@
+tr id="#{url.digest}"
+	td.center
+		- if url.image_src == false
+			span.glyphicon.glyphicon-heart
+		- else
+			= image_tag(url.image_src, height: 50)
+	td
+		= link_to url.data[:title], url_open_path(url.digest), class: "clickable", target: "blank"
+	- if @list.owner?(session_user)
+		td
+			= link_to url_destroy_path(url.id), class: "clickable", remote: true do
+				span.glyphicon.glyphicon-trash
