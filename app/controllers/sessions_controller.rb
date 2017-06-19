@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
       user = User.find_by_id(token[:user_id])
     else
       GoogleAnalyticsApi.new.event('users', 'login - failure', 'token', 555, location: request.url)
+      MyLogger.logme("JWT DEBUG", "token login failed", token: params[:t], level: "warn")
       flash[:danger] = "Neplatný přihlašovací odkaz."
       flash.discard
       render 'new' and return

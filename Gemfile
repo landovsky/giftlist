@@ -17,6 +17,7 @@ gem 'premailer-rails' #automatic styling of HTML emails
 gem 'rest-client' # for Google Analytics server-side tracking
 gem 'rollbar'
 gem 'slim'
+gem 'faker'
 
 # Bootstrap stuff
 gem 'bootstrap-sass', '~> 3.2.0'
@@ -50,12 +51,19 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 
-group :development, :test, :stage do
+group :test do
+  gem 'rspec-activemodel-mocks'
+end
+
+group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'minitest-rails'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'listen', '~> 3.0.5'
-  gem 'faker'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+
 end
 
 group :development do

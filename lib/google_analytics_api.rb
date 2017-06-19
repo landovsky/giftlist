@@ -18,19 +18,19 @@ class GoogleAnalyticsApi
       ea: action,
       el: label
     }
-    
+
     params[:dl] = options[:location] if options[:location]
     params[:ev] = options[:value] if options[:value]
     params[:cd1] = options[:user_type] if options[:user_type]
     params[:cd2] = options[:list_type] if options[:list_type]
 
     begin
-      MyLogger.logme("google analytics", "submitted params", params: params.to_query)
+      #MyLogger.logme("google analytics", "submitted params", params: params.to_query)
       RestClient.delay(strategy: :allow_duplicate).get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
-    rescue  RestClient::Exception => rex
-      MyLogger.logme("google analytics", "hit report failed", level: "warn", errors: rex)
+    rescue  RestClient::Exception => e
+      Rollbar.error(e)
       return false
     end
   end
 
-end  
+end

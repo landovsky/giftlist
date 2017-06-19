@@ -1,10 +1,9 @@
 class User < ApplicationRecord
   before_save :downcase_fields
+  before_destroy :untake_gifts
 
-  has_many :lists #ownership of GiftList
-  has_many :invitations, through: :invitation_lists, :source => :list #invitation to GiftList
-  #TODO prod cleanup: test dependent destroy
-  #FIXME při smazání uživatele zajistit, že jeho ID nebude v Gift.user_id
+  has_many :lists, dependent: :destroy                                  #ownership of GiftList
+  has_many :invitations, through: :invitation_lists, :source => :list   #invitation to GiftList
   has_many :invitation_lists, dependent: :destroy
   has_many :donations, class_name: "Gift"
 
@@ -23,6 +22,13 @@ class User < ApplicationRecord
 
   validates :role, numericality: { only_integer: true }
   validates :role, presence: true
+<<<<<<< HEAD
+=======
+
+  def downcase_fields
+    self.email.downcase!
+  end
+>>>>>>> master
 
   def full_name
     if name.blank? || surname.blank?
@@ -37,7 +43,6 @@ class User < ApplicationRecord
     options[:interval] ? interval = options[:interval] : interval ||= "months"
     options[:n] ? n = options[:n] : n ||= 6
     token = JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
-    MyLogger.logme("JWT DEBUG", "returned token", token: token)
     token
   end
 
@@ -63,8 +68,13 @@ class User < ApplicationRecord
   end
 
   private
+<<<<<<< HEAD
   def downcase_fields
     self.email.downcase!
+=======
+  def untake_gifts
+    Gift.where(user_id: self.id).update_all(user_id: nil)
+>>>>>>> master
   end
 
 end

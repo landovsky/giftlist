@@ -10,10 +10,11 @@ Rails.application.configure do
   authentication:       :login,
   enable_starttls_auto: true  }
 
-  
-  
+
+
   # Settings specified here will take precedence over those in config/application.rb.
 
+  Rails.application.routes.default_url_options[:host] = 'www.givit.cz'
   config.action_mailer.default_url_options = { host: 'www.givit.cz' }
 
   # Code is not reloaded between requests.

@@ -28,7 +28,7 @@
 			<% end %>
 		</table>
 	</div>
-	
+
 		<div class="row">
 		<h3 class="mytitle">Listing lists (count: <%= @lists.count %>)</h3>
 	</div>
@@ -44,13 +44,13 @@
 				<th>Created</th>
 			</tr>
 
-			<% @lists.each do |i| %>
+			<% @lists.each do |list| %>
 			<tr>
-				<td><%= i.occasion %></td>
-				<td><%= i.occasion_of %></td>
-				<td><%= i.user_id %></td>
-				<td><%= i.gifts.count %></td>
-				<td><%= i.created_at %></td>
+				<td><%= link_to list.occasion, User.token_url(user_id: list.owner.id, list_id: list.id), target: "blank" %></td>
+				<td><%= list.occasion_of %></td>
+				<td><%= list.user_id %></td>
+				<td><%= list.gifts.count %></td>
+				<td><%= list.created_at %></td>
 			</tr>
 			<% end %>
 		</table>
