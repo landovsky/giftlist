@@ -15,7 +15,6 @@ add_template_helper(ApplicationHelper)
   def reservations_email( recipient )
     @recipient = recipient
     @lists = List.joins(:gifts).where(gifts: {user_id: @recipient.id}).distinct
-    @lists = @lists.decorate
     @gifts = Gift.left_joins(:list, :urls, :donor).where( gifts: { user_id: @recipient.id })
     mail(to: @recipient.email, subject: "aktuální rezervace dárků")
   end

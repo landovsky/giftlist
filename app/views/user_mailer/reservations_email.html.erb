@@ -16,7 +16,7 @@
 <% end %>
 
 <div class="row">
-	<%= render partial: 'lists/list_mailer', collection: @lists, as: :list, locals: { recipient: @recipient } %>
+	<%= render partial: 'lists/list_mailer', collection: @lists.decorate, as: :list, locals: { recipient: @recipient } %>
 </div>
 <div class="row well">
 	<h4>Ještě o sobě dáme vědět.</h4>
