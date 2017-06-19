@@ -20,16 +20,16 @@ class Gift < ApplicationRecord
     return true if !user_id.blank?
   end
 
-  def take(user)
-    self.donor = user
+  def take(user_id)
+    self.donor = User.id(user_id)
     self.save
-    UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(user)
+    UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(user_id)
   end
 
-  def untake(user)
+  def untake(user_id)
     self.donor = nil
     self.save
-    UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(user)
+    UserMailer.delay(run_at: 10.minutes.from_now.localtime, strategy: :delete_previous_duplicate ).reservations_email(user_id)
   end
 
   #TODO optimize: 3 selecty na odbavení této metody, možná dlouhý join (až bude víc dat)
