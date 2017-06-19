@@ -31,9 +31,9 @@ class GiftsController < ApplicationController
     @gift = Gift.authentic?(gift_id: params[:id],user_id: current_user.id)
     if @gift
       if @gift.user_id.blank?
-        @gift.take(current_user)
+        @gift.take(current_user.id)
       else
-        @gift.untake(current_user)
+        @gift.untake(current_user.id)
       end
       @list = @gift.list #kvůli podmíněnému zobrazení ikony koše
     else

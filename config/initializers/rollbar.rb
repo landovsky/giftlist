@@ -9,7 +9,7 @@ Rollbar.configure do |config|
     config.enabled = false
   end
 
-  if %w(production).include? Rails.env
+  if %w(nic).include? Rails.env
     config.use_delayed_job
   end
 
