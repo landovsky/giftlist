@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get '/auth' => 'sessions#token_auth', as: 'auth'
 
   #USERS
-  get '/user/:id' => 'users#profile', as: 'user'
+  get '/user/:id' => 'users#profile', as: 'user' #kvůli bootstrap_form v profile.html.erb
   patch '/user/:id' => 'users#update'
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
@@ -39,5 +39,6 @@ Rails.application.routes.draw do
   get '/profile' => 'users#profile'
   #TODO zvážit jestli by invite a uninvite nemělo sedět spíš v list controlleru
   get '/lists/:list_id/uninvite/:user_id' => 'users#uninvite', as: 'uninvite'
+  post '/user_verify' => 'users#user_exists'
 
 end

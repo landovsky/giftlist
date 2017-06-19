@@ -18,24 +18,32 @@ class UsersController < ApplicationController
   end
 
   def create
-    @origin = eval(params[:origin])[:value]
-    @user = User.new(user_params)
+    @origin = eval(params[:origin])[:value] # hash > string origin controller action pro renderovani
+                                            # spravne sablony (registrace, dokončení registrace, profil)
+    @user = User.find_by(email: user_params[:email])
+    if @user              # přesměrovat existujícího uživatele na login stránku
+      #TODO BEFORE PRODUCTION dodělat hlášku pro guesta na login stránce
+      flash[:warning] = "<strong>Zadanou emailovou adresu už známe.</strong><br>Zkusíš se přihlásit? Pokud nemáš heslo, klikni na \"zapomněl jsem heslo\" a my ti pošleme nové."
+      redirect_to '/login' and return
+    else                  # pokud je email správně vyplněn, zobrazit na šabloně
+                          # celý formulář pro registraci pomocí @form_page
+      @user = User.new(user_params)
+      EmailChecker.new(user_params[:email]).valid? ? @form_page = 2 : @form_page = 1
+    end
     @user.role = User.roles["registered"]
     if @user.save
       GoogleAnalyticsApi.new.event('users', 'registered - user', '', params[:ga_user_id], location: request.url, user_type: "no_auth")
       session[:user_id] = @user.id
       redirect_to '/'
     else
-      if @user.errors.messages.key?(:email)
-        StatusMailer.delay(strategy: :delete_previous_duplicate).guest_registration_error(email: @user.email, error: @user.errors.messages)
-      end
       render @origin
     end
   end
 
   def update
     #FIXME update profilu nelze uložit bez zadání hesla
-    @origin = eval(params[:origin])[:value] # hash > string origin controller action pro renderovani spravne sablony
+    @origin = eval(params[:origin])[:value] # hash > string origin controller action pro renderovani
+                                            # spravne sablony (registrace, dokončení registrace, profil)
     @user = User.find_by(id: session_user)
 
     if @user.update_attributes(user_params)
