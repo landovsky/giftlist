@@ -1,15 +1,14 @@
 class User < ApplicationRecord
   before_save :downcase_fields
+  before_destroy :untake_gifts
 
-  has_many :lists #ownership of GiftList
-  has_many :invitations, through: :invitation_lists, :source => :list #invitation to GiftList
-  #TODO prod cleanup: test dependent destroy
-  #FIXME při smazání uživatele zajistit, že jeho ID nebude v Gift.user_id
+  has_many :lists, dependent: :destroy                                  #ownership of GiftList
+  has_many :invitations, through: :invitation_lists, :source => :list   #invitation to GiftList
   has_many :invitation_lists, dependent: :destroy
   has_many :donations, class_name: "Gift"
 
   has_secure_password
-  
+
   enum role: { guest: 0, unconfirmed: 1, registered: 2, admin: 3 }
 
   validates :email, email: true
@@ -23,12 +22,11 @@ class User < ApplicationRecord
 
   validates :role, numericality: { only_integer: true }
   validates :role, presence: true
-  
+
   def downcase_fields
     self.email.downcase!
   end
 
-  
   def full_name
     if name.blank? || surname.blank?
       email
@@ -36,9 +34,9 @@ class User < ApplicationRecord
       [name, surname].join(' ')
     end
   end
-  
+
   def token_for_list(options={})
-    options[:list_id] ? list_id = options[:list_id] : raise("Cannot proceed without List ID") 
+    options[:list_id] ? list_id = options[:list_id] : raise("Cannot proceed without List ID")
     options[:interval] ? interval = options[:interval] : interval ||= "months"
     options[:n] ? n = options[:n] : n ||= 6
     token = JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
@@ -55,17 +53,21 @@ class User < ApplicationRecord
 
   #TODO pomocná debug metoda
   def self.donation_stats( options={} )
-    user = find_by(options)    
+    user = find_by(options)
     donations = user.donations.where(user_id: user.id)
     puts "donations: #{donations.count}"
     donation_lists = List.joins(:gifts).where(gifts: {user_id: user.id}).uniq
     puts "donation's lists #{donation_lists.count}"
     out = {"donations" => donations, "donation_lists" => donation_lists}
   end
-    
 
   def registered?
     role == "registered"
+  end
+
+  private
+  def untake_gifts
+    Gift.where(user_id: self.id).update_all(user_id: nil)
   end
 
 end

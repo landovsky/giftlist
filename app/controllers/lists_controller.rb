@@ -9,16 +9,16 @@ class ListsController < ApplicationController
     lp[:occasion] = nil if lp[:occasion] == 0 #zajisti, ze se nastavi list.error.message kdyz user nevybere occasion
     lp[:user_id] = current_user.id
     lp[:occasion_date] = "24-12-#{Time.now.strftime("%Y")}" if lp[:occasion] == List.occasions["vánoce"]
-  
+
     @list = List.new(lp).decorate
-      
+
     if @list.save
       flash[:success] = "uloženo"
       flash.discard
-      @lists = List.owned(current_user)
+      @lists = List.owned_by(current_user)
       redirect_to :action => 'show', id: @list.id
     else
-      @lists_owned = List.owned(current_user).decorate
+      @lists_owned = List.owned_by(current_user).decorate
       @lists_invited = List.invited(current_user).decorate
       @selected = List.occasions[@list.occasion] if List.occasions.include?@list.occasion #nastavit vybranou prilezitost
       @selected ||= 0 #nebo nastavit "vyberte" hodnotu
@@ -29,7 +29,7 @@ class ListsController < ApplicationController
   def index
     @list = List.new.decorate
     @selected = 0 #vybrat hodnotu "vyberte" occasion type
-    @lists_owned = List.owned(current_user).decorate
+    @lists_owned = List.owned_by(current_user).decorate
     @lists_invited = List.invited(current_user).decorate
   end
 
@@ -42,7 +42,7 @@ class ListsController < ApplicationController
       @invitees = @list.invitees.decorate #dekorace kvůli zobrazení v seznamu dárců (registrovaní v. neregistrovaní)
       @list = @list.decorate
       #@fake = "landovsky@gmail.com" if ["development", "stage"].include?Rails.env #
-      @fake = fake_email(2) 
+      @fake = fake_email(2)
     else
       redirect_to :action => 'index' and return
     end

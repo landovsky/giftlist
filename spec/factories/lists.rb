@@ -1,0 +1,20 @@
+FactoryGirl.define do
+  factory :list do
+    id { generate :list_id }
+    occasion 2 #narozeniny
+    occasion_of "já"
+    occasion_date 2.weeks.from_now
+
+    factory :list_with_guests, parent: :list, traits: [:associations] do
+      after(:create) do |list|
+        list.invitees << FactoryGirl.create_list(:guest, 2)
+        list.gifts    << FactoryGirl.create_list(:gift, 2, list_id: list.id, user_id: list.invitees.last.id )
+      end
+    end
+
+    trait :associations do
+      association :owner, factory: :user
+    end
+
+  end
+end
