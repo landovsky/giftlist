@@ -40,7 +40,6 @@ class User < ApplicationRecord
     options[:interval] ? interval = options[:interval] : interval ||= "months"
     options[:n] ? n = options[:n] : n ||= 6
     token = JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
-    MyLogger.logme("JWT DEBUG", "returned token", token: token)
     token
   end
 
