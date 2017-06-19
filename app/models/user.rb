@@ -23,10 +23,6 @@ class User < ApplicationRecord
   validates :role, numericality: { only_integer: true }
   validates :role, presence: true
 
-  def downcase_fields
-    self.email.downcase!
-  end
-
   def full_name
     if name.blank? || surname.blank?
       email
@@ -35,10 +31,25 @@ class User < ApplicationRecord
     end
   end
 
+  def self.find_by_token( token_in, options={} )
+    options[:event] ? event = options[:event] : event = "not specified"
+
+    token = JsonWebToken.decode(token_in)
+
+    if token == nil                   # neplatný token
+      GoogleAnalyticsApi.new.event('users', '#{event} - failure', 'token', 555)
+      MyLogger.logme("JWT DEBUG", "token #{event} failed", event: event, token: token_in, level: "warn")
+      return false
+    else                              # dohledání uživatele podle user.id z tokenu
+      user = User.find_by_id(token[:user_id])
+    end
+  end
+
   def token_for_list(options={})
-    options[:list_id] ? list_id = options[:list_id] : raise("Cannot proceed without List ID")
-    options[:interval] ? interval = options[:interval] : interval ||= "months"
-    options[:n] ? n = options[:n] : n ||= 6
+    #TODO tokeny: vytáhnout n.send(interval)... do JsonWebToken
+    list_id = options[:list_id] if options[:list_id]
+    options[:interval] ? interval = options[:interval] : interval ||= "day"
+    options[:n] ? n = options[:n] : n ||= 1
     token = JsonWebToken.encode(user_id: self.id, list_id: list_id, exp: n.send(interval).from_now.to_i)
     token
   end
@@ -50,7 +61,7 @@ class User < ApplicationRecord
     "#{Rails.application.routes.url_helpers.auth_url}?t=#{User.find_by(id: user_id).token_for_list(list_id: list_id)}"
   end
 
-  #TODO pomocná debug metoda
+  #TODO temp - pomocná debug metoda
   def self.donation_stats( options={} )
     user = find_by(options)
     donations = user.donations.where(user_id: user.id)
@@ -64,9 +75,25 @@ class User < ApplicationRecord
     role == "registered"
   end
 
+  def self.recover_password(email)
+    @user = User.find_by(email: email.downcase)
+    if @user
+      @token = @user.token_for_list(n: 30, interval: "minutes")
+      UserMailer.delay(run_at: Time.current, strategy: :delete_previous_duplicate ).recover_password_email(@user, @token)
+      return true
+    else
+      return false
+    end
+  end
+
   private
+
   def untake_gifts
     Gift.where(user_id: self.id).update_all(user_id: nil)
+  end
+
+  def downcase_fields
+    self.email.downcase!
   end
 
 end

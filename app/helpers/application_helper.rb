@@ -28,4 +28,9 @@ module ApplicationHelper
     @list ? @list.occasion_name : ""
   end
 
+  def original_controller(origin)
+  hidden_field_tag :origin, value: origin ||= Rails.application.routes.recognize_path(request.original_url, method: :post)[:action] if origin != nil && origin == "new"
+  hidden_field_tag :origin, value: origin ||= Rails.application.routes.recognize_path(request.original_url)[:action]
+  end
+
 end

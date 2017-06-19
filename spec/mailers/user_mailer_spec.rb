@@ -16,8 +16,8 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   describe '.reservations_email' do
-    let(:recipient)  { create(:user) }
-    let(:email) { described_class.reservations_email(recipient).deliver_now }
+    let(:recipient) { create(:user) }
+    let(:email)     { described_class.reservations_email(recipient).deliver_now }
 
     it 'renders the headers' do
       expect(email.to).to eq(["#{recipient.email}"])
@@ -30,12 +30,21 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     context 'when user has reservations' do
-      let(:list) {create(:list_with_guests) }
+      let(:list)  { create(:list_with_guests) }
       let(:email) { described_class.reservations_email(list.invitees.last).deliver_now }
 
       it "renders reserved gifts" do
         expect(email.body.encoded).to match(/Pro p=C5=99ipomenut=C3=AD ti pos=C3=ADl=C3=A1me seznam/)
       end
+    end
+  end
+
+  describe '.recover_password_email' do
+    let(:recipient)   { create(:user) }
+    let(:email)       { described_class.recover_password_email(recipient, recipient.token_for_list)}
+
+    it "generates email with token in a link" do
+      expect(email.body.encoded).to match(/reset_password\?t=[a-zA-Z0-9]{8}/)
     end
   end
 

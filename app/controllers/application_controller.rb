@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+helper_method :current_user, :session_user, :current_controller
 
   #TODO pro Maca opravit nedostupné ikony ActionController::RoutingError (No route matches [GET] "/fonts/glyphicons-halflings-regular.svg"):
 
@@ -9,17 +10,14 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]).decorate if session[:user_id]
   end
-  helper_method :current_user
-  
+
   def session_user
     session[:user_id] if session[:user_id]
   end
-  helper_method :session_user
 
   def current_controller(controller)
     Rails.application.routes.recognize_path(request.original_url, method: request.env["REQUEST_METHOD"])[:controller] == controller
   end
-  helper_method :current_controller
 
   def authorize
   	session[:pre_login_path] = request.fullpath unless current_user
