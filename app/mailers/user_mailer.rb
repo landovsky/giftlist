@@ -24,4 +24,10 @@ add_template_helper(ApplicationHelper)
     mail(to: @recipient.email, subject: "aktuální rezervace dárků")
   end
 
+  def recover_password_email( recipient, token )
+    @recipient = recipient
+    @token = token
+    mail(to: @recipient.email, subject: "postup pro obnovení hesla do Givit.cz")
+  end
+
 end

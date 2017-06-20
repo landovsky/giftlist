@@ -20,10 +20,11 @@ class UsersController < ApplicationController
   def create
     @origin = eval(params[:origin])[:value] # hash > string origin controller action pro renderovani
                                             # spravne sablony (registrace, dokončení registrace, profil)
-    @user = User.find_by(email: user_params[:email])
+    @user = User.find_by(email: user_params[:email].downcase)
     if @user              # přesměrovat existujícího uživatele na login stránku
-      #TODO BEFORE PRODUCTION dodělat hlášku pro guesta na login stránce
-      flash[:warning] = "<strong>Zadanou emailovou adresu už známe.</strong><br>Zkusíš se přihlásit? Pokud nemáš heslo, klikni na \"zapomněl jsem heslo\" a my ti pošleme nové."
+      flash[:warning] = "<strong>Zadanou emailovou adresu už známe.</strong><br>Zkusíš se přihlásit?<br>
+                         Pokud neznáš heslo, klikni <a href=\"/password_recovery\"
+                         class=\"opposite underline\">sem</a> a my ti pomůžeme získat nové."
       redirect_to '/login' and return
     else                  # pokud je email správně vyplněn, zobrazit na šabloně
                           # celý formulář pro registraci pomocí @form_page
@@ -41,17 +42,41 @@ class UsersController < ApplicationController
   end
 
   def update
+    #UPDATE se používá při
+      # aktualizaci profilu
+      # dokončení registrace guestem
+      # změna hesla
+
     #FIXME update profilu nelze uložit bez zadání hesla
     @origin = eval(params[:origin])[:value] # hash > string origin controller action pro renderovani
                                             # spravne sablony (registrace, dokončení registrace, profil)
-    @user = User.find_by(id: session_user)
 
-    if @user.update_attributes(user_params)
-      if @user.role == "guest"
+    #TODO security: find_by params[:id] znamená, že někdo postem může aktualizovat existujícího uživatele
+    @user = User.find_by(id: params[:id])
+    begin
+      if params[:id] != session_user && !params[:t]
+        MyLogger.logme("SECURITY", "updatované id != session_id a není nastaven token", session_user: session_user, id: params[:id])
+      end
+    rescue => e
+      MyLogger.logme("SECURITY", "FAILED: updatované id != session_id a není nastaven token", error: e)
+    end
+
+    if @user && @user.update_attributes(user_params)
+      #TODO guest registrace: chci sbírat nějaká dodatečná data? pokud ano, měl bych guesta ponechat guesta i po
+        # resetu hesla
+      if @user.role == "guest"              # nastavení role "registered" pokud je guest
         @user.role = User.roles["registered"]
         GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id], location: request.url, user_type: 'guest')
       end
       @user.save
+      if !current_user          # nastavení hlášky po updatu hesla - probíhá v nepřihlášeném režimu
+                                # tudíž zde implicitně zkouším jestli je current_user, pokud ne
+                                # zobrazuju hlášku po update hesla
+        flash[:success] = "Heslo jsme ti nastavili, můžeš se s ním teď přihlásit."
+        flash.discard
+        @email = @user.email
+        render 'sessions/new' and return
+      end
       redirect_to lists_path
     else
       render @origin
@@ -78,9 +103,9 @@ class UsersController < ApplicationController
   end
 
   def invite
-    #TODO flash s tím kde může spravovat pozvánky
-    #TODO ošetřit, že nemůže pozvat sám sebe
-    #TODO přesunout pozvánky do List controlleru kvůli ukládání dat k seznamu
+    #TODO invitations: flash s tím kde může spravovat pozvánky
+    #TODO invitations: ošetřit, že nemůže pozvat sám sebe
+    #TODO invitations: přesunout pozvánky do List controlleru kvůli ukládání dat k seznamu
 
     @list = List.authentic?(params[:list_id], current_user.id)
     if !@list
@@ -121,9 +146,38 @@ class UsersController < ApplicationController
     @invitee_id = params[:user_id]
   end
 
+  def password_recovery       # form na vyžádání resetu hesla
+  end
+
+  def recover_password        # akce pro zaslání emailu
+    if EmailChecker.new(params[:email]).valid?
+      User.recover_password(params[:email])
+      flash[:warning] = "Pokud tvojí adresu známe, poslali jsme ti na ní
+                         email s instrukcemi k resetu hesla."
+      flash.discard
+      render 'password_recovery'
+    else
+      @email = params[:email]
+      flash[:danger] = "Takhle emailová adresa nevypadá. Zkusíš to ještě jednou?"
+      flash.discard
+      render 'password_recovery'
+    end
+  end
+
+  def reset_password          # form na zadání nového hesla přístupný přes odkaz v emailu
+                              # submit formuláře zpracuje users#update
+    redirect_to '/password_recovery' and return unless params[:t]
+    @user = User.find_by_token(params[:t])
+    unless @user
+      flash[:danger] = "Platnost odkazu na obnovení hesla vypršela, nech si poslat nový."
+      flash.discard
+      render 'password_recovery' and return
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :surname, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :surname, :password, :password_confirmation, :t)
   end
 end

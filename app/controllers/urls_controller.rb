@@ -1,11 +1,6 @@
 class UrlsController < ApplicationController
 
-  ##
-  ## k událostem přidat kontext document location
-  ##
-  ##
-  ##
-  ##
+  #TODO URLs: k událostem přidat kontext document location
 
   def open
     url = Url.eager_load(:gift => :list).find_by(digest: params[:digest])
@@ -14,15 +9,15 @@ class UrlsController < ApplicationController
   end
 
   def create
-    #TODO ošetřit situaci kdy se nevygeneruje objekt (což způsobí problémy při rendrování)
+    #TODO URLs ošetřit situaci kdy se nevygeneruje objekt (což způsobí problémy při rendrování)
     @data = LinkThumbnailer.generate(url_match(url_params[:data]))
 
-    #TODO zanořit vytvoření digestu do modelu Url
+    #TODO URLs zanořit vytvoření digestu do modelu Url
     @url = Url.new(data: @data.as_json, gift_id: url_params[:gift_id])
     @url.digest =  Digest::SHA1.hexdigest(url_match(url_params[:data]))
     @list = @url.gift.list #kvůli podmíněnému zobrazení ikony koše
 
-    #TODO udělat un-happy cestu když se to neuloží
+    #TODO URLs udělat un-happy cestu když se to neuloží
     if !@url.save
       logger.debug @url.errors.messages
       @url = Url.find_by(digest: @url.digest)
@@ -33,7 +28,7 @@ class UrlsController < ApplicationController
     @url = Url.joins(:gift => :list).where( urls: {id: params[:id]}, lists: {user_id: current_user.id}).limit(1)
     if @url.empty?
       logger.debug "URL#destroy: supplied params not authentic"
-      #TODO return nezastaví zpracování a šablona hází chybu (nemá proměnnou)
+      #TODO URLs return nezastaví zpracování a šablona hází chybu (nemá proměnnou)
       return
     else
       @url.first.destroy
