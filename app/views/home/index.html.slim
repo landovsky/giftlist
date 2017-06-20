@@ -1,7 +1,14 @@
-h1.mytitle.shadow Dárkové seznamy, jednoduše.
-h3.mysubtitle.shadow K narozeninám, Vánocům, svatbě i jiným příležitostem.
+- if @gifts.count > 0
+  .row
+    .col-xs-12.col-md-6.col-lg-6.col-sm-6.pull-left
+      h1.mytitle.shadow Dárkové seznamy, jednoduše.
+      h3.mysubtitle.shadow K narozeninám, Vánocům, svatbě i jiným příležitostem.
+    .col-xs-12.col-md-6.col-lg-6.col-sm-6.box.pull-right style="margin-top: 30px"
+      == render 'carousel'
+- else
+  h1.mytitle.shadow Dárkové seznamy, jednoduše.
+  h3.mysubtitle.shadow K narozeninám, Vánocům, svatbě i jiným příležitostem.
 br
-
 .landing.panel.panel-default style="background-color: rgba(230, 210, 203, 0.9)"
   .panel-body style="margin-left: 15px;"
     - @data.each do |d|

@@ -1,0 +1,8 @@
+tr
+	td.center
+		- if url.image_src == false
+			span.glyphicon.glyphicon-heart
+		- else
+			= image_tag(url.image_src, height: 50)
+	td
+		= link_to url.data[:title], url.data[:url], class: "clickable", target: "blank"
