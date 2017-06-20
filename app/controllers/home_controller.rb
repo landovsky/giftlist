@@ -9,6 +9,9 @@ class HomeController < ApplicationController
       ['barcode','Když už nechceš k vánocům a narozeninám dostávat cetky.','přej si konkrétní věci'],
       ['link','Když máš jasno v tom co si přeješ.','přidej odkazy do e-shopů']
     ]
+
+    @gifts = Gift.preload(:urls).where(id: [7,9,8,1015,1016]).decorate
+    @first = @gifts.first.id
   end
 
   def glyphs
