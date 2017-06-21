@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     ]
 
     @gifts = Gift.preload(:urls).where(id: [7,9,8,1015,1016]).decorate
-    @first = @gifts.first.id
+    @first = @gifts.first.id unless @gifts.count == 0
   end
 
   def glyphs
