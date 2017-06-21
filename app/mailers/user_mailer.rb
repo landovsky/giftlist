@@ -14,7 +14,7 @@ add_template_helper(ApplicationHelper)
     @list = options[:list].decorate if options[:list]
     @recipient = options[:user].decorate if options[:user]
     @token = @recipient.token_for_list(n: 6, interval: "months", list_id: @list.id)
-    mail(to: @recipient.email, subject: "pozvánka do seznamu dárků: #{@list.occasion_name} / #{@list.occasion_of}")
+    mail(reply_to: @list.owner.email, to: @recipient.email, subject: "pozvánka do seznamu dárků: #{@list.occasion_name} / #{@list.occasion_of}")
   end
 
   def reservations_email( recipient_id )
