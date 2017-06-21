@@ -37,6 +37,8 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to '/'
     else
+      flash[:danger] = "Ooops, je asi potřeba ještě něco vyplnit ve formuláři."
+      flash.discard
       render @origin
     end
   end
@@ -98,7 +100,7 @@ class UsersController < ApplicationController
     if @user && @user.registered?
       render 'profile'
     else
-      redirect_to registration_path
+      redirect_to login_path
     end
   end
 
