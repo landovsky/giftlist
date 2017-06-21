@@ -19,4 +19,13 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.reservations_email(@user.id)
   end
 
+  def recover_password_email
+    user_ids = []
+    user_ids << User.where(role: 0).sample    #guest
+    user_ids << User.where(role: 2).sample    #registrovaný
+    @user = User.id(user_ids.sample)
+    @token = @user.token_for_list(n: 30, interval: "minutes")
+    UserMailer.recover_password_email(@user, @token)
+  end
+
 end

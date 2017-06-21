@@ -1,0 +1,7 @@
+.panel.panel-default
+	.panel-body
+		= bootstrap_form_for(@user) do |f|
+			= f.email_field :email
+			= hidden_field_tag 'ga_user_id', '', :class => 'ga_user_id'
+			= original_controller(@origin)
+		 	= f.submit "Pojďme"

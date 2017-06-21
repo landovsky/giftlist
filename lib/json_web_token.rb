@@ -13,5 +13,17 @@ class JsonWebToken
     rescue
       nil
     end
+
+    def expires(token)
+      decoded = self.decode(token)
+      return false unless decoded
+      DateTime.strptime(decoded[:exp].to_s, '%s')
+    end
+
+    def expired?(token)
+      decoded = self.decode(token)
+      return true unless decoded
+      DateTime.strptime(decoded[:exp].to_s, '%s').utc < Time.current.utc
+    end
   end
 end

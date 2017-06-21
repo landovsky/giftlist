@@ -28,9 +28,10 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
   get '/auth' => 'sessions#token_auth', as: 'auth'
+  get '/auth2' => 'sessions#token_auth2', as: 'auth2'
 
   #USERS
-  get '/user/:id' => 'users#profile', as: 'user'
+  get '/user/:id' => 'users#profile', as: 'user'          #kvůli bootstrap_form v profile.html.erb
   patch '/user/:id' => 'users#update'
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
@@ -39,5 +40,8 @@ Rails.application.routes.draw do
   get '/profile' => 'users#profile'
   #TODO zvážit jestli by invite a uninvite nemělo sedět spíš v list controlleru
   get '/lists/:list_id/uninvite/:user_id' => 'users#uninvite', as: 'uninvite'
+  get '/password_recovery' => 'users#password_recovery'   # žádost o obnovu přístupu (form)
+  post '/recover_password' => 'users#recover_password'    # žádost o obnovu přístupu (controller)
+  get '/reset_password'    => 'users#reset_password'      # form na nové heslo
 
 end

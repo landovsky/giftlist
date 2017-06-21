@@ -4,26 +4,32 @@ class SessionsController < ApplicationController
   end
 
   def token_auth
-    #TODO token sign-in: donutit uživatele se přihlásit když už má registraci? (asi jo, kdyby někdo odkaz zneužil tak ať nemůže smazat jeho seznamy)
+    #TODO token sign-in: implementovat User.find_by_token
+    #TODO token sign-in: donutit uživatele se přihlásit když už má registraci?
+      # (asi jo, kdyby někdo odkaz zneužil tak ať nemůže smazat jeho seznamy)
     token = JsonWebToken.decode(params[:t])
 
-    if token != nil
-      user = User.find_by_id(token[:user_id])
-    else
+    if token == nil                   # neplatný token
       GoogleAnalyticsApi.new.event('users', 'login - failure', 'token', 555, location: request.url)
       MyLogger.logme("JWT DEBUG", "token login failed", token: params[:t], level: "warn")
       flash[:danger] = "Neplatný přihlašovací odkaz."
       flash.discard
       render 'new' and return
+    else                              # dohledání uživatele podle user.id z tokenu
+      user = User.find_by_id(token[:user_id])
     end
 
-    if user
+    if user                           # platný uživatel
       session[:user_id] = user.id
       GoogleAnalyticsApi.new.event('users', 'login - success', 'token', 555, location: request.url)
       redir = '/'
-      redir = list_path(token[:list_id]) if token.keys.include?("list_id") && !token[:list_id].blank?
+      if token.keys.include?("list_id") && !token[:list_id].blank?
+        redir = list_path(token[:list_id])
+      else
+        MyLogger.logme("SECURITY", "přístup do systému s tokenem bez list_id", level: "warn")
+      end
       redirect_to redir
-    else
+    else                              # neplatný token nebo neexistující uživatel
       flash[:danger] = "Neplatný přihlašovací odkaz."
       flash.discard
       render 'new'

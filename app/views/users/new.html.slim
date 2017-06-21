@@ -1,0 +1,14 @@
+.row
+	.col-sm-8.col-md-8.col-centered
+		h3.mytitle Registrace do Givit.cz
+		.well.well-lg Po dokončení registrace můžeš:
+			<ul>
+				<li>
+					<strong> vytvářet svoje seznamy dárků k Vánocům, narozeninám a jiným příležitostem
+				<li>
+					<strong> zvát do nich ostatní
+			</ul>
+		- if @form_page == 2
+			== render 'user_form', object: @user
+		- else
+			== render 'user_form_email', object: @user
