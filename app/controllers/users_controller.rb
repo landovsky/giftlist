@@ -55,10 +55,10 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     begin
       if params[:id] != session_user && !params[:t]
-        MyLogger.logme("SECURITY", "updatované id != session_id a není nastaven token", session_user: session_user, id: params[:id])
+        MyLogger.logme("SECURITY", "updatované id != session_id a není nastaven token", session_user: session_user, old_user: @user, params: params, level: "warn")
       end
     rescue => e
-      MyLogger.logme("SECURITY", "FAILED: updatované id != session_id a není nastaven token", error: e)
+      MyLogger.logme("SECURITY", "FAILED: updatované id != session_id a není nastaven token", error: e, level: "error")
     end
 
     if @user && @user.update_attributes(user_params)
@@ -167,7 +167,7 @@ class UsersController < ApplicationController
   def reset_password          # form na zadání nového hesla přístupný přes odkaz v emailu
                               # submit formuláře zpracuje users#update
     redirect_to '/password_recovery' and return unless params[:t]
-    @user = User.find_by_token(params[:t])
+    @user = User.find_by_token(params[:t], event: "reset_password")
     unless @user
       flash[:danger] = "Platnost odkazu na obnovení hesla vypršela, nech si poslat nový."
       flash.discard

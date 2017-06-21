@@ -23,7 +23,11 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       GoogleAnalyticsApi.new.event('users', 'login - success', 'token', 555, location: request.url)
       redir = '/'
-      redir = list_path(token[:list_id]) if token.keys.include?("list_id") && !token[:list_id].blank?
+      if token.keys.include?("list_id") && !token[:list_id].blank?
+        redir = list_path(token[:list_id])
+      else
+        MyLogger.logme("SECURITY", "přístup do systému s tokenem bez list_id", level: "warn")
+      end
       redirect_to redir
     else                              # neplatný token nebo neexistující uživatel
       flash[:danger] = "Neplatný přihlašovací odkaz."
