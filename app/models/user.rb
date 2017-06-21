@@ -76,7 +76,7 @@ class User < ApplicationRecord
   end
 
   def self.recover_password(email)
-    @user = User.find_by(email: email)
+    @user = User.find_by(email: email.downcase)
     if @user
       @token = @user.token_for_list(n: 30, interval: "minutes")
       UserMailer.delay(run_at: Time.current, strategy: :delete_previous_duplicate ).recover_password_email(@user, @token)

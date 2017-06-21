@@ -150,14 +150,14 @@ class UsersController < ApplicationController
   end
 
   def recover_password        # akce pro zaslání emailu
-    if EmailChecker.new(params[:email]).valid?
-      User.recover_password(params[:email])
+    @email = params[:email].downcase
+    if EmailChecker.new(@email).valid?
+      User.recover_password(@email)
       flash[:warning] = "Pokud tvojí adresu známe, poslali jsme ti na ní
                          email s instrukcemi k resetu hesla."
       flash.discard
       render 'password_recovery'
     else
-      @email = params[:email]
       flash[:danger] = "Takhle emailová adresa nevypadá. Zkusíš to ještě jednou?"
       flash.discard
       render 'password_recovery'

@@ -63,6 +63,7 @@ group :development, :test do
   gem 'listen', '~> 3.0.5'
   gem 'factory_girl'
   gem 'factory_girl_rails'
+  gem 'timecop'
 
 end
 
