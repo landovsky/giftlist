@@ -1,0 +1,26 @@
+<div class="item <%= "active" if gift.id == @first %>">
+	<div class="panel panel-<%= gift.panel_style %>" style="margin-bottom: 10px; background-color: white; min-height: 230px">
+		<div class="panel-heading">
+			<a data-toggle="collapse" data-target="#<%= gift.collapse_id%>" data-parent="#accordion"> <span class="shref"></span> </a>
+			<div class="panel-title">
+				<span class="glyphicon glyphicon-gift">&nbsp;</span>
+				<%= link_to gift.name, edit_gift_path(gift.id), class: "clickable" if gift.list.owner?(session_user) %>
+					<%= gift.name if !gift.list.owner?(session_user) %>
+						<%= gift.taken_badge %>
+			</div>
+		</div>
+		<div class="panel-body expand" id="<%= gift.collapse_id%>">
+			<%= gift.description_glyph %>
+				<%= gift.price_range_glyph %>
+					<p>
+						<table class="table-condensed" id="result">
+							<%= render partial: 'url_preview', collection: gift.urls, as: :url %>
+						</table>
+					</p>
+					<div class="text-center">
+						<%= link_to 'zrušit mojí rezervaci', '#', class: "clickable btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
+							<%= link_to 'rezervovat', '#', class: "clickable btn-success btn-sm" if !gift.taken?%>
+					</div>
+		</div>
+	</div>
+</div>
