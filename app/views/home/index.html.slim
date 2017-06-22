@@ -13,8 +13,9 @@ br
   .panel-body style="margin-left: 15px;"
     - @data.each do |d|
       .row
-        .col-xs-2.square
-          span.glyphicon class="glyphicon-#{d[0]}"
-        .col-xs-10
+        .col-xs-12.col-sm-2 style="text-align: center;"
+          .circle
+            span.glyphicon class="glyphicon-#{d[0]}"
+        .col-xs-12.col-sm-10
           p = "#{d[1]}"
           small #{d[2]}

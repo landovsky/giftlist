@@ -62,19 +62,21 @@ a.underline {
     margin-bottom: 25px;
   }
 
-  .square {
+  .circle {
+    display: inline-block;
     background-color: rgb(100, 8, 108);
-    max-width: 70px;
-    min-width: 70px;
-    min-height: 70px;
-    margin-bottom: 5px;
-    font-size: 33px;
-    text-align: center;
-    border-radius: 35px;
+    max-width:      2em;
+    min-width:      2em;
+    min-height:     2em;
+    margin-top:     9px;
+    margin-right:  10px;
+    margin-bottom: 10px;
+    font-size:      3em;
+    text-align:  center;
+    border-radius:  3em;
 
   }
 }
-
 
 .mytitle {
   color: white;
