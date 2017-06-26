@@ -37,7 +37,7 @@ class User < ApplicationRecord
     token = JsonWebToken.decode(token_in)
 
     if token == nil                   # neplatný token
-      GoogleAnalyticsApi.new.event('users', '#{event} - failure', 'token', 555)
+      GoogleAnalyticsApi.new.event('users', "#{event} - failure", 'token', 555)
       MyLogger.logme("JWT DEBUG", "token #{event} failed", event: event, token: token_in, level: "warn")
       return false
     else                              # dohledání uživatele podle user.id z tokenu

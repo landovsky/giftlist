@@ -33,4 +33,8 @@ module ApplicationHelper
   hidden_field_tag :origin, value: origin ||= Rails.application.routes.recognize_path(request.original_url)[:action]
   end
 
+  def ga_user_id
+    hidden_field_tag 'ga_user_id', '', :class => 'ga_user_id'
+  end
+
 end

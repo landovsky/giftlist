@@ -33,6 +33,7 @@ class UsersController < ApplicationController
     end
     @user.role = User.roles["registered"]
     if @user.save
+      params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
       GoogleAnalyticsApi.new.event('users', 'registered - user', '', params[:ga_user_id], location: request.url, user_type: "no_auth")
       session[:user_id] = @user.id
       redirect_to '/'
@@ -56,7 +57,7 @@ class UsersController < ApplicationController
     #TODO security: find_by params[:id] znamená, že někdo postem může aktualizovat existujícího uživatele
     @user = User.find_by(id: params[:id])
     begin
-      if params[:id] != session_user && !params[:t]
+      if params[:id].to_i != session_user && !params[:t]
         MyLogger.logme("SECURITY", "updatované id != session_id a není nastaven token", session_user: session_user, old_user: @user, params: params, level: "warn")
       end
     rescue => e
@@ -68,6 +69,7 @@ class UsersController < ApplicationController
         # resetu hesla
       if @user.role == "guest"              # nastavení role "registered" pokud je guest
         @user.role = User.roles["registered"]
+        params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
         GoogleAnalyticsApi.new.event('users', 'registered - guest', '', params[:ga_user_id], location: request.url, user_type: 'guest')
       end
       @user.save
@@ -79,7 +81,9 @@ class UsersController < ApplicationController
         @email = @user.email
         render 'sessions/new' and return
       end
-      redirect_to lists_path
+      flash[:success] = "Uloženo."
+      flash.discard
+      render @origin
     else
       render @origin
     end
@@ -124,8 +128,8 @@ class UsersController < ApplicationController
     @valid.each do |e|
       @user = User.find_or_create_by(email: e) do |u|
         u.role = 0
-        u.password = "empty"
-        u.password_digest = "empty"
+        u.password = "s0methiNklongAndR@ndom232"
+        params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
         GoogleAnalyticsApi.new.event('users', "guest invited", @list.occasion, params[:ga_user_id], location: request.url, user_type: 'registered', list_type: @list.occasion)
       end
       UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)

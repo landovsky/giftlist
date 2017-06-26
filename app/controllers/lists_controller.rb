@@ -13,6 +13,9 @@ class ListsController < ApplicationController
     @list = List.new(lp).decorate
 
     if @list.save
+      #TODO ošetřit, že ga_user_id nemusí být JavaScriptem nastaveno
+      params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
+      GoogleAnalyticsApi.new.event('lists', 'list created', @list.occasion, params[:ga_user_id], location: request.url)
       flash[:success] = "uloženo"
       flash.discard
       @lists = List.owned_by(current_user)
