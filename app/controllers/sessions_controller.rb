@@ -41,13 +41,16 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       session[:pre_login_path] ||= lists_path
+      params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
       GoogleAnalyticsApi.new.event('users', 'login - success', 'password', params[:ga_user_id], location: request.url)
       redirect_to session[:pre_login_path]
     else
       if user
+        params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
         GoogleAnalyticsApi.new.event('users', 'login - failure', 'password', params[:ga_user_id], location: request.url)
         logger.warn { "Failed login attempt of user id #{user.id} (#{user.full_name})" }
       else
+        params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
         GoogleAnalyticsApi.new.event('users', 'login - failure', 'credentials', params[:ga_user_id], location: request.url)
         logger.warn { "Failed login attempt with #{params[:email]} / #{params[:password]}" }
       end

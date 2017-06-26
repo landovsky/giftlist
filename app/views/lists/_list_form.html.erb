@@ -1,8 +1,9 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 			<%= bootstrap_form_for(list, layout: :inline) do |f| %>
+			<%= ga_user_id %>
 			<%= content_tag :div, class: "form-group" do %>
-			<%= f.label "Nový seznam", class: "control-label", style: "margin: 1px 10px 0px 0px"%>
+				<%= f.label "Nový seznam", class: "control-label", style: "margin: 1px 10px 0px 0px"%>
 			<% end %>
 			<%= f.select(:occasion, list.occasion_types, { hide_label: true, disabled: "0", selected: @selected}, { id: "occasion_type", class: "input-sm" }) %>
 			<%= f.text_field :occasion_data, hide_label: true, class: "input-sm", style: "display:none", id: "other" %>
@@ -10,7 +11,7 @@
 			<%= f.text_field :occasion_date, hide_label: true, class: "input-sm", id: "datepicker", placeholder: "datum příležitosti" %>
 			<%= f.primary "nový", class: "btn btn-primary" %>
 			<% end %>
-		
+
 	</div>
 </div>
 
@@ -21,8 +22,8 @@
 			viewMode : 'days',
 			format : 'DD/MM/YYYY'
 		});
-	}); 
-	
+	});
+
 	function ShowOther () {
 		var other = $("input#other");
 		var speed = 100;
@@ -33,11 +34,11 @@
 			other.hide(speed);
 		}
 	}
-	
-	$("select#occasion_type").change(function() {	
+
+	$("select#occasion_type").change(function() {
 		ShowOther();
-	});		
-	
+	});
+
 	ShowOther();
-	
+
 </script>
