@@ -1,7 +1,7 @@
 class GiftDecorator < ApplicationDecorator
   delegate_all
   decorates_association :list
-  
+
   #TODO gift decorator se nepodařil dostat do take.js.erb takže jsem všechny metody dal do modelu. Opravit, nebo vyhodit gift_decorator
   def collapse_id
     "gift#{id}"
@@ -22,9 +22,9 @@ class GiftDecorator < ApplicationDecorator
   def taken_badge
     case taken?(h.session_user)
     when "self"
-      "<span class=\"label label-success\" style=\"position: relative; left: 5px; bottom: 2px\">tvoje rezervace</span>".html_safe
+      "<span class=\"label label-success pull-right\" style=\"margin-top: 6px\">tvoje rezervace</span>".html_safe
     when true
-      "<span class=\"label label-default\" style=\"position: relative; left: 5px; bottom: 2px\">zabráno</span>".html_safe
+      "<span class=\"label label-default pull-right\" style=\"margin-top: 6px\">zabráno</span>".html_safe
     end
   end
 

@@ -1,27 +1,26 @@
-<div class="col-md-6 col-sm-6" id="<%= gift.container_id %>">
-	<div class="panel panel-<%= gift.panel_style %>" style="margin-bottom: 10px; background-color: white">
+<div class="gift col-md-6 col-sm-6" id="<%= gift.container_id %>">
+	<div class="panel panel-<%= gift.panel_style %>">
 
 		<div class="panel-heading">
-			<a data-toggle="collapse" data-target="#<%= gift.collapse_id%>" data-parent="#accordion"> <span class="shref"></span> </a>
+			<a data-toggle="collapse" data-target="#<%= gift.collapse_id%>" data-parent="#accordion"></a>
 			<div class="panel-title">
 				<span class="glyphicon glyphicon-gift">&nbsp;</span>
-				<%= link_to gift.name, edit_gift_path(gift.id), class: "clickable" if gift.list.owner?(session_user) %>
-				<%= gift.name if !gift.list.owner?(session_user) %>
-				<%= gift.taken_badge %>
+				<%= link_to gift.name, edit_gift_path(gift.id) if gift.list.owner?(session_user) %>
+					<%= gift.name if !gift.list.owner?(session_user) %>
+						<%= gift.taken_badge %>
 			</div>
 		</div>
-		<div class="panel-body collapse" id="<%= gift.collapse_id%>">
+		<div class="panel-body expand" id="<%= gift.collapse_id%>">
 			<%= gift.description_glyph %>
-			<%= gift.price_range_glyph %>
-			<p>
-				<table class="table-condensed" id="result">
-					<%= render partial: 'urls/url', collection: gift.urls %>
-				</table>
-			</p>
-			<div class="text-center">
-					<%= link_to 'zrušit mojí rezervaci', take_gift_path(gift.id), remote: true, class: "clickable btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
-					<%= link_to 'rezervovat', take_gift_path(gift.id), remote: true, class: "clickable btn-success btn-sm" if !gift.taken?%>
-			</div>
+				<%= gift.price_range_glyph %>
+						<table class="table-condensed" id="result">
+							<%= render partial: 'urls/url', collection: gift.urls %>
+						</table>
 		</div>
+		<div class="panel-footer text-center">
+			<%= link_to 'zrušit mojí rezervaci', take_gift_path(gift.id), remote: true, class: "btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
+				<%= link_to 'rezervovat', take_gift_path(gift.id), remote: true, class: "btn-success btn-sm" if !gift.taken?%>
+		</div>
+
 	</div>
 </div>

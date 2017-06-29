@@ -39,7 +39,7 @@ class ListsController < ApplicationController
   def show
     @list = List.authentic?(params[:id], current_user.id)
     if @list
-      @gifts = Gift.eager_load(:urls).where(list_id: @list.id).decorate
+      @gifts = Gift.eager_load(:urls).where(list_id: @list.id).order(:user_id).decorate
       @urls = @gifts.map(&:urls)
       @gift = Gift.new(list: @list)
       @invitees = @list.invitees.decorate #dekorace kvůli zobrazení v seznamu dárců (registrovaní v. neregistrovaní)
