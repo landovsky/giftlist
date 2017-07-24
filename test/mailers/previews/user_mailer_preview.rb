@@ -28,4 +28,7 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.recover_password_email(@user, @token)
   end
 
+  def registered_without_list_email
+    UserMailer.registered_without_list_email(User.id(1))
+  end
 end

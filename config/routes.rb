@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     get 'glyphs' => 'home#glyphs'
   end
 
+  #home
+  get '/thank_you' => 'home#thank_you'
+
   #ROOT
   get '/' => 'lists#index', constraints: LoggedInConstraint.new
   root 'home#index'

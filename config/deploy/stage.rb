@@ -10,7 +10,7 @@ set :deploy_to, "/home/ruby/giftlist/stage"
 
 append :linked_files, "config/database.yml", "config/secrets.yml", "db/stage.sqlite3"
 
-set :branch, 'master'
+set :branch, 'registered_without_list_campaign'
 
 # server-based syntax
 # ======================

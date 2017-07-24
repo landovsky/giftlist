@@ -17,7 +17,8 @@ class JsonWebToken
     def expires(token)
       decoded = self.decode(token)
       return false unless decoded
-      DateTime.strptime(decoded[:exp].to_s, '%s')
+      puts "expires #{DateTime.strptime(decoded[:exp].to_s, '%s')}"
+      puts decoded
     end
 
     def expired?(token)

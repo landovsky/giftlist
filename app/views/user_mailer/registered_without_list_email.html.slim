@@ -1,0 +1,15 @@
+div.row
+  h3: strong Všimli jsme si, že zatím nemáš žádný seznam dárků.
+  .well [style="width: 700px"]
+    p Budeme moc rádi, pokud nám kliknutím dáš najevo svůj záměr :-)
+    ol
+      li #{link_to "Seznam si chci založit hned teď!", auth_url(t: @now ), class: "underline"}
+      li Příležitost pro dárkový seznam ještě nepřišla, připomeňte se mi
+        <ul>
+          <li>#{link_to "koncem léta", auth_url(t: @end_of_summer ), class: "underline"},
+          <li>#{link_to "na podzim", auth_url(t: @end_of_autumn ), class: "underline"},
+          <li>#{link_to "před Vánocemi", auth_url(t: @before_christmas ), class: "underline"},
+        </ul>
+      li #{link_to "Seznam si založím až se mi bude chtít, už mi to nepřipomínejte.", auth_url(t: @never ), class: "underline"}
+div.row
+  = render 'footer'

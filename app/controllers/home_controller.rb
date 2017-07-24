@@ -14,6 +14,7 @@ class HomeController < ApplicationController
     @first = @gifts.first.id unless @gifts.count == 0
   end
 
-  def glyphs
-  end
+  def glyphs; end
+
+  def thank_you; end
 end

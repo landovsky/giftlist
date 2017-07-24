@@ -23,6 +23,10 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       GoogleAnalyticsApi.new.event('users', 'login - success', 'token', 555, location: request.url)
       redir = '/'
+      if token.keys.include?("answer")
+        MyLogger.logme("Kampan: lidi bez seznamu", "user: #{user.id}, odpoved: #{token[:answer]}", level: "warn")
+        redir = thank_you_path unless token[:answer] == "now"
+      end
       if token.keys.include?("list_id") && !token[:list_id].blank?
         redir = list_path(token[:list_id])
       else
