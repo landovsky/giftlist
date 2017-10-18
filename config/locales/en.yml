@@ -1,34 +1,35 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
-#en:
- # hello: "Hello world"
-
-###https://searchcode.com/file/34566400/config/locales/cz.yml
+# https://searchcode.com/file/34566400/config/locales/cz.yml
 
 en:
+  views:
+    sessions:
+      new:
+  sessions:
+    create:
+      credentials_mismatch: Kombinace přihlašovacího jména a hesla nesedí.
+  gifts:
+    i_wish: co si přeju
+  lists:
+    show:
+      invite: Pozvat
+  users:
+    profile:
+      title: Profil a změna hesla
+    update:
+      saved: Uloženo.
+    create:
+      user_exists: Zadanou emailovou adresu už známe.
+      try_login: Zkusíš se přihlásit?
+      if_you_dont_know_password: Pokud neznáš heslo, klikni
+      recieve_new_password: a my ti pomůžeme získat nové.
+    recover_password:
+      password_recovery: Pokud tvojí adresu známe, poslali jsme ti na ní email s instrukcemi k resetu hesla.
+      invalid_email: Takhle emailová adresa nevypadá. Zkusíš to ještě jednou?
   activerecord:
     attributes:
       user:
-        password: "Heslo"
+        password: Heslo
+        email: E-mail
     errors:
       models:
         user:

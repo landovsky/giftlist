@@ -18,8 +18,8 @@
 						</table>
 		</div>
 		<div class="panel-footer text-center">
-			<%= link_to 'zrušit mojí rezervaci', take_gift_path(gift.id), remote: true, class: "btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
-				<%= link_to 'rezervovat', take_gift_path(gift.id), remote: true, class: "btn-success btn-sm" if !gift.taken?%>
+			<%= link_to 'zrušit mojí rezervaci', take_gift_path(gift.id), remote: true, id: 'untake', class: "btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
+			<%= link_to 'rezervovat', take_gift_path(gift.id), remote: true, id: 'take', class: "btn-success btn-sm" if !gift.taken?%>
 		</div>
 
 	</div>

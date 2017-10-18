@@ -53,10 +53,14 @@ gem 'jbuilder', '~> 2.5'
 
 group :test do
   gem 'rspec-activemodel-mocks'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
 end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'pry-rails'
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'shoulda-matchers'

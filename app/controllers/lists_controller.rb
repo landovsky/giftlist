@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+  before_action :set_list_context, only: :show
 
   def new
   end
@@ -6,7 +7,8 @@ class ListsController < ApplicationController
   def create
     lp = list_params
     lp[:occasion] = lp[:occasion].to_i
-    lp[:occasion] = nil if lp[:occasion] == 0 #zajisti, ze se nastavi list.error.message kdyz user nevybere occasion
+    #zajisti, ze se nastavi list.error.message kdyz user nevybere occasion
+    lp[:occasion] = nil if lp[:occasion] == 0
     lp[:user_id] = current_user.id
     lp[:occasion_date] = "24-12-#{Time.now.strftime("%Y")}" if lp[:occasion] == List.occasions["vánoce"]
 
@@ -23,15 +25,18 @@ class ListsController < ApplicationController
     else
       @lists_owned = List.owned_by(current_user).decorate
       @lists_invited = List.invited(current_user).decorate
-      @selected = List.occasions[@list.occasion] if List.occasions.include?@list.occasion #nastavit vybranou prilezitost
-      @selected ||= 0 #nebo nastavit "vyberte" hodnotu
+      #nastavit vybranou prilezitost
+      @selected = List.occasions[@list.occasion] if List.occasions.include?@list.occasion
+      #nebo nastavit "vyberte" hodnotu
+      @selected ||= 0
       render 'index' and return
     end
   end
 
   def index
     @list = List.new.decorate
-    @selected = 0 #vybrat hodnotu "vyberte" occasion type
+    #vybrat hodnotu "vyberte" occasion type
+    @selected = 0
     @lists_owned = List.owned_by(current_user).decorate
     @lists_invited = List.invited(current_user).decorate
   end
@@ -55,6 +60,11 @@ class ListsController < ApplicationController
 
   def list_params
     params.require(:list).permit(:occasion, :occasion_of, :occasion_date, :id, :occasion_data)
+  end
+
+  def set_list_context
+    @list = List.authentic?(params[:id], current_user.id)
+    @list_type = @list.occasion
   end
 
 end

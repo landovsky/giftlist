@@ -9,7 +9,7 @@
 				<%= f.text_area :invitation_text, label: "Text pozvánky", value: @list.invitation_text_decorated, class: "input-sm", placeholder: "Sem napiš osobní vzkaz, který pošleme všem, které pozveš do seznamu."%>
 				<%= f.hidden_field :list_id, value: @list.id %>
 				<%= hidden_field_tag 'ga_user_id', '', :class => 'ga_user_id' %>
-				<%= f.submit "Pozvat" %>
+				<%= f.submit "Pozvat", id: "submit_invite_form" %>
 				<% end %>
 			</div>
 		</div>

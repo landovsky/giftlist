@@ -5,10 +5,10 @@
 			.panel.panel-default
 				.panel-body
 					= bootstrap_form_tag url: '/login' do |f|
-						= f.email_field :email, value: @email
-						= f.password_field :password, label: "Heslo"
+						= f.email_field :email, value: @email, id: 'email', label: User.human_attribute_name('email')
+						= f.password_field :password, label: User.human_attribute_name('password'), id: 'password'
 						= hidden_field_tag 'ga_user_id', '', :class => 'ga_user_id'
-						= f.submit "Chci dovnitř", class: 'btn btn-default pull-left'
+						= f.submit "Chci dovnitř", class: 'btn btn-default pull-left', id: 'login'
 						= link_to 'potřebuju změnit heslo', password_recovery_path, class: 'underline pull-right', style: 'margin-top: 7px'
 		.text-center
 			p.mysubtitle Pokud ještě nemáš účet, můžeš si ho vytvořit #{link_to 'zde', signup_path, class: 'opposite underline'}

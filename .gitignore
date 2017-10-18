@@ -25,6 +25,9 @@ _bin/*
 # Docker-sync
 .docker-sync/*
 
+# Rspec test persistence
+/spec/examples.txt
+
 # Deployment folders
 /current
 /releases/*

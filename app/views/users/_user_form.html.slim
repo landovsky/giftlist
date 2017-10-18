@@ -10,4 +10,4 @@
 			= f.password_field :password_confirmation, label: "Ještě jednou pro kontrolu"
 			= original_controller(@origin)
 			= hidden_field_tag 'ga_user_id', '', :class => 'ga_user_id'
-			= f.submit "Poďme"
+			= f.submit "Poďme", id: 'form_submit'

@@ -2,6 +2,8 @@ FROM rails:latest
 
 ENV APPDIR /givit
 
+RUN alias rspecx='xvfb-run -a bundle exec rspec'
+
 RUN mkdir $APPDIR
 WORKDIR $APPDIR
 

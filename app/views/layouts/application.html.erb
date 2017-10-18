@@ -31,21 +31,42 @@
 		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-	<body class="wedding">
+	<body>
 		<script>
 			$(document).ready(function() {
-	ga(function(tracker) {
-		var clientId = tracker.get('clientId');
-		var element = $('.ga_user_id');
-		element.val(clientId);
-	});
-});
+			  setTimeout( function () { changeBackground("<%= @list_type %>"); }, 600 )
+			});
+
+			$(document).ready(function() {
+				ga(function(tracker) {
+					var clientId = tracker.get('clientId');
+					var element = $('.ga_user_id');
+					element.val(clientId);
+				});
+			});
+
+			function changeBackground (scene) {
+				var available_scenes = ['svatba', 'narozeniny']
+				if (available_scenes.indexOf(scene) == -1 ) {
+					return false
+				}
+				var div = $("#background")
+				var previous_class = div.attr("class")
+				if (scene == previous_class) {
+					return false
+				}
+				div.addClass(scene);
+				div.removeClass(previous_class);
+			};
+
 		</script>
-		<div class="container" style="min-height: 800px">
-			<br />
-			<%= render 'shared/header' %>
-			<div class="col-md-8 col-centered">
-				<%= yield %>
+		<div id="background" class="svatba">
+			<div class="container" style="min-height: 800px">
+				<br />
+				<%= render 'shared/header' %>
+				<div class="col-md-8 col-centered">
+					<%= yield %>
+				</div>
 			</div>
 		</div>
 	</body>

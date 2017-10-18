@@ -4,6 +4,8 @@ class JsonWebToken
       payload[:exp] ||= exp.to_i
       #key = ENV["SECRET_KEY_BASE"]
       key = Rails.application.secrets.secret_key_base
+      raise 'Key missing' unless key
+      raise 'payload missing' unless payload
       JWT.encode(payload, key)
     end
 

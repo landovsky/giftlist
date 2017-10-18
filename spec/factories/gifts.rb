@@ -11,6 +11,5 @@ FactoryGirl.define do
     trait :reserved do
       association :donor, factory: :user
     end
-
   end
 end

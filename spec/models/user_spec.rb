@@ -1,11 +1,11 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   describe '.token_for_list' do
     let(:user)    { create(:user) }
 
-    #TODO testy: naučit se testovat JsonWebToken, který testuju v User modelu
+    # TODO: testy: naucit se testovat JsonWebToken, ktery testuju v User modelu
     it 'creates a valid token' do
       token = user.token_for_list
       expect(JsonWebToken.expired?(token)).to be false
@@ -38,5 +38,4 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
 end
