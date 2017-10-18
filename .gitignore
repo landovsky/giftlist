@@ -22,6 +22,9 @@ _bin/*
 .byebug_history
 .Gemfile.swp
 
+# Docker-sync
+.docker-sync/*
+
 # Deployment folders
 /current
 /releases/*
