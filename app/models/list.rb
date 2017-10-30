@@ -23,12 +23,15 @@ class List < ApplicationRecord
 
   def self.authentic?(list_id, user_id)
     list_id = list_id.to_i
-    return false if list_id == 0
-    @list = find_by(id: list_id)
-    return false if @list.nil? # list does not exist
-    # supplied user_id does not match list's user_id AND is not invitee
-    return false if @list.user_id != user_id && !@list.invitees.map(&:id).include?(user_id)
-    @list
+    user_id = user_id.to_i
+    return false if list_id.zero? || user_id.zero?
+    list = find_by(id: list_id)
+    return false unless list
+    allowed_users = []
+    allowed_users << list.owner.id
+    allowed_users << list.invitees.map(&:id)
+    return false unless allowed_users.flatten.include?(user_id)
+    list
   end
 
   def self.id(id)

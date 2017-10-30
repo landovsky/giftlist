@@ -33,15 +33,25 @@ RSpec.describe List, type: :model do
   end
 
   describe '.authentic?' do
-    let(:user) { create(:user_with_list) }
-    let(:list) { create(:list, :associations) }
+    let(:user)  { create(:user_with_list) }
+    let(:guest) { create(:guest) }
+    let(:list)  { create(:list, :associations) }
 
-    it 'returns list if user is owner or invitee' do
+    it 'returns list if user is owner' do
       expect(described_class.authentic?(user.lists.last.id, user.id)).to eq(user.lists.last)
+    end
+
+    it 'returns list if user is invitee' do
+      list.invite(guest)
+      expect(described_class.authentic?(list.id, guest.id)).to eq(list)
     end
 
     it 'returns false if user is not owner neither invitee' do
       expect(described_class.authentic?(list.id, user.id)).to be false
+    end
+
+    it 'returns false if integers cannot be derived from arguments' do
+      expect(described_class.authentic?('abc', 'cde')).to be false
     end
   end
 

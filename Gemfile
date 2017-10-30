@@ -56,6 +56,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'mutant-rspec'
 end
 
 group :development, :test do
