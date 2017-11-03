@@ -3,9 +3,7 @@ require 'rails_helper'
 
 RSpec.describe UserMailer, type: :mailer do
   describe '.test_email' do
-    let(:email) do
-      job = UserMailer.delay.test_email
-    end
+    let(:email) { described_class.test_email.deliver_now }
 
     it 'renders the headers' do
       expect(email.to).to eq(%w(landovsky@gmail.com))
