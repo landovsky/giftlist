@@ -11,7 +11,6 @@ class SessionsController < ApplicationController
 
     if token.nil? # neplatný token
       GoogleAnalyticsApi.new.event('users', 'login - failure', 'token', 555, location: request.url)
-      MyLogger.logme('JWT DEBUG', 'token login failed', token: params[:t], level: 'warn')
       flash[:danger] = 'Neplatný přihlašovací odkaz.'
       flash.discard
       render('new') && return

@@ -131,9 +131,7 @@ class UsersController < ApplicationController
         params[:ga_user_id] ? params[:ga_user_id] : params[:ga_user_id] = '555'
         GoogleAnalyticsApi.new.event('users', 'guest invited', @list.occasion, params[:ga_user_id], location: request.url, user_type: 'registered', list_type: @list.occasion)
       end
-      MyLogger.logme('UserMailerDebug', 'controller', list: @list, user: @user, level: 'warn')
-      #UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)
-      UserMailer.invitation_email(list: @list, user: @user).deliver_now
+      UserMailer.delay(strategy: :delete_previous_duplicate).invitation_email(list: @list, user: @user)
       @new_invitees << @user unless @list.invitees.include?(@user)
       @list.invitees << @user unless @list.invitees.include?(@user)
     end

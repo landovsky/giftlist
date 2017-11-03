@@ -39,7 +39,6 @@ class User < ApplicationRecord
 
     if token.nil? # neplatný token
       GoogleAnalyticsApi.new.event('users', "#{event} - failure", 'token', 555)
-      MyLogger.logme('JWT DEBUG', "token #{event} failed", event: event, token: token_in, level: 'warn')
       return false
     else # dohledání uživatele podle user.id z tokenu
       user = User.find_by_id(token[:user_id])
@@ -52,7 +51,6 @@ class User < ApplicationRecord
     answer = options[:answer] if options[:answer]
     options[:interval] ? interval = options[:interval] : interval ||= 'day'
     options[:n] ? n = options[:n] : n ||= 1
-    MyLogger.logme('UserMailerDebug', 'model#token_for_list', options: options.inspect, level: 'warn')
     token = JsonWebToken.encode(user_id: id, list_id: list_id, answer: answer, exp: n.send(interval).from_now.to_i)
     token
   end

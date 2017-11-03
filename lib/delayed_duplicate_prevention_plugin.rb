@@ -1,10 +1,9 @@
-#TODO delayed job - Implement Error Hook
-
+# frozen_string_literal: true
+# TODO: delayed job - Implement Error Hook
 
 # /lib/delayed_duplicate_prevention_plugin.rb
 require 'delayed_job'
 class DelayedDuplicatePreventionPlugin < Delayed::Plugin
- 
   module SignatureConcern
     extend ActiveSupport::Concern
 
@@ -14,52 +13,51 @@ class DelayedDuplicatePreventionPlugin < Delayed::Plugin
     end
 
     attr_writer :strategy
-    @@strategies = [:delete_previous_duplicate, :prevent_duplicate, :allow_duplicate]
-    
+    @@strategies = %i(delete_previous_duplicate prevent_duplicate allow_duplicate)
+
     private
+
     def add_signature
       self.signature = generate_signature
-      self.args = self.payload_object.args.to_yaml
+      self.args = payload_object.args.to_yaml
     end
 
     def generate_signature
       pobj = payload_object
-      if pobj.object.respond_to?(:id) and pobj.object.id.present?
-        sig = "#{pobj.object.class}"
-        sig += ":#{pobj.object.id}" 
+      if pobj.object.respond_to?(:id) && pobj.object.id.present?
+        sig = pobj.object.class.to_s
+        sig += ":#{pobj.object.id}"
       else
-        sig = "#{pobj.object}"
+        sig = pobj.object.to_s
       end
-      
+
       sig += "##{pobj.method_name}"
-      return sig
-    end    
-   
+      sig
+    end
+
     def manage_duplicate
-      @strategy ||= :prevent_duplicate #default strategy
+      @strategy ||= :prevent_duplicate # default strategy
       @checker = DuplicateChecker.new(self)
-      if @strategy != nil
+      unless @strategy.nil?
         @@strategies.include?(@strategy) ? send(@strategy) : raise("Only the following strategies are permitted: #{@@strategies}")
       end
     end
-  
+
     def prevent_duplicate
       if @checker.duplicate?
-        Rails.logger.warn "Found duplicate job(#{self.signature}), ignoring..."
-        errors.add(:base, "This is a duplicate")
+        Rails.logger.warn "Found duplicate job(#{signature}), ignoring..."
+        errors.add(:base, 'This is a duplicate')
       end
     end
-    
-    def allow_duplicate 
-    end
+
+    def allow_duplicate; end
 
     def delete_previous_duplicate
       if @checker.duplicate?
-        @checker.duplicates.each { |job| Delayed::Job.destroy(job.id) }
-        logger.warn "__________: #{self.class} #{__method__} DELETED #{@checker.duplicates.count} duplicate jobs"        
+        @checker.duplicates.each {|job| Delayed::Job.destroy(job.id) }
+        logger.warn "__________: #{self.class} #{__method__} DELETED #{@checker.duplicates.count} duplicate jobs"
       end
-    end   
- 
+    end
   end
 
   class DuplicateChecker
@@ -75,15 +73,15 @@ class DelayedDuplicatePreventionPlugin < Delayed::Plugin
       @duplicates = []
       enumerate_duplicates
     end
-    
+
     def enumerate_duplicates
       possible_dupes = Delayed::Job.where(signature: job.signature)
       possible_dupes = possible_dupes.where.not(id: job.id) if job.id.present?
-      result = possible_dupes.each do |possible_dupe| 
+      result = possible_dupes.each do |possible_dupe|
         duplicates << possible_dupe if possible_dupe.args == job.args
       end
     end
-    
+
     def duplicate?
       !duplicates.empty?
     end
@@ -95,7 +93,7 @@ class DelayedDuplicatePreventionPlugin < Delayed::Plugin
     end
 
     def normalize_args(args)
-      args.kind_of?(String) ? YAML.load(args) : args
+      args.is_a?(String) ? YAML.load(args) : args
     end
   end
 end

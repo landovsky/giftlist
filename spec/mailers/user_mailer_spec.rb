@@ -2,18 +2,6 @@
 require 'rails_helper'
 
 RSpec.describe UserMailer, type: :mailer do
-  describe '.test_email' do
-    let(:email) { described_class.test_email.deliver_now }
-
-    it 'renders the headers' do
-      expect(email.to).to eq(%w(landovsky@gmail.com))
-    end
-
-    it 'renders the body' do
-      expect(email.body.encoded).to match(/Bella vista/)
-    end
-  end
-
   describe '.invitation_email' do
     let(:list)  { create(:list_with_guests) }
     let(:email) { described_class.invitation_email(user: list.invitees.last, list: list).deliver_now }

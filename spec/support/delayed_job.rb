@@ -8,7 +8,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.before :each do
     # Perform DelayedJob immediatelly
-    Delayed::Worker.delay_jobs = false
+    # Delayed::Worker.delay_jobs = false
 
     # DatabaseCleaner strategies
     DatabaseCleaner.strategy = if Capybara.current_driver == :rack_test

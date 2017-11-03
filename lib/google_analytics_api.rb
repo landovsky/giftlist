@@ -1,22 +1,19 @@
+# frozen_string_literal: true
 require 'rest_client'
 
 class GoogleAnalyticsApi
-
   def event(category, action, label, client_id, options={})
     return unless GOOGLE_ANALYTICS_SETTINGS[:tracking_code].present?
-    if client_id.blank?
-      MyLogger.logme("google analytics", "no Client ID detected", level: "warn")
-      return
-    end
+    return if client_id.blank?
 
     params = {
-      v: GOOGLE_ANALYTICS_SETTINGS[:version],
+      v:   GOOGLE_ANALYTICS_SETTINGS[:version],
       tid: GOOGLE_ANALYTICS_SETTINGS[:tracking_code],
       cid: client_id,
-      t: "event",
-      ec: category,
-      ea: action,
-      el: label
+      t:   'event',
+      ec:  category,
+      ea:  action,
+      el:  label
     }
 
     params[:dl] = options[:location] if options[:location]
@@ -25,12 +22,11 @@ class GoogleAnalyticsApi
     params[:cd2] = options[:list_type] if options[:list_type]
 
     begin
-      #MyLogger.logme("google analytics", "submitted params", params: params.to_query)
+      # MyLogger.logme("google analytics", "submitted params", params: params.to_query)
       RestClient.delay(strategy: :allow_duplicate).get(GOOGLE_ANALYTICS_SETTINGS[:endpoint], params: params, timeout: 4, open_timeout: 4)
-    rescue  RestClient::Exception => e
+    rescue RestClient::Exception => e
       Rollbar.error(e)
       return false
     end
   end
-
 end
