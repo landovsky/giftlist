@@ -10,6 +10,11 @@ class UserMailer < ApplicationMailer
   # odekorovany objekt.
   # Objekty je potreba dekorovat az uvnitr UserMailer metody nebo ve view.
 
+  def test_email(_options={})
+    mail(to:      'landovsky@gmail.com',
+         subject: 'pozvánka do seznamu dárků:')
+  end
+
   def invitation_email(options={})
     @list       = options[:list] if options[:list]
     @recipient  = options[:user] if options[:user]
