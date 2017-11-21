@@ -6,7 +6,8 @@
 
 <p>
 	<%= link_to 'zpět', lists_path, class: "btn btn-default" %>&nbsp;
-	<%= link_to @list.invitations_button_label, '#', id: "invitation_btn", class: "btn btn-success" if @list.owner?(session_user) %>
+	<%= link_to @list.invitations_button_label, '#', id: "invitation_btn", class: "btn btn-success" if @list.owner?(session_user) %>&nbsp;
+  <%= link_to 'Upravit', '#', class: "btn btn-success" if @list.owner?(session_user) %>
 </p>
 
 <%= render 'users/invitations' if @list.owner?(session_user) %>

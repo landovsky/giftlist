@@ -45,22 +45,8 @@
 				});
 			});
 
-			function changeBackground (scene) {
-				var available_scenes = ['svatba', 'narozeniny']
-				if (available_scenes.indexOf(scene) == -1 ) {
-					return false
-				}
-				var div = $("#background")
-				var previous_class = div.attr("class")
-				if (scene == previous_class) {
-					return false
-				}
-				div.addClass(scene);
-				div.removeClass(previous_class);
-			};
-
 		</script>
-		<div id="background" class="svatba">
+		<div id="background" class="vanoce">
 			<div class="container" style="min-height: 800px">
 				<br />
 				<%= render 'shared/header' %>

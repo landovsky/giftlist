@@ -10,6 +10,12 @@ class ListDecorator < ApplicationDecorator
     end
   end
 
+  def edit_button
+    if object.owner?(h.current_user.id)
+      "<span class=\"glyphicon glyphicon-pencil pull-right\"></span>".html_safe
+    end
+  end
+
   def occasion_date_f
     occasion_date.strftime("%D") if occasion_date != nil
   end

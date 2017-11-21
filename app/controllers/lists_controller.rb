@@ -35,7 +35,7 @@ class ListsController < ApplicationController
 
   def index
     @list = List.new.decorate
-    #vybrat hodnotu "vyberte" occasion type
+    # vybrat hodnotu "vyberte" occasion type
     @selected = 0
     @lists_owned = List.owned_by(current_user).decorate
     @lists_invited = List.invited(current_user).decorate

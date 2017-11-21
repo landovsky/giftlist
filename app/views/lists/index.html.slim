@@ -1,0 +1,20 @@
+= render "shared/alert-box"
+
+h3.mytitle
+  |Seznamy dárků
+
+= render partial: 'list_form', locals: { list: @list } if !current_user.guest?
+.panel.panel-default
+	.panel-heading.mytitle
+		|Moje
+
+	.panel-body
+		= render partial: 'list', collection: @lists_owned
+		= render partial: 'list_empty', locals: { type: 'owned' } if @lists_owned.blank?
+
+.panel.panel-default
+	.panel-heading.mytitle
+	 |Cizí
+	.panel-body
+		= render partial: 'list', collection: @lists_invited
+		= render partial: 'list_empty', locals: { type: 'invited' } if @lists_invited.blank?

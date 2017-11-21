@@ -91,12 +91,22 @@ a.underline {
 }
 
 .mytitle {
-  color: white;
+  color: #163752;  
   font-weight: bold;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
 }
 
 .mysubtitle {
-  color: white;
+  color: #163752;
+  text-shadow: 0 1px 5px rgba(255, 255, 255, 0.8);
+}
+
+.giftbox {
+  color: #af1f1f;
+}
+
+.givit {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -163,12 +173,6 @@ h5 {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-blend-mode: color;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
 }
 
 .narozeniny {
@@ -177,12 +181,14 @@ h5 {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-blend-mode: color;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
+}
+
+.vanoce {
+  background-image: url(image-path('xmax-givit_lg.jpg'));
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .clickable {

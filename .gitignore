@@ -22,8 +22,9 @@ _bin/*
 .byebug_history
 .Gemfile.swp
 
-# Docker-sync
-.docker-sync/*
+# Hidden files and folders, except
+.*/*
+!/.gitignore
 
 # Rspec test persistence
 /spec/examples.txt

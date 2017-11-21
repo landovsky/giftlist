@@ -3,7 +3,7 @@ version: "2"
 volumes:
   givit-sync:
     external: true
-  gem_store_242:
+  gem_store_240:
     external: true
 
 services:
@@ -18,6 +18,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - gem_store_242:/gems
+      - gem_store_240:/gems
       - .:/givit
       - givit-sync:/givit:nocopy
