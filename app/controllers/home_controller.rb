@@ -10,7 +10,7 @@ class HomeController < ApplicationController
       ['link','Když máš jasno v tom co si přeješ.','přidej odkazy do e-shopů']
     ]
 
-    @gifts = Gift.preload(:urls).where(id: [22,3,2,23]).decorate
+    @gifts = Gift.preload(:urls).where(id: [100,4,103,104,99]).decorate
     @first = @gifts.first.id unless @gifts.count == 0
   end
 
