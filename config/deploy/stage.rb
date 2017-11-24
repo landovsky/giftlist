@@ -1,9 +1,9 @@
-set :bundle_without, 'development'
+set :bundle_without, %w{development}.join(' ')
 server '37.205.8.146', user: 'ruby', roles: %w{app db web}
 
 set :ssh_options, {
   #forward_agent: true,
-  keys: "~/.ssh/mac-home.pub"
+  keys: "~/.ssh/big-mac.pub"
 }
 
 set :deploy_to, "/home/ruby/giftlist/stage"
