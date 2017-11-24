@@ -13,6 +13,8 @@ class List < ApplicationRecord
   validates :occasion_of, presence: { message: 'Kdo je obdarovaný?' }
   validates :occasion_date, presence: { message: 'Kdy se slaví?' }
 
+  scope :active, -> { where("occasion_date > ?", 10.days.ago) }
+
   def self.owned_by(user_id)
     where(user_id: user_id)
   end

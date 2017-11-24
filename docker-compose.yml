@@ -8,9 +8,9 @@ volumes:
 
 services:
   web:
+    #image: web:ruby
     build:
       context: .
-      #dockerfile: docker/Dockerfile-web-dev
     command: ./start.sh
     #env_file: .env
     tty: true

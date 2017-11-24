@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list_context, only: :show
+  before_action :set_list_context, only: [:show, :destroy]
 
   def new
   end
@@ -30,6 +30,16 @@ class ListsController < ApplicationController
       #nebo nastavit "vyberte" hodnotu
       @selected ||= 0
       render 'index' and return
+    end
+  end
+
+  def destroy
+    if @list.destroy
+      flash[:success] = "Tvůj seznam jsme smazali."
+      redirect_to root_path
+    else
+      flash[:success] = "chyba"
+      redirect_to list_path(@list.id)
     end
   end
 

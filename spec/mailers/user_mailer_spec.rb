@@ -16,6 +16,7 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   describe '.reservations_email' do
+    
     let(:recipient) { create(:user) }
     let(:email)     { described_class.reservations_email(recipient).deliver_now }
 
@@ -37,6 +38,16 @@ RSpec.describe UserMailer, type: :mailer do
         expect(email.body.encoded).to match(/Pro p=C5=99ipomenut=C3=AD ti pos=C3=ADl=C3=A1me seznam/)
       end
     end
+
+    context 'when user has reservations from past occasions' do
+      let(:list)  { create(:list_with_guests, occasion_date: 2.weeks.ago) }
+      let(:email) { described_class.reservations_email(list.invitees.last).deliver_now }
+
+      it 'does not render any gifts' do
+        expect(email.body.encoded).to match(/U=C5=BE nem=C3=A1=C5=A1 =C5=BE=C3=A1dn=C3=A9 rezervace/)
+      end
+    end
+
   end
 
   describe '.recover_password_email' do

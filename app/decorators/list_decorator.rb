@@ -10,6 +10,7 @@ class ListDecorator < ApplicationDecorator
     end
   end
 
+  # TODO: review jestli budu pozivat (tuzticka)
   def edit_button
     if object.owner?(h.current_user.id)
       "<span class=\"glyphicon glyphicon-pencil pull-right\"></span>".html_safe

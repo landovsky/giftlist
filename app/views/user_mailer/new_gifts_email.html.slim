@@ -1,0 +1,21 @@
+div.row
+  p style="margin-top: 30px"
+	  h4
+       strong #{@list.owner.name} přidal/a nový dárek na seznam #{link_to @list.occasion_name, auth_url(t: @token ), style: "text-decoration: underline;"}.
+
+div.row
+  = render partial: 'gifts/gift_mailer', locals: { gift: @gift }
+
+div.row.well
+  h4
+    |Ještě o sobě dáme vědět.
+  |Na tuto adresu ti pošleme email, když :
+  
+  ul
+    li
+      | si zarezervuješ dárek
+    li
+      | přiblíží datum události pro kterou byl seznam vytvořen
+
+div.row
+	= render 'footer'

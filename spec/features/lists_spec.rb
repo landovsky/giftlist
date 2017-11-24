@@ -29,4 +29,15 @@ RSpec.feature 'Sessions', type: :feature do
 
     expect(page).to have_selector(:link_or_button, 'neco@neco.neco')
   end
+
+  scenario 'User can delete his own list', js: true do
+    expect(page).to have_text('jájenjá')
+    click_link_or_button 'narozeniny'
+    accept_confirm { click_link 'smazat' }
+
+    expect(page).not_to have_text('jájenjá')
+  end
+
+  scenario 'User cannot delete list of other' do
+  end
 end

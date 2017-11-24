@@ -17,6 +17,6 @@ module Giftlist
     config.autoload_paths << Rails.root.join('lib')
     #config.active_job.queue_adapter = :delayed_job
     config.active_job.queue_adapter = :async
-    config.web_console.whitelisted_ips = '172.19.0.1'
+    config.web_console.whitelisted_ips = '172.19.0.1' if Rails.env == :development
   end
 end

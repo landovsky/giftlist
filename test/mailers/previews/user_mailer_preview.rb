@@ -5,11 +5,18 @@ class UserMailerPreview < ActionMailer::Preview
   def invitation_email
     rand_list = List.all.map(&:id).sample
     #@list = List.find_by(id: rand_list)
-    @list = List.id(1005).decorate
+    @list = List.load_random
     rand_recipient = @list.invitees.map(&:id).sample
     #@recipient = User.find_by(id: rand_recipient).decorate
     @recipient = User.id(2)
     UserMailer.invitation_email(list: @list, user: @recipient)
+  end
+
+  def new_gifts_email_preview
+    gift = Gift.load_random
+    donor = gift.list.invitees.first
+    token = donor.token_for_list(list_id: gift.list.id)
+    UserMailer.new_gifts_email(recipient: donor, gift: gift, token: token)
   end
 
   def reservations_email

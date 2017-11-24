@@ -6,6 +6,10 @@ class Gift < ApplicationRecord
   validates_presence_of :list
   validates :name, presence: { message: "něco si přeju, ale jak se to jen řekne..." }
 
+  scope :recent, -> { where("created_at > ?", 2.minutes.ago) }
+
+  after_create :notify_donors
+
   def associate_to_list(list_id)
     if List.find_by(id: list_id) == nil
       return false
@@ -77,4 +81,13 @@ class Gift < ApplicationRecord
     "<span class=\"label label-default\" style=\"position: relative; left: 5px; bottom: 2px\">zabráno</span>".html_safe if taken?
   end
 
+  def notify_donors
+    return if list.invitees.blank?
+    list.invitees.each do |invitee|
+      # TODO: udelat vyber token/bezna url dynamicky
+      # TODO: optimalizovat - pri desitkach invitees to muze chvilku trvat
+      token = invitee.token_for_list(list_id: list.id, n: 10)
+      UserMailer.delay.new_gifts_email(recipient: invitee, token: token, gift: self)
+    end
+  end
 end

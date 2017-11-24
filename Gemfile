@@ -54,7 +54,9 @@ gem 'jbuilder', '~> 2.5'
 group :test do
   gem 'rspec-activemodel-mocks'
   gem 'capybara'
-  #gem 'capybara-webkit'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'mutant-rspec'
 end
@@ -89,3 +91,4 @@ gem 'net-ssh', '>=3.0.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'X', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#gem 'tzinfo-data'

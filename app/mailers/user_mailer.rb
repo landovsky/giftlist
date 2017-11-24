@@ -22,9 +22,17 @@ class UserMailer < ApplicationMailer
          subject:  "pozvánka do seznamu dárků: #{@list.occasion_name} / #{@list.occasion_of}")
   end
 
+  def new_gifts_email(recipient:, gift:, token:)
+    @recipient = recipient
+    @gift      = gift.decorate
+    @list      = gift.list.decorate
+    @token     = token
+    mail(to: @recipient.email, subject: "podívej co nového si přeje #{@list.owner.full_name}")
+  end
+
   def reservations_email(recipient_id)
     @recipient = User.id(recipient_id)
-    @lists = List.joins(:gifts).where(gifts: {user_id: @recipient.id}).distinct.decorate
+    @lists = List.active.joins(:gifts).where(gifts: {user_id: @recipient.id}).distinct.decorate
     @gifts = Gift.left_joins(:list, :urls, :donor).where(gifts: {user_id: @recipient.id})
     mail(to: @recipient.email, subject: 'aktuální rezervace dárků')
   end
