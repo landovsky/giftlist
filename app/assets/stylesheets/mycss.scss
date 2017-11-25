@@ -27,7 +27,7 @@
 
 }
 
-a.opposite {
+.opposite {
   color: white;
 }
 
@@ -91,14 +91,14 @@ a.underline {
 }
 
 .mytitle {
-  color: #163752;  
+  color: white;  
   font-weight: bold;
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2px 2px #303030;
 }
 
 .mysubtitle {
-  color: #163752;
-  text-shadow: 0 1px 5px rgba(255, 255, 255, 0.8);
+  color: white;
+  text-shadow: 2px 2px 2px #303030;
 }
 
 .giftbox {

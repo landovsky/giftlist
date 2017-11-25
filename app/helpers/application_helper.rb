@@ -8,7 +8,7 @@ module ApplicationHelper
     when "stage"
       host = "http://stage.givit.cz/"
     when "production"
-      host = "http://www.givit.cz/"
+      host = "https://www.givit.cz/"
     end
   end
 

@@ -39,7 +39,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
 
-  config.action_controller.asset_host = "http://www.givit.cz/"
+  config.action_controller.asset_host = "https://www.givit.cz/"
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
