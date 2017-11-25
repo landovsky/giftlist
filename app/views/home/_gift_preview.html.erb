@@ -17,10 +17,6 @@
 							<%= render partial: 'url_preview', collection: gift.urls, as: :url %>
 						</table>
 					</p>
-					<div class="text-center">
-						<%= link_to 'zrušit mojí rezervaci', '#', class: "clickable btn-warning btn-sm" if gift.taken?(session_user) == "self"%>
-							<%= link_to 'rezervovat', '#', class: "clickable btn-success btn-sm" if !gift.taken?%>
-					</div>
 		</div>
 	</div>
 </div>

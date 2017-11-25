@@ -1,9 +1,10 @@
 - if @gifts.count > 0
   .row
     .col-xs-12.col-md-6.col-lg-6.col-sm-6.pull-left
-      h1.mytitle.shadow Dárkové seznamy, jednoduše.
+      h1.mytitle.shadow Dárkové seznamy, #{link_to 'jednoduše', signup_path, class:"underline opposite"}.
       h3.mysubtitle.shadow K narozeninám, Vánocům, svatbě i jiným příležitostem.
-    .col-xs-12.col-md-6.col-lg-6.col-sm-6.box.pull-right style="margin-top: 30px"
+    .col-xs-12.col-md-6.col-lg-6.col-sm-6.box.pull-right style="margin-top: -20px"
+      h3.mytitle.shadow Z přání uživatelů..
       == render 'carousel'
 - else
   h1.mytitle.shadow Dárkové seznamy, jednoduše.
