@@ -4,7 +4,7 @@ module ApplicationHelper
   def asset_host
     case Rails.env
     when "development"
-      host = "http://localhost:3000/"
+      host = "http://localhost:#{ENV['LOCAL_PORT']}/"
     when "stage"
       host = "http://stage.givit.cz/"
     when "production"

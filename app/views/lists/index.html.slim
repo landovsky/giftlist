@@ -5,7 +5,7 @@ h3.mytitle
 
 = render partial: 'list_form', locals: { list: @list } if !current_user.guest?
 .panel.panel-default
-	.panel-heading.mytitle
+	.panel-heading
 		|Moje
 
 	.panel-body
@@ -13,7 +13,7 @@ h3.mytitle
 		= render partial: 'list_empty', locals: { type: 'owned' } if @lists_owned.blank?
 
 .panel.panel-default
-	.panel-heading.mytitle
+	.panel-heading
 	 |Cizí
 	.panel-body
 		= render partial: 'list', collection: @lists_invited

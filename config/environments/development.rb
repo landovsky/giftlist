@@ -20,11 +20,11 @@ config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.preview_path = 'test/mailers/previews'
 
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: "localhost:#{ENV['LOCAL_PORT']}" }
+  Rails.application.routes.default_url_options[:host] = "localhost:#{ENV['LOCAL_PORT']}"
 
   #config.action_controller.asset_host = "http://stage.givit.cz/"
-  config.action_controller.asset_host = "http://localhost:3000/"
+  config.action_controller.asset_host = "http://localhost:#{ENV['LOCAL_PORT']}/"
 
 
   # Do not eager load code on boot.
