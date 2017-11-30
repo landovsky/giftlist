@@ -9,9 +9,13 @@ class UrlsController < ApplicationController
   end
 
   def create
-    #TODO URLs ošetřit situaci kdy se nevygeneruje objekt (což způsobí problémy při rendrování)
-    @data = LinkThumbnailer.generate(url_match(url_params[:data]))
-
+    begin
+      @data = LinkThumbnailer.generate(url_match(url_params[:data]))
+    rescue Errno::EADDRNOTAVAIL, LinkThumbnailer::HTTPError, NoMethodError => error
+      MyLogger.logme('LinkThumbnailer', 'chyba generování url', url: url_params[:data], error: error, level: 'warn')
+      render 'create_error' and return
+    end
+    
     #TODO URLs zanořit vytvoření digestu do modelu Url
     @url = Url.new(data: @data.as_json, gift_id: url_params[:gift_id])
     @url.digest =  Digest::SHA1.hexdigest(url_match(url_params[:data]))

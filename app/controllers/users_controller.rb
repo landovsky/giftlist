@@ -145,8 +145,8 @@ class UsersController < ApplicationController
       raise 'List not authentic'
       redirect_to '/' && return
     end
-    # TODO: ošetřit že na to někdo klikne dvakrát a už nebude co mazat
-    InvitationList.find_by(user_id: params[:user_id], list_id: @list.id).destroy
+    
+    InvitationList.find_by(user_id: params[:user_id], list_id: @list.id)&.destroy
     @invitee_id = params[:user_id]
   end
 
