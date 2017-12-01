@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   #home
   get '/thank_you' => 'home#thank_you'
 
+  # test product page
+  get '/test_product' => 'home#test_product'
+
   #ROOT
   get '/' => 'lists#index', constraints: LoggedInConstraint.new
   root 'home#index'

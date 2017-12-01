@@ -2,40 +2,14 @@
   .panel-body
     .col-md-10.col-lg-8
       div.row
-        = bootstrap_form_for(@gift) do |f|
-          = f.text_field :name, label: t('gifts.i_wish'), class: "input-sm", placeholder: ""
+        = bootstrap_form_for(@gift, :html => {:id => "giftform"}) do |f|
+          = f.text_field :name, id: 'gift_name', label: t('gifts.i_wish'), class: "input-sm", placeholder: ""
           = f.text_area :description, label: "podrobnosti", class: "input-sm", placeholder: "popis podrobností"
           = f.text_field :price_range, label: "cenové rozpětí", class: "input-sm", placeholder: "350..450 Kč"
-          = f.hidden_field :list_id, value: @gift.list_id
-          = f.primary "uložit", id: "submit_gift_form", class: "btn btn-success"
-          = link_to 'smazat', @gift, :method => :delete, :confirm => "Určitě?" if current_page?(action: 'edit')
+          = f.hidden_field :list_id, value: @list.id
+        = render partial: 'gifts/url_form'
+        a.btn.btn-success#submit_giftform uložit
+        = link_to 'smazat', @gift, :method => :delete, :confirm => "Určitě?" if current_page?(action: 'edit')
       div.row
-        = render partial: 'gifts/url_form' if current_controller("gifts")
         table.table-condensed#result
           = render partial: 'urls/url', collection: @urls if current_controller("gifts")
-
-javascript:
-  $(document).ready 
-  $("#urlform").submit( function(event) {   // zamezí odeslání prázdného formu
-      url = $("#url");
-      if ( url.val().length === 0 ) {
-        url.fadeOut(500);
-        url.fadeIn(500);
-        $("#url").removeClass('waiting');
-        event.preventDefault();
-      }
-    });
-
-    $('#url').on('paste', function () {       // submit on paste
-        var element = this;
-        setTimeout(function () {
-          var text = $(element).val();
-          $("#url").addClass('waiting');
-          $("#urlform").submit();
-        }, 100);
-    });
-
-    $('#url').on('blur', function () {        // submit on lost focus (klikne vedle)
-        $("#url").addClass('waiting');
-        $("#urlform").submit();
-      });

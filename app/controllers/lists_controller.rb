@@ -76,5 +76,4 @@ class ListsController < ApplicationController
     @list = List.authentic?(params[:id], current_user.id)
     @list_type = @list.occasion
   end
-
 end

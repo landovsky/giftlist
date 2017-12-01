@@ -14,9 +14,11 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require bootstrap.min
 //= require bootstrap-sprockets
 //= require moment
 //= require bootstrap-datetimepicker
 //= require moment/cs
+//= require url.js
+//= require list.js
+//= require google_analytics.js
 //= require_tree .

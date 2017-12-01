@@ -5,6 +5,7 @@ class List < ApplicationRecord
   has_many :invitees, through: :invitation_lists, source: :user
   has_many :invitation_lists, dependent: :destroy
   has_many :gifts, dependent: :destroy
+  has_many :urls
 
   enum occasion: { 'svatba' => 1, 'narozeniny' => 2, 'vánoce' => 3, 'jiná' => 99 }
 

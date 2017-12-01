@@ -3,7 +3,6 @@ url = $("#<%= j (@url.digest)%>")
 $("#url").removeClass('waiting');
 if( url.length === 0 ) {
 	$('#result').append("<%= j (render @url, as: :url) %>");
-	alert("Odkaz jsme uložili.")
 	} else {
 	url.fadeIn(500);
 	url.animate( { opacity: 0.25 }, 200, function() {

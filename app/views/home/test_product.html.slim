@@ -1,0 +1,19 @@
+html
+  head
+    title Test product
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    meta property="og:title" content="testovací produkt"
+    meta property="og:type" content="product"
+    meta property="og:url" content="http://www.givit.cz/test_product"
+    meta property="og:image" content="#{asset_path('givit.png')}"
+  body
+    div
+      div.container style="min-height: 800px"
+        div.col-md-8.col-centered
+          p testovací produkt
+          p
+            = image_tag(asset_path('givit.png'))
+

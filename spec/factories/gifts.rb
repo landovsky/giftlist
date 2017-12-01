@@ -6,6 +6,9 @@ FactoryGirl.define do
 
     trait :associations do
       association :list, factory: :list
+      after(:create) do |gift|
+        gift.urls << create(:url)
+      end
     end
 
     trait :reserved do

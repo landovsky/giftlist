@@ -90,4 +90,8 @@ class Gift < ApplicationRecord
       UserMailer.delay.new_gifts_email(recipient: invitee, token: token, gift: self)
     end
   end
+
+  def bind_loose_urls
+    Url.bind_loose(list_id: list_id, gift_id: id)
+  end
 end

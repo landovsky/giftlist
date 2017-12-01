@@ -1,4 +1,6 @@
 class GiftsController < ApplicationController
+  before_action :set_list_context, only: [:new, :create]
+
   def index
   end
 
@@ -18,8 +20,10 @@ class GiftsController < ApplicationController
     @gift = Gift.new(gift_params)
 
     if @gift.save
+      @gift.bind_loose_urls
       redirect_to list_path(id: @gift.list_id)
     else
+      @urls ||= @list.urls 
       render 'new'
     end
   end
@@ -72,6 +76,11 @@ class GiftsController < ApplicationController
 
   def gift_params
     params.require(:gift).permit(:name, :description, :price_range, :list_id)
+  end
+
+  def set_list_context
+    @list = List.authentic?(gift_params[:list_id], current_user.id).decorate
+    @list_type = @list.occasion
   end
 
 end

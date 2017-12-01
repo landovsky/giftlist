@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
-  factory :list do
+  factory :list, traits: [:associations] do
     id { generate :list_id }
     occasion 2 # narozeniny
     occasion_of 'jájenjá'
@@ -15,6 +16,13 @@ FactoryGirl.define do
 
     trait :associations do
       association :owner, factory: :user
+    end
+
+    trait :loose_url do
+      association :owner, factory: :user
+      after(:create) do |list|
+        list.urls << FactoryGirl.create(:url)
+      end
     end
   end
 end

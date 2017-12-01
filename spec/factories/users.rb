@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :user do
-    id { generate :user_id }
+    id        { generate :user_id }
     name     'John'
     surname  'Doe'
     role     2

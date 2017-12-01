@@ -17,9 +17,9 @@ class UrlsController < ApplicationController
     end
     
     #TODO URLs zanořit vytvoření digestu do modelu Url
-    @url = Url.new(data: @data.as_json, gift_id: url_params[:gift_id])
+    @url = Url.new(data: @data.as_json, gift_id: url_params[:gift_id], list_id: url_params[:list_id])
     @url.digest =  Digest::SHA1.hexdigest(url_match(url_params[:data]))
-    @list = @url.gift.list #kvůli podmíněnému zobrazení ikony koše
+    @list = List.find(url_params[:list_id]) #kvůli podmíněnému zobrazení ikony koše
 
     #TODO URLs udělat un-happy cestu když se to neuloží
     if !@url.save
@@ -29,14 +29,13 @@ class UrlsController < ApplicationController
   end
 
   def destroy
-    @url = Url.joins(:gift => :list).where( urls: {id: params[:id]}, lists: {user_id: current_user.id}).limit(1)
-    if @url.empty?
+    @url = Url.id(params[:id])
+    if @url.authentic?(current_user)
+      @url.destroy
+    else
       logger.debug "URL#destroy: supplied params not authentic"
       #TODO URLs return nezastaví zpracování a šablona hází chybu (nemá proměnnou)
       return
-    else
-      @url.first.destroy
-      @url = @url.first #konverze ActiveRecord::Relation objektu do Url objektu
     end
   end
 
@@ -52,7 +51,7 @@ class UrlsController < ApplicationController
 
   private
   def url_params
-    params.require(:url).permit(:data, :digest, :id, :gift_id)
+    params.require(:url).permit(:data, :digest, :id, :gift_id, :list_id)
   end
 
 end

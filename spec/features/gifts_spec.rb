@@ -10,13 +10,13 @@ RSpec.feature 'Gifts', type: :feature do
     let!(:gift) { create(:gift, name: 'koloběžka', list_id: list.id) }
     before      { login(user) }
 
-    scenario 'add gift to his list' do
+    scenario 'add gift to his list', js: true do
       click_link_or_button 'narozeniny'
 
       fill_in 'gift_name',          with: 'můj dárek'
       fill_in 'gift_description',   with: 'co bych si přál'
       fill_in 'gift_price_range',   with: 'za 200 kila'
-      click_button 'submit_gift_form'
+      first('#submit_giftform').click
 
       expect(current_path).to include lists_path
       expect(page).to have_selector(:link_or_button, 'můj dárek')
@@ -24,22 +24,20 @@ RSpec.feature 'Gifts', type: :feature do
       expect(page).to have_text('za 200 kila')
     end
 
-    scenario 'update existing gift' do
+    scenario 'update existing gift', js: true do
       click_link_or_button 'narozeniny'
       click_link_or_button 'koloběžka'
 
       fill_in 'gift_name',          with: 'můj dárek'
       fill_in 'gift_description',   with: 'co bych si přál'
       fill_in 'gift_price_range',   with: 'za 200 kila'
-      click_button 'submit_gift_form'
+      first('#submit_giftform').click
 
       expect(current_path).to include lists_path
       expect(page).to have_selector(:link_or_button, 'můj dárek')
       expect(page).to have_text('co bych si přál')
       expect(page).to have_text('za 200 kila')
     end
-
-    scenario 'add url to existing gift'
 
     scenario 'reserve gift', js: true do
       click_link_or_button 'narozeniny'
