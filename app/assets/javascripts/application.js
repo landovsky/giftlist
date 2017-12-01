@@ -20,5 +20,4 @@
 //= require moment/cs
 //= require url.js
 //= require list.js
-//= require google_analytics.js
 //= require_tree .
