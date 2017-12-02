@@ -47,6 +47,15 @@ class UserMailer < ApplicationMailer
     mail(to: user.email, subject: 'Vzkaz z Givit.cz: založíme seznam dárků?')
   end
 
+  def christmas_email(user)
+    @ans_a = user.token_for_list(camp: 'xm17', answer: 'kost',  interval: 'days', n: 10)
+    @ans_b = user.token_for_list(camp: 'xm17', answer: 'jidlo', interval: 'days', n: 10)
+    @ans_c = user.token_for_list(camp: 'xm17', answer: 'darky', interval: 'days', n: 10)
+    @never = user.token_for_list(camp: 'xm17', answer: 'never', interval: 'days', n: 10)
+
+    mail(to: user.email, subject: 'Vzkaz z Givit.cz: co si přeješ pod stromeček?')
+  end
+
   # per seznam - pro lidi se seznamem bez darku
   def list_without_gifts_email; end
 

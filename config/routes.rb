@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   #home
   get '/thank_you' => 'home#thank_you'
+  get '/unsubscribed' => 'home#unsubscribed'
 
   # test product page
   get '/test_product' => 'home#test_product'

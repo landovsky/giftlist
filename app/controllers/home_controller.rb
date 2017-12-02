@@ -21,4 +21,6 @@ class HomeController < ApplicationController
   def glyphs; end
 
   def thank_you; end
+
+  def unsubscribed; end
 end

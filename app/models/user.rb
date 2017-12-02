@@ -49,9 +49,10 @@ class User < ApplicationRecord
     # TODO: tokeny: vytáhnout n.send(interval)... do JsonWebToken
     list_id = options[:list_id] if options[:list_id]
     answer = options[:answer] if options[:answer]
+    campaign = options[:camp] if options[:camp]
     options[:interval] ? interval = options[:interval] : interval ||= 'day'
     options[:n] ? n = options[:n] : n ||= 1
-    token = JsonWebToken.encode(user_id: id, list_id: list_id, answer: answer, exp: n.send(interval).from_now.to_i)
+    token = JsonWebToken.encode(user_id: id, list_id: list_id, answer: answer, camp: campaign, exp: n.send(interval).from_now.to_i)
     token
   end
 

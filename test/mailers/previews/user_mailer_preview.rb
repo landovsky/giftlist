@@ -35,6 +35,11 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.recover_password_email(@user, @token)
   end
 
+  def christmas_email_preview
+    user = User.id(2)
+    UserMailer.christmas_email(user)
+  end
+
   def registered_without_list_email
     UserMailer.registered_without_list_email(User.id(1))
   end

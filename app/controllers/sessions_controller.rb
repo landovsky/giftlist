@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
     if token.nil? # neplatný token
       GoogleAnalyticsApi.new.event('users', 'login - failure', 'token', 555, location: request.url)
-      flash[:danger] = 'Neplatný přihlašovací odkaz.'
+      flash[:danger] = 'Neplatný přihlašovací odkaz. Zkuste přihlášení emailem / heslem, případně reset hesla.'
       flash.discard
       render('new') && return
     # dohledani uzivatele podle user.id z tokenu
@@ -24,19 +24,20 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       GoogleAnalyticsApi.new.event('users', 'login - success', 'token', 555, location: request.url)
       redir = '/'
-      if token.keys.include?('answer')
-        MyLogger.logme('Kampan: lidi bez seznamu', "user: #{user.id}, odpoved: #{token[:answer]}", level: 'warn')
-        redir = thank_you_path unless token[:answer] == 'now'
-      end
       if token.keys.include?('list_id') && !token[:list_id].blank?
         redir = list_path(token[:list_id])
+      elsif token.keys.include?('answer') && token[:answer] == 'never'
+        redir = unsubscribed_path
+      elsif token.keys.include?('answer') && !token[:answer].blank?
+        MyLogger.logme("Kampan: #{token[:camp]}", "user: #{user.id}, odpoved: #{token[:answer]}", level: 'warn')
+        redir = thank_you_path unless token[:answer] == 'now'
       else
-        MyLogger.logme('SECURITY', 'přístup do systému s tokenem bez list_id', level: 'warn')
+        MyLogger.logme('SECURITY', 'přístup do systému s tokenem bez list_id', token: token, level: 'warn')
       end
       redirect_to redir
     # neplatný token nebo neexistující uživatel
     else
-      flash[:danger] = 'Neplatný přihlašovací odkaz.'
+      flash[:danger] = 'Neplatný přihlašovací odkaz. Zkuste přihlášení emailem / heslem, případně reset hesla.'
       flash.discard
       render 'new'
     end

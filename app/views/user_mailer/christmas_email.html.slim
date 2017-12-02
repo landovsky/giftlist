@@ -1,0 +1,27 @@
+div.row [style="max-width: 700px"]
+  h3: strong Vánoční dárky, které potěší.
+
+  h4
+    | Provedli jsme rozsáhlý globální průzkum mezi vánočními andílky. Ptali jsme se, co nejvíce přispívá ke spokojenosti lidí pod vánočním stromečkem.
+  h4
+    | Pohled andělů už známe,
+    strong<
+      | ale zajímá nás jak to vidíte vy, lidé.
+
+  .well [style="width: 700px"]
+    p
+      strong Chcete-li se průzkumu zúčastnit, klikněte na jednu z odpovědí:
+    p K náladě u nás nejvíc přispěje, když:
+    p.tab a) #{link_to 'dědovi z krku vytáhneme alespoň jednu rybí kost', auth_url(t: @ans_a), class: 'underline' },
+    p.tab b) #{link_to 'se pořádně nacpeme salátu, kapra, štrůdlu a vánočního cukroví', auth_url(t: @ans_b), class: 'underline' }
+    p.tab c) #{link_to 'pod stromečkem najdu dárky, co mě potěší', auth_url(t: @ans_c), class: 'underline' },
+    br
+    h4
+      | Jak už to u reklam bývá, správná odpověd je
+      strong<
+        | c).
+    h4 S vánočními dárky umíme pomoci, #{link_to 'založ', 'https://www.givit.cz/', class: 'underline' } si vánoční seznam na Givit.cz.
+div.row
+  = render 'footer'
+div.row
+  p Reklamní e-maily z Givit.cz už #{link_to 'nechci', auth_url(t: @never), class: 'underline' } dostávat.
