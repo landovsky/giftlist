@@ -24,6 +24,11 @@ RSpec.describe Url, type: :model do
     end
   end
 
+  describe '.url_host' do
+    it 'parses host from uri' do
+    end
+  end
+
   describe '.authentic?' do
       let(:gift_with_url)       { create(:gift, :associations) }
       let(:gift_with_url_cizi)  { create(:gift, :associations) }
@@ -57,9 +62,5 @@ RSpec.describe Url, type: :model do
         expect(url_with_gift_cizi.authentic?(user)).to be false
       end
     end
-  end
-
-  describe 'self.bind_loose' do
-    skip 'missing'
   end
 end
