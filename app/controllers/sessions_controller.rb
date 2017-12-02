@@ -27,6 +27,7 @@ class SessionsController < ApplicationController
       if token.keys.include?('list_id') && !token[:list_id].blank?
         redir = list_path(token[:list_id])
       elsif token.keys.include?('answer') && token[:answer] == 'never'
+        MyLogger.logme("Kampan: #{token[:camp]}", "user: #{user.id}, odpoved: #{token[:answer]}", level: 'warn')
         redir = unsubscribed_path
       elsif token.keys.include?('answer') && !token[:answer].blank?
         MyLogger.logme("Kampan: #{token[:camp]}", "user: #{user.id}, odpoved: #{token[:answer]}", level: 'warn')
