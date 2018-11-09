@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'pg', '0.21.0'
+
 # MojeApp extras
 gem 'link_thumbnailer'
 gem 'jwt'
@@ -32,7 +34,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
 # Use Puma as the app server
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

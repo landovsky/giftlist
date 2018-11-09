@@ -37,3 +37,4 @@ revisions.log
 rolled-back-release*
 shared/*
 stage/*
+.env

@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20171201092743) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 20171201092743) do
     t.datetime "updated_at"
     t.string   "signature"
     t.text     "args"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
   create_table "gifts", force: :cascade do |t|
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 20171201092743) do
     t.string   "price_range"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["list_id"], name: "index_gifts_on_list_id"
-    t.index ["user_id"], name: "index_gifts_on_user_id"
+    t.index ["list_id"], name: "index_gifts_on_list_id", using: :btree
+    t.index ["user_id"], name: "index_gifts_on_user_id", using: :btree
   end
 
   create_table "invitation_lists", force: :cascade do |t|
@@ -46,21 +49,21 @@ ActiveRecord::Schema.define(version: 20171201092743) do
     t.integer  "list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["list_id"], name: "index_invitation_lists_on_list_id"
-    t.index ["user_id"], name: "index_invitation_lists_on_user_id"
+    t.index ["list_id"], name: "index_invitation_lists_on_list_id", using: :btree
+    t.index ["user_id"], name: "index_invitation_lists_on_user_id", using: :btree
   end
 
   create_table "lists", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "occasion"
     t.string   "occasion_of"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.date     "occasion_date"
+    t.integer  "occasion"
     t.string   "occasion_data"
     t.text     "invitation_text"
     t.text     "welcome_text"
-    t.index ["user_id"], name: "index_lists_on_user_id"
+    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
   end
 
   create_table "urls", force: :cascade do |t|
@@ -70,7 +73,7 @@ ActiveRecord::Schema.define(version: 20171201092743) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "list_id"
-    t.index ["gift_id"], name: "index_urls_on_gift_id"
+    t.index ["gift_id"], name: "index_urls_on_gift_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,4 +89,10 @@ ActiveRecord::Schema.define(version: 20171201092743) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "gifts", "lists"
+  add_foreign_key "gifts", "users"
+  add_foreign_key "invitation_lists", "lists"
+  add_foreign_key "invitation_lists", "users"
+  add_foreign_key "lists", "users"
+  add_foreign_key "urls", "gifts"
 end

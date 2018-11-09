@@ -1,7 +1,6 @@
 class ChangeColumnTypeInLists < ActiveRecord::Migration[5.0]
   def change
-    change_table :lists do |t|
-      t.change :occasion, :integer
-    end
+    remove_column :lists, :occasion
+    add_column :lists, :occasion, :integer
   end
 end

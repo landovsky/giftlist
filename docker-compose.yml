@@ -1,17 +1,24 @@
 version: "2"
 
 volumes:
-  givit-sync:
-    external: true
   gem_store_240:
     external: true
 
+networks:
+  givit:
+
 services:
+  postgres:
+    image: postgres:latest
+    networks:
+      - givit
+    ports:
+      - "5439:5432"
   web:
     #image: web:ruby
     build:
       context: .
-    command: ./start.sh
+    command: bash
     env_file: .env
     tty: true
     stdin_open: true
@@ -20,4 +27,5 @@ services:
     volumes:
       - gem_store_240:/gems
       - .:/givit
-      - givit-sync:/givit:nocopy
+    networks:
+      - givit
